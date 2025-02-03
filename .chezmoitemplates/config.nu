@@ -17,6 +17,16 @@ mkdir ($nu.data-dir | path join "vendor/autoload")
 starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
 
 # Alias definitions
+
+# chezmoi
 alias dot = chezmoi
 alias dota = chezmoi apply -v
 alias dote = code (dot source-path)
+
+# just
+alias j = just
+alias jr = just run
+alias jd = just dev
+alias jf = just fmt
+alias jt = just test
+alias jb = just build
