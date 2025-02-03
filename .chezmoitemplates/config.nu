@@ -17,11 +17,19 @@
 # You can remove these comments if you want or leave
 # them for future reference.
 
+
+use std/util "path add"
+
+# Mac OS only:
+path add "/opt/homebrew/opt/openjdk@21/bin"
+path add "/opt/homebrew/bin"
+path add "/Users/nebula/.zsh"
+path add "/opt/homebrew/anaconda3/bin"
+path add "/Users/nebula/Projects/scripts"
+
 $env.config.buffer_editor = "code"
 
 $env.config.show_banner = false
 
 mkdir ($nu.data-dir | path join "vendor/autoload")
 starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
-
-$env.config.
