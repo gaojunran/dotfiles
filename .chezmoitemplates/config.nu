@@ -35,3 +35,6 @@ alias jf = just fmt
 alias jt = just test
 alias jb = just build
 
+# tiged
+alias degit = tiged
+
