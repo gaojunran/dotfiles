@@ -1,4 +1,4 @@
-# Quickly clone a repo in Github. Requires `gh` and `fzf` installed.
+# Quickly clone a repo in Github. 📢 Requires `gh` and `fzf` installed. In the preview panel, press TAB to toggle README of the selected repo.
 def gc --env [
     name: string # allow 3 kinds of input: owner/repo, @owner, repo
 ] {
@@ -17,7 +17,7 @@ def gc --env [
         open $env.GH_CACHE_FILE 
             | get name 
             | to text 
-            | fzf --preview ("open " + $env.GH_CACHE_FILE + " | where fullName == {} | first") --preview-window right:70% --bind "tab:change-preview(gh repo view {})" --bind "focus:change-preview(nu -c ("open " + $env.GH_CACHE_FILE + " | where fullName == {} | first"))"
+            | fzf --preview ("open " + $env.GH_CACHE_FILE + " | where fullName == {} | first") --preview-window right:70% --bind "tab:change-preview(gh repo view {})" --bind "focus:change-preview(nu -c ('open ' + $env.GH_CACHE_FILE + ' | where fullName == {} | first'))"
             | if (($in | str length) > 0) { gh repo clone $in }
         
     } else { # have repo name only, invoke fzf
@@ -27,12 +27,12 @@ def gc --env [
         open $env.GH_CACHE_FILE 
             | get fullName
             | to text 
-            | fzf --preview ("open " + $env.GH_CACHE_FILE + " | where fullName == {} | first") --preview-window right:70% --bind "tab:change-preview(gh repo view {})" --bind "focus:change-preview(nu -c ("open " + $env.GH_CACHE_FILE + " | where fullName == {} | first"))"
+            | fzf --preview ("open " + $env.GH_CACHE_FILE + " | where fullName == {} | first") --preview-window right:70% --bind "tab:change-preview(gh repo view {})" --bind "focus:change-preview(nu -c ('open ' + $env.GH_CACHE_FILE + ' | where fullName == {} | first'))"
             | if (($in | str length) > 0) { gh repo clone $in }
     }
 }
 
-# Quickly earch for a repo in Github. Requires `gh` and `fzf` installed.
+# Quickly earch for a repo in Github. 📢 Requires `gh` and `fzf` installed. In the preview panel, press TAB to toggle README of the selected repo.
 def gs --env [
     name: string # allow 3 kinds of input: owner/repo, @owner, repo
 ] {
@@ -51,8 +51,8 @@ def gs --env [
         open $env.GH_CACHE_FILE 
             | get fullName 
             | to text 
-            | fzf --preview ("open " + $env.GH_CACHE_FILE + " | where fullName == {} | first") --preview-window right:70% --bind "tab:change-preview(gh repo view {})" --bind "focus:change-preview(nu -c ("open " + $env.GH_CACHE_FILE + " | where fullName == {} | first"))"
-            | if (($in | str length) > 0) { start ("https://github.com/" + $in) }
+            | fzf --preview ("open " + $env.GH_CACHE_FILE + " | where fullName == {} | first") --preview-window right:70% --bind "tab:change-preview(gh repo view {})" --bind "focus:change-preview(nu -c ('open ' + $env.GH_CACHE_FILE + ' | where fullName == {} | first'))" --bind "enter:execute(start ('https://github.com/' + {}))"
+            # | if (($in | str length) > 0) { start ("https://github.com/" + $in) }
     } else { # have repo name only, invoke fzf
         gh search repos $name --limit 50 --json $env.GH_SEARCH_FIELDS 
             | into string 
@@ -60,7 +60,7 @@ def gs --env [
         open $env.GH_CACHE_FILE 
             | get fullName
             | to text 
-            | fzf --preview ("open " + $env.GH_CACHE_FILE + " | where fullName == {} | first") --preview-window right:70% --bind "tab:change-preview(gh repo view {})" --bind "focus:change-preview(nu -c ('open ' + $env.GH_CACHE_FILE + ' | where fullName == {} | first'))"
-            | if (($in | str length) > 0) { start ("https://github.com/" + $in) }
+            | fzf --preview ("open " + $env.GH_CACHE_FILE + " | where fullName == {} | first") --preview-window right:70% --bind "tab:change-preview(gh repo view {})" --bind "focus:change-preview(nu -c ('open ' + $env.GH_CACHE_FILE + ' | where fullName == {} | first'))" --bind "enter:execute(start 'https://github.com/' + {})"
+            # | if (($in | str length) > 0) { start ("https://github.com/" + $in) }
     }
 }
