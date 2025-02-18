@@ -14,16 +14,12 @@ path add "/usr/local/bin"
 
 # 🪐 Env
 
-$env.config.buffer_editor = "code"
-$env.config.show_banner = false
-$env.PWD = "~" | path expand  # for Windows compatibility
-
 # VPN proxy
 $env.http_proxy = "http://127.0.0.1:7897"
 $env.https_proxy = "http://127.0.0.1:7897"
 
 # Yazi, for Windows compatibility
-$env.YAZI_CONFIG_HOME = "~/.config/yazi"
+$env.YAZI_CONFIG_HOME = "~/.config/yazi" | path expand
 
 zoxide init nushell | save -f ~/.zoxide.nu
 

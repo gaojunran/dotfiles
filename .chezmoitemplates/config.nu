@@ -2,6 +2,8 @@ use std/util "path add"
 
 const MY_SCRIPTS = "~/.config/scripts"
 
+$env.config.buffer_editor = "code"
+$env.config.show_banner = false
 
 # 🪐 Scripts
 
