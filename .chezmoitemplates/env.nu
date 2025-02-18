@@ -16,6 +16,7 @@ path add "/usr/local/bin"
 
 $env.config.buffer_editor = "code"
 $env.config.show_banner = false
+$env.PWD = "~" | path expand  # for Windows compatibility
 
 # VPN proxy
 $env.http_proxy = "http://127.0.0.1:7897"
