@@ -60,7 +60,7 @@ def gs --env [
         open $env.GH_CACHE_FILE 
             | get fullName
             | to text 
-            | fzf --preview ("open " + $env.GH_CACHE_FILE + " | where fullName == {} | first") --preview-window right:70% --bind "tab:change-preview(gh repo view {})" --bind "focus:change-preview(nu -c ('open ' + $env.GH_CACHE_FILE + ' | where fullName == {} | first'))" --bind "enter:execute(start 'https://github.com/' + {})"
+            | fzf --preview ("open " + $env.GH_CACHE_FILE + " | where fullName == {} | first") --preview-window right:70% --bind "tab:change-preview(gh repo view {})" --bind "focus:change-preview(nu -c ('open ' + $env.GH_CACHE_FILE + ' | where fullName == {} | first'))" --bind "enter:execute(start ('https://github.com/' + {}))"
             # | if (($in | str length) > 0) { start ("https://github.com/" + $in) }
     }
 }

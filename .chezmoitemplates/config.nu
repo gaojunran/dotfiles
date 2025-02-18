@@ -23,12 +23,15 @@ starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.n
 
 # Zoxide
 source ~/.zoxide.nu
+alias cd_nushell = cd # backup
+alias cd = z
 
-# 🪐 Alias definitions
+# 🪐 Alias/Command definitions
 
 alias clr = clear
 alias q = exit
-alias r = reset
+alias r = exec nu; clr
+alias o = start
 
 # chezmoi
 alias dot = chezmoi
@@ -45,3 +48,22 @@ alias jb = just build
 
 # tiged
 alias degit = tiged
+
+# homebrew
+alias br = brew
+alias bri = brew install
+alias bru = brew upgrade
+alias brl = brew list
+alias brx = brew uninstall
+alias brs = brew search
+
+# yazi
+def --env y [...args] {
+	let tmp = (mktemp -t "yazi-cwd.XXXXXX")
+	yazi ...$args --cwd-file $tmp
+	let cwd = (open $tmp)
+	if $cwd != "" and $cwd != $env.PWD {
+		cd $cwd
+	}
+	rm -fp $tmp
+}
