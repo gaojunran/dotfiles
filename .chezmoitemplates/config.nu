@@ -2,16 +2,6 @@ use std/util "path add"
 
 const MY_SCRIPTS = "~/.config/scripts"
 
-# Mac OS only:
-path add "/opt/homebrew/opt/openjdk@21/bin"
-# path add "/opt/homebrew/bin" # has been added in env.nu already
-path add "/opt/homebrew/anaconda3/bin"
-path add "~/.cargo/bin"
-path add "~/Library/Application Support/JetBrains/Toolbox/scripts"
-path add "~/Projects/scripts"
-
-$env.config.buffer_editor = "code"
-$env.config.show_banner = false
 
 # 🪐 Scripts
 
@@ -67,3 +57,9 @@ def --env y [...args] {
 	}
 	rm -fp $tmp
 }
+
+# zellij
+alias z = zellij
+
+# tailscale
+alias ts = tailscale
