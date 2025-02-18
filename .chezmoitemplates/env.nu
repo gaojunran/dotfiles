@@ -14,6 +14,8 @@ path add "/usr/local/bin"
 
 # 🪐 Env
 
+$env.HOME = $nu.home_path
+
 # VPN proxy
 $env.http_proxy = "http://127.0.0.1:7897"
 $env.https_proxy = "http://127.0.0.1:7897"

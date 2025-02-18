@@ -29,6 +29,7 @@ alias o = start
 alias dot = chezmoi
 alias dota = dot apply -v
 alias dote = code (dot source-path)
+alias dotu = dot update --apply
 
 # just
 alias j = just
@@ -48,6 +49,15 @@ alias bru = brew upgrade
 alias brl = brew list
 alias brx = brew uninstall
 alias brs = brew search
+
+# scoop
+alias sc = scoop
+alias sci = scoop install
+alias scu = scoop update
+alias scl = scoop list
+alias scx = scoop uninstall
+alias scs = scoop search
+
 
 # yazi
 def --env y [...args] {
