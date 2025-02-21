@@ -1,11 +1,15 @@
 use std/util "path add"
 
 const MY_SCRIPTS = "~/.config/scripts"
+const MY_BIN = "~/.config/bin"
 
 $env.config.buffer_editor = "code"
 $env.config.show_banner = false
 
 # 🪐 Scripts
+
+# make binaries executable
+ls ($MY_BIN | path expand) | each { |f| chmod +x ($MY_BIN | path join $f.name) }
 
 source $"($MY_SCRIPTS)/gs.nu"
 
@@ -18,12 +22,21 @@ source ~/.zoxide.nu
 alias cd_nushell = cd # backup
 alias cd = z
 
+# bash-env
+use $"($MY_SCRIPTS)/bash-env.nu"
+
 # 🪐 Alias/Command definitions
 
 alias clr = clear
 alias q = exit
 alias r = exec nu; clr
 alias o = start
+
+# mkdir and cd into it.
+def --env mc [ dir: string ] {
+	mkdir $dir
+	cd $dir
+}
 
 # chezmoi
 alias dot = chezmoi
@@ -57,6 +70,66 @@ alias scu = scoop update
 alias scl = scoop list
 alias scx = scoop uninstall
 alias scs = scoop search
+
+# ✨ uv
+
+alias uvr = uv run
+alias uvx = uv remove
+# Create a Python project and cd into it.
+def --wrapped --env uvn [ name: string, ...rest ] {
+    mc $name
+	uv init ...$rest
+}
+# Sync the env with pyproject.toml, requirements.txt, or simply add a package.
+def --wrapped uvi [...args] {
+	if ($args | length ) == 0 {
+		uv sync
+		if ("requirements.txt" | path exists) {
+			uv pip sync requirements.txt
+		}
+	} else {
+		uv add ...$args
+	}
+}
+alias uvf = ruff format
+
+# ✨ cargo
+
+alias cg = cargo
+alias cgx = cargo uninstall
+# Create a new Rust project and cd into it.
+def --wrapped --env cgn [ name: string, ...rest ] {
+	cargo new $name ...$rest
+	cd $name
+}
+# Sync the env with Cargo.toml, or simply add a package.
+alias cgi = cargo install
+alias cgb = cargo build
+alias cgt = cargo test
+alias cgf = cargo fmt
+
+
+# ✨ pnpm
+
+alias pn = pnpm
+# Sync the env with package.json, or simply add a package.
+alias pni = pnpm install
+alias pnr = pnpm run
+alias pnx = pnpm remove
+
+# ✨ gradle
+
+def --wrapped gd [...args] {
+	if ($nu.os-info.name == "windows") {
+		.\gradlew.bat ...$args
+	} else {
+		./gradlew ...$args
+	}
+}
+alias gdb = gd build
+alias gdr = gd run
+alias gdt = gd test
+alias gdf = gd format
 
 
 # yazi

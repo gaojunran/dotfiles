@@ -7,3 +7,8 @@ AppData/Roaming/nushell/env.nu
 Library/Application Support/nushell/config.nu
 Library/Application Support/nushell/env.nu
 {{ end }}
+
+{{ if ne .chezmoi.os "linux" }}
+~/.config/nushell/config.nu
+~/.config/nushell/env.nu
+{{ end }}

@@ -1,7 +1,7 @@
 use std/util "path add"
 
 # 🪐 PATH
-
+path add "~/.config/bin"
 path add "/opt/homebrew/bin"
 path add "/nix/var/nix/profiles/default/bin"
 path add "/opt/homebrew/opt/openjdk@21/bin"
@@ -11,10 +11,16 @@ path add "~/.cargo/bin"
 path add "~/Library/Application Support/JetBrains/Toolbox/scripts"
 path add "~/Projects/scripts"
 path add "/usr/local/bin"
+path add "~/.local/bin"
+
+# 🪐 Commands
+
+# Checks if a command is installed, return boolean.
+def is-installed [ app: string ] {
+	((which $app | length) > 0)
+}
 
 # 🪐 Env
-
-$env.HOME = $nu.home-path
 
 # VPN proxy
 $env.http_proxy = "http://127.0.0.1:7897"
@@ -23,7 +29,9 @@ $env.https_proxy = "http://127.0.0.1:7897"
 # Yazi, for Windows compatibility
 $env.YAZI_CONFIG_HOME = "~/.config/yazi" | path expand
 
-zoxide init nushell | save -f ~/.zoxide.nu
+if (is-installed "zoxide") {
+    zoxide init nushell | save -f ~/.zoxide.nu
+}
 
 # From https://github.com/AntKazakovv/nix-nushell-env
 let nixNuScript = ("~/.config/scripts/nix.nu" | path expand)
