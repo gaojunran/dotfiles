@@ -8,8 +8,10 @@ $env.config.show_banner = false
 
 # 🪐 Scripts
 
-# make binaries executable
-ls ($MY_BIN | path expand) | each { |f| chmod +x ($MY_BIN | path join $f.name) }
+# make binaries executable in unix
+if not (is-windows) {
+	ls ($MY_BIN | path expand) | each { |f| chmod +x ($MY_BIN | path join $f.name) }
+}
 
 source $"($MY_SCRIPTS)/gs.nu"
 
@@ -120,7 +122,7 @@ alias pnx = pnpm remove
 # ✨ gradle
 
 def --wrapped gd [...args] {
-	if ($nu.os-info.name == "windows") {
+	if is-windows {
 		.\gradlew.bat ...$args
 	} else {
 		./gradlew ...$args

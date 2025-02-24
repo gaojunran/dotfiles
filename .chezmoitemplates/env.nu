@@ -13,11 +13,16 @@ path add "~/Projects/scripts"
 path add "/usr/local/bin"
 path add "~/.local/bin"
 
-# 🪐 Commands
+# 🪐 Utils
 
 # Checks if a command is installed, return boolean.
 def is-installed [ app: string ] {
 	((which $app | length) > 0)
+}
+
+# Check if it's Windows now.
+def is-windows [] {
+    $nu.os-info.name == "windows"
 }
 
 # 🪐 Env
@@ -34,8 +39,8 @@ if (is-installed "zoxide") {
 }
 
 # From https://github.com/AntKazakovv/nix-nushell-env
-let nixNuScript = ("~/.config/scripts/nix.nu" | path expand)
+# let nixNuScript = ("~/.config/scripts/nix.nu" | path expand)
 
-if ($nixNuScript | path exists) {
-    nu $nixNuScript | from json | load-env
-}
+# if ($nixNuScript | path exists) {
+#     nu $nixNuScript | from json | load-env
+# }
