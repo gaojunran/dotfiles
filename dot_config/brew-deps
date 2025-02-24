@@ -1,0 +1,30 @@
+# Formulae
+
+brew "bash"  # bash 5
+brew "chezmoi"
+brew "fastfetch"
+brew "fzf"
+brew "gh"
+brew "go"
+brew "gradle"
+brew "jc"  # https://github.com/kellyjonbrazil/jc
+brew "just"
+brew "killport" # https://github.com/jkfran/killport
+brew "lazygit"
+brew "neovim"
+brew "node"
+brew "nushell"
+brew "openjdk"
+brew "pandoc"
+brew "ripgrep"
+brew "scrcpy"
+brew "sqlite"
+brew "starship"
+brew "tldr"
+brew "tokei"
+brew "typst"
+brew "uv"
+brew "xmake"
+brew "yazi"
+brew "zellij"
+brew "zoxide"

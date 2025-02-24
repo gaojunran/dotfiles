@@ -14,12 +14,13 @@ This will install `chezmoi` and apply my dotfiles to your system. See more usage
 
 ⚠️ My Nushell configs have tried their best to be compatible with Windows, macOS and Linux. However, I assume you have installed many cli tools in advance, otherwise you can't use many custom commands and aliases.
 
+
 ## Nushell
 
 In the year 2025, I decided to switch my workflow to [nushell](https://www.nushell.sh/). Nearly all my handful tools are nushell-related, stored [here](./.chezmoitemplates/). Here lists some scripts which are specifically separated out:
 
 - [gs.nu](./dot_config/scripts/gs.nu): The easiest way to search or clone a repo from GitHub.
-- [nix.nu](./dot_config/scripts/nix.nu): From the project [nix-nushell-env](https://github.com/AntKazakovv/nix-nushell-env), a nushell plugin to launch nix-shell.
+- (Currently deprecated) [nix.nu](./dot_config/scripts/nix.nu): From the project [nix-nushell-env](https://github.com/AntKazakovv/nix-nushell-env), a nushell plugin to launch nix-shell.
 - [bash-env.nu](./dot_config/scripts/bash-env.nu): From the project [bash-env-nushell](https://github.com/tesujimath/bash-env-nushell), a nushell plugin to launch bash shell and load env variables from bash.
 
 Moreover, for compatibility consideration, I will not write bash/zsh/powershell/bat scripts in the future. Python3 for simple users and Nushell for myself are enough.
@@ -27,5 +28,15 @@ Moreover, for compatibility consideration, I will not write bash/zsh/powershell/
 ## Yazi
 
 A TUI file manager, see [here](./dot_config/yazi).
+
+## Dependences Setup
+
+My manifests for system dependences(cli tools, applications, ...) are listed below:
+
+- **brew**: for MacOS.
+- **scoop**: for Windows. Working.
+- **apt**: for Ubuntu Linux. Working.
+
+Run `just deps-setup` in `HOME` to install all dependences!
 
 

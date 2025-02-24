@@ -150,3 +150,16 @@ alias z = zellij
 
 # tailscale
 alias ts = tailscale
+
+# fastfetch
+alias ff = fastfetch
+
+# lazygit
+alias g = lazygit
+
+# Open a project in...
+
+alias "c." = code .
+alias "z." = zed .
+alias "p." = pycharm .
+alias "i." = idea .

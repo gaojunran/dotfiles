@@ -15,7 +15,7 @@ def gc --env [
             | into string 
             | save -f $env.GH_CACHE_FILE
         open $env.GH_CACHE_FILE 
-            | get name 
+            | get fullName 
             | to text 
             | fzf --preview ("open " + $env.GH_CACHE_FILE + " | where fullName == {} | first") --preview-window right:70% --bind "tab:change-preview(gh repo view {})" --bind "focus:change-preview(nu -c ('open ' + $env.GH_CACHE_FILE + ' | where fullName == {} | first'))"
             | if (($in | str length) > 0) { gh repo clone $in }
