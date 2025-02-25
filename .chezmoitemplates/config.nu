@@ -169,10 +169,21 @@ alias "p." = pycharm .
 alias "i." = idea .
 
 # Search-and-See a file. Use fzf to fuzzy-find a file and use bat to view it.
-def ss [file: string = ""] {
-	if $file == "" {
+def ss [file?: string] {
+	if $file == null {
 	    fzf | bat $in
 	} else {
 		fzf -q $file | bat $in
 	}
 }
+
+# Find help from `<command> --help`.
+def "?" --wrapped [
+	--detail (-d)  # If you want a more detailed result. 
+	...cmd
+] {
+	nu -l -c (($cmd | str join " ") +  " --help")
+}
+
+# Find help from tldr.
+alias "??" = tldr

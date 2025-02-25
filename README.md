@@ -19,7 +19,7 @@ This will install `chezmoi` and apply my dotfiles to your system. See more usage
 
 In the year 2025, I decided to switch my workflow to [nushell](https://www.nushell.sh/). Nearly all my handful tools are nushell-related, stored [here](./.chezmoitemplates/). Here lists some scripts which are specifically separated out:
 
-- [gs.nu](./dot_config/scripts/gs.nu): The easiest way to search or clone a repo from GitHub.
+- [gh-search.nu](./dot_config/scripts/gh-search.nu): The easiest way to search or clone a repo from GitHub.
 - (Currently deprecated) [nix.nu](./dot_config/scripts/nix.nu): From the project [nix-nushell-env](https://github.com/AntKazakovv/nix-nushell-env), a nushell plugin to launch nix-shell.
 - [bash-env.nu](./dot_config/scripts/bash-env.nu): From the project [bash-env-nushell](https://github.com/tesujimath/bash-env-nushell), a nushell plugin to launch bash shell and load env variables from bash.
 
