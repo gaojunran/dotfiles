@@ -1,8 +1,10 @@
 # Formulae
 
 brew "bash"  # bash 5
+brew "bat"
 brew "chezmoi"
 brew "fastfetch"
+brew "fd"
 brew "fzf"
 brew "gh"
 brew "go"
@@ -11,6 +13,7 @@ brew "jc"  # https://github.com/kellyjonbrazil/jc
 brew "just"
 brew "killport" # https://github.com/jkfran/killport
 brew "lazygit"
+brew "maven"
 brew "neovim"
 brew "node"
 brew "nushell"

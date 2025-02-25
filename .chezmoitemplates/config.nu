@@ -13,7 +13,7 @@ if not (is-windows) {
 	ls ($MY_BIN | path expand) | each { |f| chmod +x ($MY_BIN | path join $f.name) }
 }
 
-source $"($MY_SCRIPTS)/gs.nu"
+use $"($MY_SCRIPTS)/gh-search.nu" *
 
 # Starship
 mkdir ($nu.data-dir | path join "vendor/autoload")
@@ -133,6 +133,10 @@ alias gdr = gd run
 alias gdt = gd test
 alias gdf = gd format
 
+# ✨ maven
+
+alias mvr = mvn exec:java  
+
 
 # yazi
 def --env y [...args] {
@@ -163,3 +167,12 @@ alias "c." = code .
 alias "z." = zed .
 alias "p." = pycharm .
 alias "i." = idea .
+
+# Search-and-See a file. Use fzf to fuzzy-find a file and use bat to view it.
+def ss [file: string = ""] {
+	if $file == "" {
+	    fzf | bat $in
+	} else {
+		fzf -q $file | bat $in
+	}
+}
