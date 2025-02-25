@@ -31,12 +31,20 @@ A TUI file manager, see [here](./dot_config/yazi).
 
 ## Dependences Setup
 
-My manifests for system dependences(cli tools, applications, ...) are listed below:
+My manifests for system dependences are listed below:
 
-- **brew**: for MacOS.
-- **scoop**: for Windows. Working.
+- [**brew**](./dot_config/brew-deps): for MacOS.
+- [**scoop**](./dot_config/scoop-deps.json): for Windows.
 - **apt**: for Ubuntu Linux. Working.
 
 Run `just deps-setup` in `HOME` to install all dependences!
 
+## Applications Setup
 
+My applications, which usually called `casks` in `brew`, or `extra` in `scoop`, are listed below: 
+
+- [**brew**](./dot_config/brew-apps): for MacOS.
+- [**scoop**](./dot_config/scoop-apps.json): for Windows.
+- **apt**: for Ubuntu Linux. Working.
+
+Run `just apps-setup` in `HOME` to install all applications!
