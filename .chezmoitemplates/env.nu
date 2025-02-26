@@ -25,6 +25,10 @@ def is-windows [] {
     $nu.os-info.name == "windows"
 }
 
+def is-macos [] {
+    $nu.os-info.name == "macos"
+}
+
 # 🪐 Env
 
 # VPN proxy

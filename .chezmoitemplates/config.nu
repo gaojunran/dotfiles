@@ -192,17 +192,17 @@ alias "??" = tldr
 # Install all dependences. See https://github.com/gaojunran/dotfiles?tab=readme-ov-file#dependences-setup.
 def "setup-deps" [] {
 	if (is-windows) {
-		scoop import ~/.config/setup/brew-deps
+		scoop import ~/.config/setup/scoop-deps.json
 	} else {
-		brew bundle --file ~/.config/setup/scoop-deps.json
+		brew bundle --file ~/.config/setup/brew-deps
 	}
 }
 
 # Install all applications. See https://github.com/gaojunran/dotfiles?tab=readme-ov-file#applications-setup.
 def "setup-apps" [] {
 	if (is-windows) {
-		scoop import ~/.config/setup/brew-apps
+		scoop import ~/.config/setup/scoop-apps.json
 	} else {
-		brew bundle --file ~/.config/setup/scoop-apps.json
+		brew bundle --file ~/.config/setup/brew-apps
 	}
 }

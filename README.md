@@ -33,8 +33,8 @@ A TUI file manager, see [here](./dot_config/yazi).
 
 My manifests for system dependences are listed below:
 
-- [**brew**](./dot_config/brew-deps): for MacOS.
-- [**scoop**](./dot_config/scoop-deps.json): for Windows.
+- [**brew**](./dot_config/setup/brew-deps): for MacOS & Linux.
+- [**scoop**](./dot_config/setup/scoop-deps.json): for Windows.
 
 Run `setup-deps` in nushell to install all dependences!
 
@@ -42,7 +42,7 @@ Run `setup-deps` in nushell to install all dependences!
 
 My applications, which usually called `casks` in `brew`, or `extra` in `scoop`, are listed below: 
 
-- [**brew**](./dot_config/brew-apps): for MacOS.
-- [**scoop**](./dot_config/scoop-apps.json): for Windows.
+- [**brew**](./dot_config/setup/brew-apps): for MacOS.
+- [**scoop**](./dot_config/setup/scoop-apps.json): for Windows.
 
 Run `setup-apps` in nushell to install all applications!
