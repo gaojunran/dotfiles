@@ -120,12 +120,14 @@ alias pnr = pnpm run
 alias pnx = pnpm remove
 
 # ✨ gradle
-
+# Use wrapper if exists, otherwise use gradle directly (often to init a new project).
 def --wrapped gd [...args] {
-	if is-windows {
+	if (is-windows) and ("./gradlew.bat" | path exists) {
 		.\gradlew.bat ...$args
-	} else {
+	} else if ("./gradlew" | path exists) {
 		./gradlew ...$args
+	} else {
+		gradle ...$args
 	}
 }
 alias gdb = gd build
