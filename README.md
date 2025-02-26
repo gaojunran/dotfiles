@@ -35,9 +35,8 @@ My manifests for system dependences are listed below:
 
 - [**brew**](./dot_config/brew-deps): for MacOS.
 - [**scoop**](./dot_config/scoop-deps.json): for Windows.
-- **apt**: for Ubuntu Linux. Working.
 
-Run `just deps-setup` in `HOME` to install all dependences!
+Run `setup-deps` in nushell to install all dependences!
 
 ## Applications Setup
 
@@ -45,6 +44,5 @@ My applications, which usually called `casks` in `brew`, or `extra` in `scoop`, 
 
 - [**brew**](./dot_config/brew-apps): for MacOS.
 - [**scoop**](./dot_config/scoop-apps.json): for Windows.
-- **apt**: for Ubuntu Linux. Working.
 
-Run `just apps-setup` in `HOME` to install all applications!
+Run `setup-apps` in nushell to install all applications!

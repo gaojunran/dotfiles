@@ -187,3 +187,22 @@ def "?" --wrapped [
 
 # Find help from tldr.
 alias "??" = tldr
+
+
+# Install all dependences. See https://github.com/gaojunran/dotfiles?tab=readme-ov-file#dependences-setup.
+def "setup-deps" [] {
+	if (is-windows) {
+		scoop import ~/.config/setup/brew-deps
+	} else {
+		brew bundle --file ~/.config/setup/scoop-deps.json
+	}
+}
+
+# Install all applications. See https://github.com/gaojunran/dotfiles?tab=readme-ov-file#applications-setup.
+def "setup-apps" [] {
+	if (is-windows) {
+		scoop import ~/.config/setup/brew-apps
+	} else {
+		brew bundle --file ~/.config/setup/scoop-apps.json
+	}
+}
