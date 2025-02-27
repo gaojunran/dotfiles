@@ -1,0 +1,5 @@
+# Use nushell in homebrew folder.
+command = "/opt/homebrew/bin/nu"
+
+# Font
+font-size = 20

@@ -29,6 +29,12 @@ Moreover, for compatibility consideration, I will not write bash/zsh/powershell/
 
 A TUI file manager, see [here](./dot_config/yazi).
 
+## Terminal
+
+For MacOS, I use [ghostty](./dot_config/ghostty/config) as my terminal emulator. It's highly recommended to bind a hotkey `ctrl+space` to launch it.
+
+I'm not sure what to use for Windows❓, maybe I'll wait until ghostty's windows support.
+
 ## Dependences Setup
 
 My manifests for system dependences are listed below:

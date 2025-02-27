@@ -130,6 +130,20 @@ def --wrapped gd [...args] {
 		gradle ...$args
 	}
 }
+# Create a Gradle project and cd into it.
+def --wrapped --env gdn [ 
+	name: string, # Project name
+	version: int = 21, # Java version
+	--java (-j), # Use java or not.
+	--kotlin (-k), # Use kotlin or not.
+	--test: string = "junit-jupiter" # Test framework
+	...rest 
+] {
+    mc $name
+	let type = (if $java { "java-application" } else if $kotlin { "kotlin-application" } else { "java-application" })
+	gd init --incubating --dsl kotlin --type $type --java-version $version --test-framework $test ...$rest
+}
+
 alias gdb = gd build
 alias gdr = gd run
 alias gdt = gd test
@@ -181,7 +195,6 @@ def ss [file?: string] {
 
 # Find help from `<command> --help`.
 def "?" --wrapped [
-	--detail (-d)  # If you want a more detailed result. 
 	...cmd
 ] {
 	nu -l -c (($cmd | str join " ") +  " --help")
