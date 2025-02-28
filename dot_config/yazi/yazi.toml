@@ -1,2 +1,7 @@
 [manager]
+# Show hidden files by default.
 show_hidden = true
+
+# Sort files by last modified time.
+sort_by = "mtime"
+sort_reverse = true

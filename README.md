@@ -29,11 +29,13 @@ Moreover, for compatibility consideration, I will not write bash/zsh/powershell/
 
 A TUI file manager, see [here](./dot_config/yazi).
 
+My keymap: [here](./dot_config/yazi/keymap.toml).
+
 ## Terminal
 
 For MacOS, I use [ghostty](./dot_config/ghostty/config) as my terminal emulator. It's highly recommended to bind a hotkey `ctrl+space` to launch it.
 
-I'm not sure what to use for Windows❓, maybe I'll wait until ghostty's windows support.
+I'm not sure what to use for Windows❓, maybe I'll wait until ghostty's Windows support.
 
 ## Dependences Setup
 

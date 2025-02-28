@@ -2,4 +2,9 @@
 command = "/opt/homebrew/bin/nu"
 
 # Font
-font-size = 20
+font-size = 18
+
+# Toggle Quick Terminal by Hyper + z (It's recommended to re-bind to capslock!)
+keybind = global:cmd+opt+ctrl+z=toggle_quick_terminal
+
+quick-terminal-position = right
