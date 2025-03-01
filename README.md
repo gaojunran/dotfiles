@@ -37,6 +37,29 @@ For MacOS, I use [ghostty](./dot_config/ghostty/config) as my terminal emulator.
 
 I'm not sure what to use for Windows❓, maybe I'll wait until ghostty's Windows support.
 
+## Keymaps (MacOS)
+
+These keymaps are scattering everywhere, so I simply write them down here.
+
+- `ctrl + space`: to launch search-bar in many apps, such as Finder, Arc, VS Code, Intellij Idea...
+- `Caps Lock` (re-mapped to `ctrl + cmd + opt + z`): to toggle quick terminal.
+- `cmd + shift + s`: Screenshot or Record, by Cleanshot.
+- Keymaps which are managed by Raycast:
+  - `opt + space`: to toggle Raycast.
+  - `cmd + space`: to toggle Terminal (Ghostty).
+  - `opt + a`: Toggle Arc.
+  - `opt + w`: Toggle Wechat.
+  - `opt + q`: Toggle QQ.
+  - `opt + f`: Search for files.
+  - `opt + t`: Quickly translate.
+  - `opt + s`: Search for snippets.
+  - `opt + v`: Search in clipboard.
+  - `opt + z`: Search for menu items.
+
+## IDE Configurations
+
+TODO
+
 ## Dependences Setup
 
 My manifests for system dependences are listed below:
