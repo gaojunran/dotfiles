@@ -20,7 +20,9 @@ mkdir ($nu.data-dir | path join "vendor/autoload")
 starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
 
 # Zoxide
-source ~/.zoxide.nu
+if (is-installed "zoxide") {
+   source ~/.zoxide.nu
+}
 alias cd_nushell = cd # backup
 alias cd = z
 
