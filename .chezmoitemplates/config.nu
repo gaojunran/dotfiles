@@ -27,7 +27,7 @@ if (is-installed "zoxide") {
 	source ~/.zoxide.nu
 }
 alias cdn = cd # backup
-alias cd = z
+# alias cd = z
 
 # bash-env
 use $"($MY_SCRIPTS)/bash-env.nu"
