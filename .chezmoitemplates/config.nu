@@ -26,7 +26,7 @@ if (is-installed "starship") {
 if (is-installed "zoxide") {
 	source ~/.zoxide.nu
 }
-alias cd_nushell = cd # backup
+alias cdn = cd # backup
 alias cd = z
 
 # bash-env
@@ -62,7 +62,7 @@ alias jb = just build
 # tiged
 alias degit = tiged
 
-# homebrew
+# brew for MacOS
 alias br = brew
 alias bri = brew install
 alias bru = brew upgrade
@@ -70,13 +70,21 @@ alias brl = brew list
 alias brx = brew uninstall
 alias brs = brew search
 
-# scoop
+# scoop for Windows
 alias sc = scoop
 alias sci = scoop install
 alias scu = scoop update
 alias scl = scoop list
 alias scx = scoop uninstall
 alias scs = scoop search
+
+# yay of Arch Linux
+alias ya = yay 
+alias yai = yay -S
+alias yau = yay -S
+alias yal = yay -Q
+alias yax = yay -Rs
+alias yas = yay -Ss
 
 # ✨ uv
 
@@ -136,19 +144,10 @@ def --wrapped gd [...args] {
 	}
 }
 # Create a Gradle project and cd into it.
-def --wrapped --env gdn [ 
-	name: string, # Project name
-	version: int = 21, # Java version
-	--java (-j), # Use java or not.
-	--kotlin (-k), # Use kotlin or not.
-	--test: string = "junit-jupiter" # Test framework
-	...rest 
-] {
+def --wrapped --env gdn [ name: string, ...rest ] {
     mc $name
-	let type = (if $java { "java-application" } else if $kotlin { "kotlin-application" } else { "java-application" })
-	gd init --incubating --dsl kotlin --type $type --java-version $version --test-framework $test ...$rest
+	gd init ...$rest
 }
-
 alias gdb = gd build
 alias gdr = gd run
 alias gdt = gd test
@@ -169,9 +168,6 @@ def --env y [...args] {
 	}
 	rm -fp $tmp
 }
-
-# zellij
-alias z = zellij
 
 # tailscale
 alias ts = tailscale
@@ -213,8 +209,10 @@ alias "??" = tldr
 def "setup-deps" [] {
 	if (is-windows) {
 		scoop import ~/.config/setup/scoop-deps.json
-	} else {
+	} else if (is-macos) {
 		brew bundle --file ~/.config/setup/brew-deps
+	} else {
+		"Use your own package manager bro!"
 	}
 }
 
@@ -222,7 +220,9 @@ def "setup-deps" [] {
 def "setup-apps" [] {
 	if (is-windows) {
 		scoop import ~/.config/setup/scoop-apps.json
-	} else {
+	} else if (is-macos) {
 		brew bundle --file ~/.config/setup/brew-apps
+	} else {
+		"Do you want to use GUI apps in Linux? Anyway, I don't."
 	}
 }

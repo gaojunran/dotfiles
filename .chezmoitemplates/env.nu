@@ -41,6 +41,8 @@ $env.YAZI_CONFIG_HOME = "~/.config/yazi" | path expand
 
 if (is-installed "zoxide") {
     zoxide init nushell | save -f ~/.zoxide.nu
+} else {
+    touch ~/.zoxide.nu
 }
 
 # From https://github.com/AntKazakovv/nix-nushell-env
@@ -49,3 +51,5 @@ if (is-installed "zoxide") {
 # if ($nixNuScript | path exists) {
 #     nu $nixNuScript | from json | load-env
 # }
+
+
