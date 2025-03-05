@@ -23,11 +23,10 @@ if (is-installed "starship") {
 
 
 # Zoxide
-if (is-installed "zoxide") {
-	source ~/.zoxide.nu
-}
+source ~/.zoxide.nu # Why can't I wrap it by if?
+
 alias cdn = cd # backup
-# alias cd = z
+alias cd = z
 
 # bash-env
 use $"($MY_SCRIPTS)/bash-env.nu"
