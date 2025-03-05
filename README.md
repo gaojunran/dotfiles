@@ -14,6 +14,22 @@ This will install `chezmoi` and apply my dotfiles to your system. See more usage
 
 ⚠️ My Nushell configs have tried their best to be compatible with Windows, macOS and Linux. However, I assume you have installed many cli tools in advance (see [here](https://github.com/gaojunran/dotfiles?tab=readme-ov-file#dependences-setup)), otherwise you can't use many custom commands and aliases.
 
+## From a brand new computer 💻
+
+1. Install **scoop** on Windows, or **brew** on macOS and Linux.
+
+```bash
+# Use Windows Terminal to install scoop
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+
+# Install homebrew/linuxbrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+2. Run `scoop install chezmoi nushell` or `brew install chezmoi nushell`.
+3. Run `chezmoi init --apply gaojunran` to apply my dotfiles to your system.
+4. Run `setup-deps` in `nushell` to install all dependencies!
 
 ## Nushell
 

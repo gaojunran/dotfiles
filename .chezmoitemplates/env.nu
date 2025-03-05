@@ -19,7 +19,7 @@ use std/util "path add"
 # 🪐 PATH
 path add "~/.config/bin"
 path add "/opt/homebrew/bin"
-path add "/nix/var/nix/profiles/default/bin"
+# path add "/nix/var/nix/profiles/default/bin"
 path add "/opt/homebrew/opt/openjdk@21/bin"
 path add "/opt/homebrew/bin"
 path add "/opt/homebrew/anaconda3/bin"
@@ -28,6 +28,7 @@ path add "~/Library/Application Support/JetBrains/Toolbox/scripts"
 path add "~/Projects/scripts"
 path add "/usr/local/bin"
 path add "~/.local/bin"
+path add "/home/linuxbrew/.linuxbrew/bin"
 
 # 🪐 Env
 
