@@ -16,20 +16,9 @@ This will install `chezmoi` and apply my dotfiles to your system. See more usage
 
 ## From a brand new computer 💻
 
-1. Install **scoop** on Windows, or **brew** on macOS and Linux.
-
-```bash
-# Use Windows Terminal to install scoop
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
-
-# Install homebrew/linuxbrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-2. Run `scoop install chezmoi nushell` or `brew install chezmoi nushell`.
-3. Run `chezmoi init --apply gaojunran` to apply my dotfiles to your system.
-4. Run `setup-deps` in `nushell` to install all dependencies!
+1. Install [chezmoi](https://www.chezmoi.io/) and [nushell](https://www.nushell.sh/) to your system.
+2. Run `chezmoi init --apply gaojunran` to apply my dotfiles to your system.
+3. Run `setup-deps` in `nushell` to install all dependencies!
 
 ## Nushell
 
@@ -80,8 +69,9 @@ TODO
 
 My manifests for system dependences are listed below:
 
-- [**brew**](./dot_config/setup/brew-deps): for MacOS & Linux.
-- [**scoop**](./dot_config/setup/scoop-deps.json): for Windows.
+- [**brew dependences for MacOS**](./dot_config/setup/brew-deps): for MacOS.
+- [**scoop dependences for Windows**](./dot_config/setup/scoop-deps.json): for Windows.
+- for Linux? Use your favourite package manager!
 
 Run `setup-deps` in nushell to install all dependences!
 
@@ -89,7 +79,8 @@ Run `setup-deps` in nushell to install all dependences!
 
 My applications, which usually called `casks` in `brew`, or `extra` in `scoop`, are listed below: 
 
-- [**brew**](./dot_config/setup/brew-apps): for MacOS.
-- [**scoop**](./dot_config/setup/scoop-apps.json): for Windows.
+- [**brew applications for MacOS**](./dot_config/setup/brew-apps).
+- [**scoop applications for Windows**](./dot_config/setup/scoop-apps.json).
+- for Linux? Are you sure to use GUI apps in Linux? I don't want!
 
-Run `setup-apps` in nushell to install all applications!
+Run `setup-apps` in nushell to install all applications!s
