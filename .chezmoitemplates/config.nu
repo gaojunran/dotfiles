@@ -17,11 +17,14 @@ use $"($MY_SCRIPTS)/gh-search.nu" *
 
 # Starship
 mkdir ($nu.data-dir | path join "vendor/autoload")
-starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+if (is-installed "starship") {
+	starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+}
+
 
 # Zoxide
 if (is-installed "zoxide") {
-   source ~/.zoxide.nu
+	source ~/.zoxide.nu
 }
 alias cd_nushell = cd # backup
 alias cd = z
