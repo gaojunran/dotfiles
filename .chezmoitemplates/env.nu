@@ -10,8 +10,14 @@ def is-windows [] {
     $nu.os-info.name == "windows"
 }
 
+# Check if it's macOS now.
 def is-macos [] {
     $nu.os-info.name == "macos"
+}
+
+# Check if it's Linux now.
+def is-linux [] {
+    $nu.os-info.name == "linux"
 }
 
 use std/util "path add"
@@ -33,8 +39,11 @@ path add "/home/linuxbrew/.linuxbrew/bin"
 # 🪐 Env
 
 # VPN proxy
-$env.http_proxy = "http://127.0.0.1:7897"
-$env.https_proxy = "http://127.0.0.1:7897"
+if (not (is-linux)) {
+    $env.http_proxy = "http://127.0.0.1:7897"
+    $env.https_proxy = "http://127.0.0.1:7897"
+}
+
 
 # Yazi, for Windows compatibility
 $env.YAZI_CONFIG_HOME = "~/.config/yazi" | path expand
