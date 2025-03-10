@@ -30,7 +30,7 @@ use $"($MY_SCRIPTS)/bash-env.nu"
 # 🪐 Alias/Command definitions
 alias cd = z  # zoxide
 alias q = exit
-alias r = exec nu
+alias r = clear; exec nu
 alias cat = bat
 alias degit = tiged
 alias ts = tailscale
