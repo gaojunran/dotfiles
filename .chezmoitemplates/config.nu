@@ -21,22 +21,21 @@ if (is-installed "starship") {
 	starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
 }
 
-
 # Zoxide
 source ~/.zoxide.nu # Why can't I wrap it by if?
-
-alias cdn = cd # backup
-alias cd = z
 
 # bash-env
 use $"($MY_SCRIPTS)/bash-env.nu"
 
 # 🪐 Alias/Command definitions
-
-alias clr = clear
+alias cd = z  # zoxide
 alias q = exit
-alias r = exec nu; clr
-alias o = start
+alias r = exec nu
+alias cat = bat
+alias degit = tiged
+alias ts = tailscale
+alias ff = fastfetch
+alias g = lazygit
 
 # mkdir and cd into it.
 def --env mc [ dir: string ] {
@@ -57,9 +56,6 @@ alias jd = just dev
 alias jf = just fmt
 alias jt = just test
 alias jb = just build
-
-# tiged
-alias degit = tiged
 
 # brew for MacOS
 alias br = brew
@@ -168,21 +164,33 @@ def --env y [...args] {
 	rm -fp $tmp
 }
 
-# tailscale
-alias ts = tailscale
+# use code to open in pwd, or open a dir.
+def c [ dir?: string ] {
+    if $dir == null {
+		code .
+	} else {
+		code $dir
+	}
+}
 
-# fastfetch
-alias ff = fastfetch
+# use idea to open in pwd, or open a dir.
+def i [ dir?: string ] {
+    if $dir == null {
+		idea .
+	} else {
+		idea $dir
+	}
+}
 
-# lazygit
-alias g = lazygit
+# start
+def o [ arg?: string ] {
+    if $arg == null {
+		start .
+	} else {
+		start $arg
+	}
+}
 
-# Open a project in...
-
-alias "c." = code .
-alias "z." = zed .
-alias "p." = pycharm .
-alias "i." = idea .
 
 # Search-and-See a file. Use fzf to fuzzy-find a file and use bat to view it.
 def ss [file?: string] {
