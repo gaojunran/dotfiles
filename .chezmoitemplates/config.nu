@@ -56,8 +56,8 @@ alias dotu = dot update --apply
 
 # just
 alias j = just
+alias d = just dev
 alias jr = just run
-alias jd = just dev
 alias jf = just fmt
 alias jt = just test
 alias jb = just build
