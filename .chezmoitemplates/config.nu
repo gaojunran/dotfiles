@@ -35,6 +35,8 @@ alias degit = tiged
 alias ts = tailscale
 alias ff = fastfetch
 alias g = lazygit
+# bottom, to monitor system stats
+alias top = btm
 
 # mkdir and cd into it.
 def --env mc [ dir: string ] {
@@ -158,6 +160,15 @@ alias gdf = gd format
 alias mvr = mvn exec:java  
 
 
+# Use llm with aichat
+alias "？" = aichat
+alias ai = aichat
+# execute shell command with aichat
+alias aix = aichat -e
+# get code only with aichat
+alias aic = aichat -c
+
+
 # yazi
 def --env y [...args] {
 	let tmp = (mktemp -t "yazi-cwd.XXXXXX")
@@ -215,6 +226,8 @@ def "?" --wrapped [
 
 # Find help from tldr.
 alias "??" = tldr
+
+
 
 
 # Install all dependences. See https://github.com/gaojunran/dotfiles?tab=readme-ov-file#dependences-setup.
