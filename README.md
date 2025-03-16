@@ -63,7 +63,7 @@ These keymaps are scattering everywhere, so I simply write them down here.
 
 ## IDE Configurations
 
-TODO
+- [VS Code](./.chezmoitemplates/vscode-settings.json): My VS Code settings. Extends from [antfu's](https://github.com/antfu/vscode-settings/blob/main/.vscode/settings.json). Focusing on Rust, Python and Web development.
 
 ## Dependences Setup
 
