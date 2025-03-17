@@ -40,7 +40,7 @@ My keymap: [here](./dot_config/yazi/keymap.toml).
 
 For MacOS, I use [ghostty](./dot_config/ghostty/config) as my terminal emulator. It's highly recommended to bind a hotkey `ctrl+space` to launch it.
 
-I'm not sure what to use for Windows❓, maybe I'll wait until ghostty's Windows support.
+For Windows, I use [Windows Terminal](./AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json) as default.
 
 ## Keymaps (MacOS)
 
