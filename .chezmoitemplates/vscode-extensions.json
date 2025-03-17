@@ -1,0 +1,52 @@
+{
+  "recommendations": [
+
+    // Themes & Icons
+    "antfu.icons-carbon",
+    "antfu.theme-vitesse",
+    "file-icons.file-icons",
+    "sainnhe.gruvbox-material",
+
+    // WEB RELATED, mostly extended from antfu
+    "antfu.iconify",
+    "antfu.slidev",
+    "antfu.unocss",
+    "antfu.vite",
+    "lokalise.i18n-ally",
+    "bradlc.vscode-tailwindcss",
+    "dbaeumer.vscode-eslint",
+    "Vue.volar",
+    "johnsoncodehk.vscode-tsconfig-helper",
+
+    // PYTHON RELATED
+    "charliermarsh.ruff",
+    "ms-python.python",
+    "ms-toolsai.jupyter",
+    "marimo-team.vscode-marimo",
+
+    // Other langs
+    "1YiB.rust-bundle",
+    "TheNuProjectContributors.vscode-nushell-lang",
+    "nefrob.vscode-just-syntax",
+    "myriad-dreamin.tinymist",
+    
+    // Utils
+    "tomoki1207.pdf",
+    "fill-labs.dependi",
+    "aminer.codegeex",  // currently my copilot, by zhipuai
+    "usernamehw.errorlens",
+    "streetsidesoftware.code-spell-checker",
+    "antfu.browse-lite",
+    "eamodio.gitlens",
+    "EditorConfig.EditorConfig",
+    "github.vscode-github-actions",
+    "GitHub.vscode-pull-request-github",
+    "mpontus.tab-cycle",
+    "naumovs.color-highlight",
+    "WakaTime.vscode-wakatime", // useful to stat your time on coding
+    "znck.grammarly",
+    "gaojunran.tokei-statistics",   // it's mine!
+    
+    // TODO: add database support
+  ]
+}

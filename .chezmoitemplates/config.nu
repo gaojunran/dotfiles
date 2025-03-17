@@ -28,7 +28,8 @@ source ~/.zoxide.nu # Why can't I wrap it by if?
 use $"($MY_SCRIPTS)/bash-env.nu"
 
 # 🪐 Alias/Command definitions
-alias cd = z  # zoxide
+# zoxide
+alias cd = z  
 alias q = exit
 alias cat = bat
 alias degit = tiged
@@ -37,6 +38,8 @@ alias ff = fastfetch
 alias g = lazygit
 # bottom, to monitor system stats
 alias top = btm
+# https://github.com/antfu/iroiro, to pick colors
+alias iro = npx iroiro
 
 # mkdir and cd into it.
 def --env mc [ dir: string ] {
