@@ -13,7 +13,7 @@ if not (is-windows) {
 	ls ($MY_BIN | path expand) | each { |f| chmod +x ($MY_BIN | path join $f.name) }
 }
 
-use $"($MY_SCRIPTS)/gh-search.nu" *
+use $"($MY_SCRIPTS)/gh-actions.nu" *
 
 # Starship
 mkdir ($nu.data-dir | path join "vendor/autoload")
@@ -240,7 +240,7 @@ def "setup-deps" [] {
 	} else if (is-macos) {
 		brew bundle --file ~/.config/setup/brew-deps
 	} else {
-		"Use your own package manager bro!"
+		"Use your own package manager bro! TODO: yay's automation"
 	}
 }
 
