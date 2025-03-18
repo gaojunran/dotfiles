@@ -20,7 +20,8 @@
   "workbench.tree.indent": 10,
 
   "window.dialogStyle": "custom",
-  "window.nativeTabs": true, // this is great, macOS only
+  // macOS only, https://github.com/microsoft/vscode/issues/115469#issuecomment-770630115
+  "window.nativeTabs": true, 
   "window.title": "${rootName}", // this make tabs more readable
   "window.titleBarStyle": "custom",
   "extensions.autoUpdate": "onlyEnabledExtensions",

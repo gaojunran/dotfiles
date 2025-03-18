@@ -41,6 +41,18 @@ alias top = btm
 # https://github.com/antfu/iroiro, to pick colors
 alias iro = npx iroiro
 
+# cd to my directories
+alias hw = cd ~/Homework
+alias py = cd ~/py-projects
+alias rs = cd ~/rs-projects
+alias vue = cd ~/vue-projects
+
+# pick a project using fzf, and cd into it (by default).
+def --env pro [] {
+	# TODO
+}
+
+
 # mkdir and cd into it.
 def --env mc [ dir: string ] {
 	mkdir $dir
@@ -253,4 +265,22 @@ def "setup-apps" [] {
 	} else {
 		"Do you want to use GUI apps in Linux? Anyway, I don't."
 	}
+}
+
+# 📢 Run once when coming to a new machine. Prepare all the directories.
+def "setup-dirs" [] {
+	mkdir -v ~/Downloads
+	mkdir -v ~/Documents
+	mkdir -v ~/Pictures
+	mkdir -v ~/Videos
+	mkdir -v ~/Music
+  # For temporary projects.
+	mkdir -v ~/Playground   
+	# My projects.
+	# Only receive softlinks from different language folders to this folder.
+	mkdir -v ~/Projects
+	mkdir -v ~/vue-projects
+	mkdir -v ~/rs-projects
+	mkdir -v ~/py-projects
+	mkdir -v ~/jvm-projects
 }

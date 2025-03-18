@@ -61,5 +61,3 @@ if (is-installed "zoxide") {
 # if ($nixNuScript | path exists) {
 #     nu $nixNuScript | from json | load-env
 # }
-
-
