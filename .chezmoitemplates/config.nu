@@ -47,6 +47,15 @@ alias py = cd ~/py-projects
 alias rs = cd ~/rs-projects
 alias vue = cd ~/vue-projects
 
+# usql actions
+def pg [db?: string] {
+	if $db == null {
+		usql "pg://nebula:nebula@localhost:5430/"
+	} else {
+		usql ("pg://nebula:nebula@localhost:5430/" + $db)
+	}
+}
+
 # pick a project using fzf, and cd into it (by default).
 def --env pro [] {
 	# TODO
@@ -182,6 +191,7 @@ alias ai = aichat
 alias aix = aichat -e
 # get code only with aichat
 alias aic = aichat -c
+alias trans = aichat "Translate to Chinese if it's English, and Translate to English if it's Chinese. If it's a word, try to give me its meanings as many as possible: "
 
 
 # yazi
@@ -196,27 +206,35 @@ def --env y [...args] {
 }
 
 # use code to open in pwd, or open a dir.
-def c [ dir?: string ] {
-    if $dir == null {
+def c [ arg?: string ] {
+  if $in == null and $arg == null {
 		code .
+	} else if $arg == null {
+		code $in
 	} else {
-		code $dir
+		code $arg
 	}
 }
 
 # use idea to open in pwd, or open a dir.
-def i [ dir?: string ] {
-    if $dir == null {
+def i [ arg?: string ] {
+  if $in == null and $arg == null {
 		idea .
+	} else if $arg == null {
+		idea $in
 	} else {
-		idea $dir
+		idea $arg
 	}
 }
 
-# start
+
+
+# use finder to open in pwd, or open a dir.
 def o [ arg?: string ] {
-    if $arg == null {
+	if $in == null and $arg == null {
 		start .
+	} else if $arg == null {
+		start $in
 	} else {
 		start $arg
 	}
@@ -245,7 +263,7 @@ alias "??" = tldr
 
 
 
-# Install all dependences. See https://github.com/gaojunran/dotfiles?tab=readme-ov-file#dependences-setup.
+# 📢 Install all dependences. See https://github.com/gaojunran/dotfiles?tab=readme-ov-file#dependences-setup.
 def "setup-deps" [] {
 	if (is-windows) {
 		scoop import ~/.config/setup/scoop-deps.json
@@ -256,7 +274,7 @@ def "setup-deps" [] {
 	}
 }
 
-# Install all applications. See https://github.com/gaojunran/dotfiles?tab=readme-ov-file#applications-setup.
+# 📢 Install all applications. See https://github.com/gaojunran/dotfiles?tab=readme-ov-file#applications-setup.
 def "setup-apps" [] {
 	if (is-windows) {
 		scoop import ~/.config/setup/scoop-apps.json
