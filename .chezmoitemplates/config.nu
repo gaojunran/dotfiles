@@ -82,6 +82,8 @@ alias dotu = dot update --apply
 
 # just
 alias j = just
+# Run a global command.
+alias "!" = just --justfile ~/.config/justfile --working-directory .
 alias d = just dev
 alias jr = just run
 alias jf = just fmt
