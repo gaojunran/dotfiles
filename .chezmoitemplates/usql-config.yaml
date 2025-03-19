@@ -1,0 +1,3 @@
+connections:
+  pg: pg://nebula:nebula@localhost:5430/
+  playground: pg://nebula:nebula@localhost:5430/playground
