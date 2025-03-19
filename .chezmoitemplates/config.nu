@@ -120,7 +120,7 @@ alias uvr = uv run
 alias uvx = uv remove
 # Create a Python project and cd into it.
 def --wrapped --env uvn [ name: string, ...rest ] {
-    mc $name
+	mc $name
 	uv init ...$rest
 }
 # Sync the env with pyproject.toml, requirements.txt, or simply add a package.
@@ -173,7 +173,7 @@ def --wrapped gd [...args] {
 }
 # Create a Gradle project and cd into it.
 def --wrapped --env gdn [ name: string, ...rest ] {
-    mc $name
+  mc $name
 	gd init ...$rest
 }
 alias gdb = gd build
@@ -260,7 +260,7 @@ def "?" --wrapped [
 }
 
 # Find help from tldr.
-alias "??" = tldr
+# alias "??" = tldr
 
 
 
