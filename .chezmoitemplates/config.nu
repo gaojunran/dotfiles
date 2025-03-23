@@ -40,6 +40,16 @@ alias g = lazygit
 alias top = btm
 # https://github.com/antfu/iroiro, to pick colors
 alias iro = npx iroiro
+# Switch between mac/win and arch linux
+alias mac = mac nu
+alias win = exit
+def arch [] {
+	if (is-windows) {
+		Arch nu
+	} else {
+		orb nu
+	}
+}
 
 # cd to my directories
 alias hw = cd ~/Homework
@@ -50,9 +60,9 @@ alias vue = cd ~/vue-projects
 # usql actions
 def pg [db?: string] {
 	if $db == null {
-		usql "pg://nebula:nebula@localhost:5430/"
+		usql "pg://nebula:nebula@localhost:5432/"
 	} else {
-		usql ("pg://nebula:nebula@localhost:5430/" + $db)
+		usql ("pg://nebula:nebula@localhost:5432/" + $db)
 	}
 }
 
@@ -65,6 +75,9 @@ def --env pro [] {
 # mkdir and cd into it.
 def --env mc [ dir: string ] {
 	mkdir $dir
+	if ("justfile" | path exists) {
+		cp "justfile" ($dir | path join "justfile")
+	}
 	cd $dir
 }
 
@@ -146,7 +159,7 @@ def --wrapped --env cgn [ name: string, ...rest ] {
 	cd $name
 }
 # Sync the env with Cargo.toml, or simply add a package.
-alias cgi = cargo install
+alias cgi = cargo add
 alias cgb = cargo build
 alias cgt = cargo test
 alias cgf = cargo fmt
