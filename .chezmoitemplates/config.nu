@@ -42,10 +42,10 @@ alias top = btm
 alias iro = npx iroiro
 # Switch between mac/win and arch linux
 alias mac = mac nu
-alias win = exit
+# alias win = C:\Users\gaoju\scoop\apps\nu\current\nu.exe
 def arch [] {
 	if (is-windows) {
-		Arch nu
+		Arch.exe nu
 	} else {
 		orb nu
 	}
@@ -197,7 +197,7 @@ alias gdf = gd format
 # ✨ maven
 
 alias mvr = mvn exec:java  
-
+alias mvc = mvn clean
 
 # Use llm with aichat
 alias "？" = aichat
@@ -219,6 +219,13 @@ def --env y [...args] {
 	}
 	rm -fp $tmp
 }
+alias yd = y ~/Downloads
+alias yc = y ~/.config
+alias yD = y ~/Documents
+alias ys = y ~/Pictures/Screenshots
+alias yt = y ~/Playground
+alias yp = y ~/Projects
+
 
 # use code to open in pwd, or open a dir.
 def c [ arg?: string ] {

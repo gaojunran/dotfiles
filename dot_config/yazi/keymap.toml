@@ -4,7 +4,7 @@ run  = "cd ~/Downloads"
 desc = "Cd to ~/Downloads"
 
 [[manager.prepend_keymap]]
-on   = [ "g", "." ]
+on   = [ "g", "c" ]
 run  = "cd ~/.config"
 desc = "Cd to ~/.config"
 
