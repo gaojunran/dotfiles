@@ -45,7 +45,7 @@ alias mac = mac nu
 # alias win = C:\Users\gaoju\scoop\apps\nu\current\nu.exe
 def arch [] {
 	if (is-windows) {
-		Arch.exe nu
+		Arch.exe runp "nu"
 	} else {
 		orb nu
 	}
