@@ -5,6 +5,7 @@ const MY_BIN = "~/.config/bin"
 
 $env.config.buffer_editor = "code"
 $env.config.show_banner = false
+$env.EDITOR = "code"
 
 # 🪐 Scripts
 
@@ -32,6 +33,8 @@ use $"($MY_SCRIPTS)/bash-env.nu"
 alias cd = z  
 alias q = exit
 alias cat = bat
+alias cpp = cp
+alias cp = cb copy
 alias degit = tiged
 alias ts = tailscale
 alias ff = fastfetch
@@ -79,6 +82,13 @@ def --env mc [ dir: string ] {
 		cp "justfile" ($dir | path join "justfile")
 	}
 	cd $dir
+}
+
+def new [suffix: string, ...rest] {
+	for $name in $rest {
+	  touch ($name + "." + $suffix)
+		print ("Created " + $name + "." + $suffix)
+	}
 }
 
 # clear and refresh shell
@@ -219,6 +229,8 @@ def --env y [...args] {
 	}
 	rm -fp $tmp
 }
+# Open in HOME and do not change cwd when quitting. Often used for searching files.
+alias yy = yazi ~
 alias yd = y ~/Downloads
 alias yc = y ~/.config
 alias yD = y ~/Documents
@@ -262,16 +274,6 @@ def o [ arg?: string ] {
 	}
 }
 
-
-# Search-and-See a file. Use fzf to fuzzy-find a file and use bat to view it.
-def ss [file?: string] {
-	if $file == null {
-	    fzf | bat $in
-	} else {
-		fzf -q $file | bat $in
-	}
-}
-
 # Find help from `<command> --help`.
 def "?" --wrapped [
 	...cmd
@@ -279,8 +281,6 @@ def "?" --wrapped [
 	nu -l -c (($cmd | str join " ") +  " --help")
 }
 
-# Find help from tldr.
-# alias "??" = tldr
 
 
 
