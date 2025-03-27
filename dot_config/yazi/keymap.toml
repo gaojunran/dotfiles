@@ -10,17 +10,12 @@ run  = "cd ~/.config"
 desc = "Cd to ~/.config"
 
 [[manager.prepend_keymap]]
-on   = [ "g", "p" ]
-run  = "cd ~/Projects"
-desc = "Cd to ~/Projects"
-
-[[manager.prepend_keymap]]
 on   = [ "g", "s" ]
 run  = "cd ~/Pictures/Screenshots"
 desc = "Cd to ~/Pictures/Screenshots"
 
 [[manager.prepend_keymap]]
-on   = [ "g", "t" ]
+on   = [ "g", "p" ]
 run  = "cd ~/Playground"
 desc = "Cd to ~/Playground"
 
@@ -34,3 +29,8 @@ desc = "Cd to ~/Documents"
 on   = [ "c", "b" ]
 run  = 'shell "cb copy $@"'
 desc = "Copy to clipboard"
+
+[[manager.prepend_keymap]]
+on   = [ "`" ]
+run  = 'shell "code ."'
+desc = "Open current directory in VS Code"

@@ -235,8 +235,7 @@ alias yd = y ~/Downloads
 alias yc = y ~/.config
 alias yD = y ~/Documents
 alias ys = y ~/Pictures/Screenshots
-alias yt = y ~/Playground
-alias yp = y ~/Projects
+alias yp = y ~/Playground
 
 
 # use code to open in pwd, or open a dir.
