@@ -30,7 +30,9 @@ use $"($MY_SCRIPTS)/bash-env.nu"
 
 # 🪐 Alias/Command definitions
 # zoxide
-alias cd = z  
+alias cd = z
+alias cdp = cd ~/Playground
+
 alias q = exit
 alias cat = bat
 alias cpp = cp
@@ -54,11 +56,10 @@ def arch [] {
 	}
 }
 
-# cd to my directories
-alias hw = cd ~/Homework
-alias py = cd ~/py-projects
-alias rs = cd ~/rs-projects
-alias vue = cd ~/vue-projects
+def mix [] {
+	repomix
+	cb copy ./repomix-output.txt
+}
 
 # usql actions
 def pg [db?: string] {
@@ -68,12 +69,6 @@ def pg [db?: string] {
 		usql ("pg://nebula:nebula@localhost:5432/" + $db)
 	}
 }
-
-# pick a project using fzf, and cd into it (by default).
-def --env pro [] {
-	# TODO
-}
-
 
 # mkdir and cd into it.
 def --env mc [ dir: string ] {
@@ -231,6 +226,11 @@ def --env y [...args] {
 }
 # Open in HOME and do not change cwd when quitting. Often used for searching files.
 alias yy = yazi ~
+alias hw = y ~/Homework
+alias py = y ~/python-projects
+alias rs = y ~/rust-projects
+alias vue = y ~/vue-projects
+alias jv = y ~/jvm-projects
 alias yd = y ~/Downloads
 alias yc = y ~/.config
 alias yD = y ~/Documents
