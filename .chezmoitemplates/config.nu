@@ -35,8 +35,10 @@ alias cdp = cd ~/Playground
 
 alias q = exit
 alias cat = bat
-alias cpp = cp
-alias cp = cb copy
+alias cpf = cp
+alias cc = cb copy
+alias cv = cb paste
+
 alias degit = tiged
 alias ts = tailscale
 alias ff = fastfetch
@@ -54,6 +56,24 @@ def arch [] {
 	} else {
 		orb nu
 	}
+}
+
+# Copy specified files / files from the clipboard, to ~/Playground/<dir>.
+def --env cvp [
+	dir?: string,  # Specify a dir name. It'll be ~/Playground/<dir>.
+	...files: string # Specify files to copy. If empty, copy from clipboard.
+] {
+	let abs_files = $files | each { |file| $file | path expand }
+	cd ~/Playground
+	if ($dir != null) {
+		mc $dir
+	}
+	if (($files | length) > 0) {
+		$abs_files | each { | file | cpf $file ($file | path basename) }
+	} else {
+		cb paste
+	}
+	ls -a
 }
 
 def mix [] {

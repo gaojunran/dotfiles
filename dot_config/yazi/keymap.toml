@@ -26,9 +26,19 @@ desc = "Cd to ~/Documents"
 
 # Actions
 [[manager.prepend_keymap]]
-on   = [ "c", "b" ]
+on   = [ "c", "c" ]
 run  = 'shell "cb copy $@"'
 desc = "Copy to clipboard"
+
+[[manager.prepend_keymap]]
+on   = [ "c", "v" ]
+run  = 'shell "cb paste"'
+desc = "Paste from clipboard"
+
+[[manager.prepend_keymap]]
+on   = [ "c", "p" ]
+run  = 'copy path'
+desc = "Copy file path"
 
 [[manager.prepend_keymap]]
 on   = [ "`" ]
