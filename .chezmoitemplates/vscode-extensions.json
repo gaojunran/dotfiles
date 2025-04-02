@@ -31,6 +31,7 @@
     "myriad-dreamin.tinymist",
     
     // Utils
+    "qt-kaneko.macos-native-copy-paste",  // allow copying to clipboard on mac
     "tomoki1207.pdf",
     "fill-labs.dependi",
     "aminer.codegeex",  // currently my copilot, by zhipuai

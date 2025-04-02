@@ -172,8 +172,10 @@ def --wrapped uvi [...args] {
 		uv add ...$args
 	}
 }
-alias uvf = ruff format
-
+alias uvii = uv tool install
+alias uvxx = uv tool uninstall
+alias uvll = uv tool list
+alias uvuu = uv tool upgrade
 # ✨ cargo
 
 alias cg = cargo
@@ -183,11 +185,17 @@ def --wrapped --env cgn [ name: string, ...rest ] {
 	cargo new $name ...$rest
 	cd $name
 }
-# Sync the env with Cargo.toml, or simply add a package.
-alias cgi = cargo add
+def --wrapped cgi [...args] {
+	if ($args | length ) == 0 {
+		cargo check
+	} else {
+		cargo add ...$args
+	}
+}
 alias cgb = cargo build
 alias cgt = cargo test
-alias cgf = cargo fmt
+alias cgii = cargo install
+alias cgxx = cargo uninstall
 
 
 # ✨ pnpm
