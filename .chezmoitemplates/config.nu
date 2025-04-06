@@ -28,6 +28,11 @@ source ~/.zoxide.nu # Why can't I wrap it by if?
 # bash-env
 use $"($MY_SCRIPTS)/bash-env.nu"
 
+# jenv
+# def jenv [version: string] {
+
+# }
+
 # 🪐 Alias/Command definitions
 # zoxide
 alias cd = z
@@ -47,6 +52,7 @@ alias g = lazygit
 alias top = btm
 # https://github.com/antfu/iroiro, to pick colors
 alias iro = npx iroiro
+alias hex = hexyl
 # Switch between mac/win and arch linux
 alias mac = mac nu
 # alias win = C:\Users\gaoju\scoop\apps\nu\current\nu.exe
@@ -229,7 +235,11 @@ alias gdf = gd format
 
 # ✨ maven
 
-alias mvr = mvn exec:java  
+def mvr [] {
+	mvn clean package
+	let jar = ls ./target | where name =~ "jar" | first | get name
+	java -jar $jar
+}
 alias mvc = mvn clean
 
 # Use llm with aichat
