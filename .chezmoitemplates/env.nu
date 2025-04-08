@@ -50,11 +50,17 @@ if (not (is-linux)) {
 # Yazi, for Windows compatibility
 $env.YAZI_CONFIG_HOME = "~/.config/yazi" | path expand
 
-if (is-installed "zoxide") {
-    zoxide init nushell | save -f ~/.zoxide.nu
-} else {
-    touch ~/.zoxide.nu
+# if (is-installed "zoxide") {
+#     zoxide init nushell | save -f ~/.zoxide.nu
+# } else {
+#     touch ~/.zoxide.nu
+# }
+
+if not (is-installed "asdf") {
+    touch ~/.asdf/plugins/java/set-java-home.nu
 }
+
+alias "!cd" = cd
 
 # From https://github.com/AntKazakovv/nix-nushell-env
 # let nixNuScript = ("~/.config/scripts/nix.nu" | path expand)

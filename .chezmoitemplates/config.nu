@@ -28,19 +28,43 @@ source ~/.zoxide.nu # Why can't I wrap it by if?
 # bash-env
 use $"($MY_SCRIPTS)/bash-env.nu"
 
-# jenv
-# def jenv [version: string] {
+# asdf
+let shims_dir = (
+  if ( $env | get --ignore-errors ASDF_DATA_DIR | is-empty ) {
+    $env.HOME | path join '.asdf'
+  } else {
+    $env.ASDF_DATA_DIR
+  } | path join 'shims'
+)
+$env.PATH = ( $env.PATH | split row (char esep) | where { |p| $p != $shims_dir } | prepend $shims_dir )
+source ~/.asdf/plugins/java/set-java-home.nu
 
-# }
+# ----------------------------
 
 # 🪐 Alias/Command definitions
 # zoxide
-alias cd = z
+alias "!cd" = cd
+# alias cd = z
+def --env cd [ dir?: string ] {
+	if ($dir == null) {
+		z
+	} else {
+		z $dir
+	}
+	if (".tool-versions" | path exists) {
+		asdf install
+	}
+}
 alias cdp = cd ~/Playground
 
 alias q = exit
+
+# bat
+alias "!cat" = cat
 alias cat = bat
-alias cpf = cp
+
+# clipboard
+alias "!cp" = cp
 alias cc = cb copy
 alias cv = cb paste
 
@@ -75,7 +99,7 @@ def --env cvp [
 		mc $dir
 	}
 	if (($files | length) > 0) {
-		$abs_files | each { | file | cpf $file ($file | path basename) }
+		$abs_files | each { | file | !cp $file ($file | path basename) }
 	} else {
 		cb paste
 	}
