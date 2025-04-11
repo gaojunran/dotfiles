@@ -60,7 +60,10 @@ if not (is-installed "asdf") {
     touch ~/.asdf/plugins/java/set-java-home.nu
 }
 
+# Redirect default commands
 alias "!cd" = cd
+alias "!cp" = cp
+alias "!cat" = cat
 
 # From https://github.com/AntKazakovv/nix-nushell-env
 # let nixNuScript = ("~/.config/scripts/nix.nu" | path expand)

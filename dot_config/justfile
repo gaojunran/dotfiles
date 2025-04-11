@@ -1,7 +1,0 @@
-# The file is designed to be globally used between your projects.
-# Run it with `just --justfile <location-of-this-file> --working-directory . <recipe>`.
-
-# Use gcc to compile a single C file, and run it.
-runc cfile *args:
-    gcc {{replace(cfile, ".c", "")}}.c {{args}} -o {{replace(cfile, ".c", "")}}
-    ./{{replace(cfile, ".c", "")}}
