@@ -1,5 +1,5 @@
 # yazi
-def --env y [...args] {
+export def --env y [...args] {
 	let tmp = (mktemp -t "yazi-cwd.XXXXXX")
 	yazi ...$args --cwd-file $tmp
 	let cwd = (open $tmp)
@@ -9,17 +9,17 @@ def --env y [...args] {
 	rm -fp $tmp
 }
 # Open in HOME and do not change cwd when quitting. Often used for searching files.
-alias yy = yazi ~
-alias hw = y ~/Homework
-alias yd = y ~/Downloads
-alias yD = y ~/Documents
-alias ys = y ~/Pictures/Screenshots
-alias yp = y ~/Playground
-alias yP = y ~/Projects
+export alias yy = yazi ~
+export alias hw = y ~/Homework
+export alias yd = y ~/Downloads
+export alias yD = y ~/Documents
+export alias ys = y ~/Pictures/Screenshots
+export alias yp = y ~/Playground
+export alias yP = y ~/Projects
 
 
 # use code to open in pwd, or open a dir.
-def c [ arg?: string ] {
+export def c [ arg?: string ] {
   if $in == null and $arg == null {
 		code .
 	} else if $arg == null {
@@ -30,7 +30,7 @@ def c [ arg?: string ] {
 }
 
 # use idea to open in pwd, or open a dir.
-def i [ arg?: string ] {
+export def i [ arg?: string ] {
   if $in == null and $arg == null {
 		idea .
 	} else if $arg == null {
@@ -41,7 +41,7 @@ def i [ arg?: string ] {
 }
 
 # use finder to open in pwd, or open a dir.
-def o [ arg?: string ] {
+export def o [ arg?: string ] {
 	if $in == null and $arg == null {
 		start .
 	} else if $arg == null {

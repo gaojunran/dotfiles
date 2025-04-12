@@ -167,3 +167,6 @@ use $"($MY_SCRIPTS)/open-with.nu" *
 
 # ✨ gh
 use $"($MY_SCRIPTS)/gh-actions.nu" *
+
+# ✨ xmake
+use $"($MY_SCRIPTS)/xmake.nu" *
