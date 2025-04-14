@@ -59,6 +59,7 @@ alias degit = tiged
 alias ts = tailscale
 alias ff = fastfetch
 alias g = lazygit
+alias tree = eza -T
 # bottom, to monitor system stats
 alias top = btm
 # https://github.com/antfu/iroiro, to pick colors
@@ -106,7 +107,7 @@ def --env mc [ dir: string ] {
 	if ("justfile" | path exists) {
 		!cp "justfile" ($dir | path join "justfile")
 	} else {
-		!cp "~/.config/justfile" ($dir | path join "justfile")
+		# !cp "~/.config/justfile" ($dir | path join "justfile")
 	}
 	cd $dir
 }
