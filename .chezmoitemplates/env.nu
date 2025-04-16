@@ -57,6 +57,7 @@ $env.YAZI_CONFIG_HOME = "~/.config/yazi" | path expand
 # }
 
 if not (is-installed "asdf") {
+    mkdir ~/.asdf/plugins/java
     touch ~/.asdf/plugins/java/set-java-home.nu
 }
 
@@ -64,6 +65,7 @@ if not (is-installed "asdf") {
 alias "!cd" = cd
 alias "!cp" = cp
 alias "!cat" = cat
+alias "!ps" = ps
 
 # From https://github.com/AntKazakovv/nix-nushell-env
 # let nixNuScript = ("~/.config/scripts/nix.nu" | path expand)

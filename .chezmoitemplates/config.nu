@@ -6,8 +6,14 @@ const MY_BIN = "~/.config/bin"
 $env.config.buffer_editor = "code"
 $env.config.show_banner = false
 $env.EDITOR = "code"
+$env.HOME = '~' | path expand
 
 # 🪐 Scripts
+
+# Set encoding to UTF-8
+if (is-windows) {
+    chcp 65001
+}
 
 # make binaries executable in unix
 if not (is-windows) {
@@ -23,8 +29,7 @@ if (is-installed "starship") {
 # Zoxide
 source ~/.zoxide.nu # Why can't I wrap it by if?
 
-# bash-env
-use $"($MY_SCRIPTS)/bash-env.nu"
+
 
 # asdf
 let shims_dir = (
@@ -58,6 +63,7 @@ alias cat = bat
 alias degit = tiged
 alias ts = tailscale
 alias ff = fastfetch
+alias of = onefetch
 alias g = lazygit
 alias tree = eza -T
 # bottom, to monitor system stats
@@ -92,14 +98,6 @@ def mix [] {
 	cb copy ./repomix-output.txt
 }
 
-# usql actions
-def pg [db?: string] {
-	if $db == null {
-		usql "pg://nebula:nebula@localhost:5432/"
-	} else {
-		usql ("pg://nebula:nebula@localhost:5432/" + $db)
-	}
-}
 
 # mkdir and cd into it.
 def --env mc [ dir: string ] {
@@ -167,7 +165,16 @@ use $"($MY_SCRIPTS)/aichat.nu" *
 use $"($MY_SCRIPTS)/open-with.nu" *
 
 # ✨ gh
-use $"($MY_SCRIPTS)/gh-actions.nu" *
+use $"($MY_SCRIPTS)/gh.nu" *
 
 # ✨ xmake
 use $"($MY_SCRIPTS)/xmake.nu" *
+
+# ✨ bash-env
+use $"($MY_SCRIPTS)/bash-env.nu" *
+
+# ✨ git
+use $"($MY_SCRIPTS)/git.nu" *
+
+# ✨ sql
+use $"($MY_SCRIPTS)/sql.nu" *

@@ -9,6 +9,7 @@ export def gc --env [
     
     if ($name | str contains "/") { # have both owner and repo name
         gh repo clone $name
+        cd ($name | str substring (($name | str index-of "/") + 1)..($name | str length))
     } else if ($name | str contains "@") { # have owner only, invoke fzf
         let owner = $name | str replace "@" ""
         gh search repos --owner ($owner) --limit 500 --json $env.GH_SEARCH_FIELDS 
