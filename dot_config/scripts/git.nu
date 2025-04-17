@@ -1,7 +1,7 @@
 # Here lists some typical workflows:
-# Personal single-branch projects: commit `cm` -> sync from remote `sync` -> push `ps`
-# Personal two-branch (main + dev) projects: commit `cm` on dev -> sync and integrate into main branch `inte` -> push main `ps`
-# Corporate projects: sync from remote `sync` -> commit `cm` -> push `ps`
+# Personal single-branch projects: update from remote `pl` -> commit `cm` -> push `ps`
+# Personal two-branch (main + dev) projects: update dev from remote `pl` -> commit `cm` on dev -> sync and integrate into main branch `inte` -> push main `ps`
+# Corporate projects: update feat branch from remote if exists `pl` -> commit `cm` -> sync from main `sync` -> push `ps` -> open a pull request
 
 
 # Init
@@ -19,16 +19,17 @@ export def is-clean [] {
 }
 
 # ====== Branches ======
-export alias br = git switch
+export alias br = git branch
 export def has-branch [name: string] {
   return (git branch | lines | each { |it| $it | str trim | str replace '* ' ''  } | any { |it| $it == $name })
 }
 export def current-branch [] {
-  let git_output = (git rev-parse --abbrev-ref HEAD | str trim)
-  if ($git_output == "HEAD") {
+  let branch = (git symbolic-ref --short HEAD | complete)
+
+  if $branch.exit_code != 0 {
     return "detached HEAD"
   } else {
-    return $git_output
+    return ($branch.stdout | str trim)
   }
 }
 export def branch-count [] {
@@ -120,7 +121,7 @@ export def psf [] {
 # For some small personal projects, simply commit and push current branch to remote.
 export def cmp [] {
   cm
-  input "📝 Commit message (will be pushed!): " | cm $in
+  input "📝 Commit message (will be pushed!): " | if $in != "" { cm $in } 
   ps
 }
 
@@ -154,6 +155,7 @@ export def syp [] {
 # After this command, you may want to push main branch to remote.
 export def inte [] {
   let current = (current-branch)
+  print $current
   if ($current == "main") {
     print "❌ This action is not applicable to main branch. Switch to another branch first."
     return

@@ -1,5 +1,5 @@
 # Quickly clone a repo in Github. 📢 Requires `gh`, `glow` and `fzf` installed. 
-export def gc --env [
+export def clone --env [
     name: string # allow 3 kinds of input: owner/repo, @owner, repo
 ] {
     $env.GH_SEARCH_FIELDS = "createdAt,defaultBranch,description,forksCount,fullName,hasDownloads,hasIssues,hasPages,hasProjects,hasWiki,homepage,id,isArchived,isDisabled,isFork,isPrivate,language,license,name,openIssuesCount,owner,pushedAt,size,stargazersCount,updatedAt,url,visibility,watchersCount"
@@ -38,8 +38,8 @@ export def gc --env [
     }
 }
 
-# Quickly earch for a repo in Github. 📢 Requires `gh`, `glow` and `fzf` installed. 
-export def gs --env [
+# Quickly search for a repo in Github, to check its README or open its github homepage. 📢 Requires `gh`, `glow` and `fzf` installed. 
+export def repo --env [
     name: string # allow 3 kinds of input: owner/repo, @owner, repo
 ] {
     $env.GH_SEARCH_FIELDS = "createdAt,defaultBranch,description,forksCount,fullName,hasDownloads,hasIssues,hasPages,hasProjects,hasWiki,homepage,id,isArchived,isDisabled,isFork,isPrivate,language,license,name,openIssuesCount,owner,pushedAt,size,stargazersCount,updatedAt,url,visibility,watchersCount"  # TODO: only use the fields we need
@@ -70,9 +70,12 @@ export def gs --env [
 }
 
 # Quickly create a repo in your github, pushing all commits from your pwd. TODO: add more options
-export def gn --env [
+export def rn --env [
     name: string # repo name
     desc: string = "" # repo description
 ] {
     gh repo create $name --source . --push --description $desc --public
 }
+
+export alias pr = gh pr
+export alias prn = gh pr create

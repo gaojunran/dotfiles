@@ -1,7 +1,5 @@
-source ~/.zoxide.nu # Why can't I wrap it by if?
-
 # zoxide
-def --env cd [ dir?: string ] {
+export def --env cd [ dir?: string ] {
 	if ($dir == null) {
 		z
 	} else {
@@ -13,7 +11,7 @@ def --env cd [ dir?: string ] {
 }
 
 # mkdir and cd into it.
-def --env mc [ dir: string ] {
+export def --env mc [ dir: string ] {
 	mkdir $dir
 	if ("justfile" | path exists) {
 		!cp "justfile" ($dir | path join "justfile")
@@ -25,7 +23,7 @@ def --env mc [ dir: string ] {
 
 # Only code directories are needed to be cd into.
 # Other dirs (Documents, Downloads, etc.) are included in yazi.nu.
-alias cdp = cd ~/Playground
-alias cdi = cd ~/Projects
-alias cdhw = cd ~/Homework
-alias cdw = cd ~/Work
+export alias cdp = cd ~/Playground
+export alias cdi = cd ~/Projects
+export alias cdhw = cd ~/Homework
+export alias cdw = cd ~/Work

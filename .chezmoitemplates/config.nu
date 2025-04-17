@@ -26,6 +26,8 @@ if (is-installed "starship") {
 	starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
 }
 
+source ~/.zoxide.nu
+
 # asdf
 let shims_dir = (
   if ( $env | get --ignore-errors ASDF_DATA_DIR | is-empty ) {
@@ -83,7 +85,7 @@ def mix [] {
 }
 
 # create new files/directories.
-def new [suffix: string, ...rest] {
+def new [suffix: string, ...rest: string] {
 	if ($suffix == '/') {
 		for $name in $rest {
 			mkdir $name
