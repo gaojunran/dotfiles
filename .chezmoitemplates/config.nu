@@ -26,11 +26,6 @@ if (is-installed "starship") {
 	starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
 }
 
-# Zoxide
-source ~/.zoxide.nu # Why can't I wrap it by if?
-
-
-
 # asdf
 let shims_dir = (
   if ( $env | get --ignore-errors ASDF_DATA_DIR | is-empty ) {
@@ -45,18 +40,7 @@ source ~/.asdf/plugins/java/set-java-home.nu
 # ----------------------------
 
 # 🪐 Alias/Command definitions
-# zoxide
-def --env cd [ dir?: string ] {
-	if ($dir == null) {
-		z
-	} else {
-		z $dir
-	}
-	if (("justfile" | path exists) and (open "justfile" | find "cd:" | length) > 0) {
-		just cd
-	}
-}
-alias cdp = cd ~/Playground
+
 
 alias q = exit
 alias cat = bat
@@ -96,18 +80,6 @@ def gitignore [ category: string ] {
 def mix [] {
 	repomix
 	cb copy ./repomix-output.txt
-}
-
-
-# mkdir and cd into it.
-def --env mc [ dir: string ] {
-	mkdir $dir
-	if ("justfile" | path exists) {
-		!cp "justfile" ($dir | path join "justfile")
-	} else {
-		# !cp "~/.config/justfile" ($dir | path join "justfile")
-	}
-	cd $dir
 }
 
 # create new files/directories.
@@ -178,3 +150,6 @@ use $"($MY_SCRIPTS)/git.nu" *
 
 # ✨ sql
 use $"($MY_SCRIPTS)/sql.nu" *
+
+# ✨ zoxide
+use $"($MY_SCRIPTS)/zoxide.nu" *

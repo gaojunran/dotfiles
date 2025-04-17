@@ -1,8 +1,13 @@
+# Here lists some typical workflows:
+# Personal single-branch projects: commit `cm` -> sync from remote `sync` -> push `ps`
+# Personal two-branch (main + dev) projects: commit `cm` on dev -> sync and integrate into main branch `inte` -> push main `ps`
+# Corporate projects: sync from remote `sync` -> commit `cm` -> push `ps`
+
+
 # Init
 export def gi [] {
   git config --global init.defaultBranch main
   git init
-  git switch -c dev
 }
 
 # ====== Status ======
@@ -26,6 +31,10 @@ export def current-branch [] {
     return $git_output
   }
 }
+export def branch-count [] {
+  git branch | lines | length
+}
+
 # `br` conflicts with `brew`.
 export alias bra = git switch -c
 export def brd [branch?: string] {
@@ -40,19 +49,32 @@ export def brd [branch?: string] {
   }
 }
 export alias mai = git switch main  # avoid conflict with main command
-export alias dev = git switch dev
+export alias dev = git switch -c dev
+export def dev [] {
+  if (has-branch 'dev') {
+    git switch dev
+  } else {
+    input "📢 Create dev branch? (y/n): " | if ($in == "y") {
+      git switch -c dev
+    }
+  }
+}
 export def feat [name: string] {
   if (has-branch ('feat/' + $name)) {
     git switch $name
   } else {
-    git switch -c ('feat/' + $name)
+    input "📢 Create this branch? (y/n): " | if ($in == "y") {
+      git switch -c ('feat/' + $name)
+    }
   }
 }
 export def fix [name: string] {
   if (has-branch ('fix/' + $name)) {
     git switch $name
   } else {
-    git switch -c ('fix/' + $name)
+    input "📢 Create this branch? (y/n): " | if ($in == "y") {
+      git switch -c ('fix/' + $name)
+    }
   }
 }
 
@@ -60,10 +82,11 @@ export def fix [name: string] {
 
 # Run `cm` without args when you want to commit. It'll stage all changes and show diff.
 # After checking diff, you can run `cm` again with a commit message to actually commit.
-export def cm [message?: string, --force (-f)] {
-  if ((current-branch) == "main" and not $force) {
+export def cm [message?: string] {
+  # Only allow commit on main branch if there's only one main branch.
+  if ((current-branch) == "main" and (branch-count) > 1) {
     print "⚠️ Do not commit on main branch!"
-    return  
+    return
   }
   if ($message == null) {
     git add .
@@ -76,6 +99,7 @@ export def cm [message?: string, --force (-f)] {
     git commit -am $message
   }
 }
+
 # Show commit history.
 export def his [] {
   git log --pretty=%h»¦«%aN»¦«%s»¦«%aD | lines | split column "»¦«" sha1 committer desc merged_at | first 10
@@ -84,15 +108,20 @@ export def his [] {
 # ====== Push/Pull/Rebase/Merge ======
 
 export alias ps = git push -u origin HEAD
-export alias psm = git push -u origin main
-export def psf [
-  --force (-f)
-] {
-  if ((current-branch) == "main" and not $force) {
-    print "⚠️ Do not force push on main branch!"
+export def psf [] {
+  # Only allow force push on main branch if there's only one main branch.
+  if ((current-branch) == "main" and (branch-count) > 1) {
+    print "❌ Do not force push on main branch!"
     return  
   }
   git push -u origin HEAD -f
+}
+
+# For some small personal projects, simply commit and push current branch to remote.
+export def cmp [] {
+  cm
+  input "📝 Commit message (will be pushed!): " | cm $in
+  ps
 }
 
 # Sync latest changes from main branch, and corporate into current branch.
@@ -100,7 +129,8 @@ export def psf [
 # After this command, you may want to push current branch and open a pull request.
 export def sync [] {
   if not (is-clean) {
-    print "⚠️ Working directory is not clean. Please commit or stash your changes."
+    print "⚠️ Working directory is not clean. Please commit or stash your changes: "
+    git-status
     return
   }
   let current = (current-branch)
@@ -120,10 +150,14 @@ export def syp [] {
 }
 
 # For some small personal projects, simply integrate current branch into main branch.
-# Use it after you finish several commits on a feature/fix/dev branch.
+# Use it after you finish several commits on a branch.
 # After this command, you may want to push main branch to remote.
 export def inte [] {
   let current = (current-branch)
+  if ($current == "main") {
+    print "❌ This action is not applicable to main branch. Switch to another branch first."
+    return
+  }
   sync
   git switch main
   git merge $current --ff-only
@@ -131,7 +165,7 @@ export def inte [] {
 }
 export def itp [] {
   inte
-  psm
+  ps
 }
 
 # ====== Undo Operations ======
