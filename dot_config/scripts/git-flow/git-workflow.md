@@ -157,9 +157,23 @@ export def sync [] {
 
 1. 将原代码仓库（上游代码仓库）同步到你的Fork仓库中，这使用了`gh` CLI，详见[文档](https://cli.github.com/manual/gh_repo_sync)。
 
+```bash
+gh repo sync (git remote get-url origin)
+```
+
 2. 更新本地的`main`分支到最新。
 
+```bash
+git switch main
+git pull --rebase origin main
+```
+
 3. **将当前分支的更改重新应用到最新的 main 分支上**，确保当前分支的更改是最新的。🚀
+
+```bash
+git switch $current
+git rebase main
+```
 
 这个变基的操作有一个示意图：
 
@@ -179,7 +193,7 @@ export def sync [] {
 
 学习本文将是你从一个git初级用户迈向中级用户的关键一步，希望能对你有所帮助！
 
-## 附1：`master`还是`main`？
+## 附：`master`还是`main`？
 
 前面已经提到过，因为种族歧视的原因，现在github中`master`和`main`将会长期共存。我编写了一个函数返回当前的主分支：
 

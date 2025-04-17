@@ -2,7 +2,7 @@ use std/util "path add"
 
 const MY_SCRIPTS = "~/.config/scripts"
 const MY_BIN = "~/.config/bin"
-
+const MY_AUTOLOAD = "~/.config/autoload"
 $env.config.buffer_editor = "code"
 $env.config.show_banner = false
 $env.EDITOR = "code"
@@ -20,23 +20,13 @@ if not (is-windows) {
 	ls ($MY_BIN | path expand) | each { |f| chmod +x ($MY_BIN | path join $f.name) }
 }
 
-# Starship
-mkdir ($nu.data-dir | path join "vendor/autoload")
-if (is-installed "starship") {
-	starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
-}
+# zoxide
+source ($MY_AUTOLOAD | path join "zoxide.nu")
 
-source ~/.zoxide.nu
+# starship
+source ($MY_AUTOLOAD | path join "starship.nu")
 
 # asdf
-let shims_dir = (
-  if ( $env | get --ignore-errors ASDF_DATA_DIR | is-empty ) {
-    $env.HOME | path join '.asdf'
-  } else {
-    $env.ASDF_DATA_DIR
-  } | path join 'shims'
-)
-$env.PATH = ( $env.PATH | split row (char esep) | where { |p| $p != $shims_dir } | prepend $shims_dir )
 source ~/.asdf/plugins/java/set-java-home.nu
 
 # ----------------------------
@@ -103,6 +93,9 @@ def r [] {
 	clear
 	exec nu
 }
+
+# ✨ asdf
+use $"($MY_SCRIPTS)/asdf.nu" *
 
 # ✨ setup
 use $"($MY_SCRIPTS)/setup.nu" *

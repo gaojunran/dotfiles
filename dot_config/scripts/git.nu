@@ -127,13 +127,6 @@ export def psf [] {
 }
 export alias pl = git pull --rebase
 
-# For some small personal projects, simply commit and push current branch to remote.
-export def cmp [] {
-  cm
-  input "📝 Commit message (will be pushed!): " | if $in != "" { cm $in } 
-  ps
-}
-
 # Sync latest changes from main branch, and corporate into current branch.
 # Now current branch is: latest main branch -> current branch changes.
 # After this command, you may want to push current branch and open a pull request.
@@ -158,10 +151,6 @@ export def sync [] {
   git switch $current
   git rebase $master_or_main
 }
-export def syp [] {
-  sync
-  ps
-}
 
 # For some small personal projects, simply integrate current branch into main branch.
 # Use it after you finish several commits on a branch.
@@ -177,11 +166,6 @@ export def inte [] {
   git switch $master_or_main
   git merge $current --ff-only
   $current
-}
-export def itp [] {
-  let current = (inte)
-  ps (master-or-main)
-  ps $current
 }
 
 # ====== Undo Operations ======
