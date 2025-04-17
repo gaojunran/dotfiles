@@ -17,6 +17,13 @@ export def git-status [] {
 export def is-clean [] {
   return ((git-status | length) == 0)
 }
+export def master-or-main [] {
+  if (git branch | lines | each { |it| $it | str trim | str replace '* ' ''  } | any { |it| $it == "main" }) {
+    return "main"
+  } else {
+    return "master"
+  }
+}
 
 # ====== Branches ======
 export alias br = git branch
@@ -41,7 +48,7 @@ export alias bra = git switch -c
 export def brd [branch?: string] {
   let current = (current-branch)
   if ($current == $branch or $current == "detached HEAD" or $branch == null) {
-    git switch main
+    git switch (master-or-main)
   }
   if ($branch == null) {
     git branch -d $current
@@ -49,13 +56,14 @@ export def brd [branch?: string] {
     git branch -d $branch
   }
 }
-export alias mai = git switch main  # avoid conflict with main command
+export alias mst = git switch (master-or-main)
 export alias dev = git switch -c dev
 export def dev [] {
   if (has-branch 'dev') {
     git switch dev
   } else {
     input "📢 Create dev branch? (y/n): " | if ($in == "y") {
+      git switch (master-or-main)
       git switch -c dev
     }
   }
@@ -85,8 +93,8 @@ export def fix [name: string] {
 # After checking diff, you can run `cm` again with a commit message to actually commit.
 export def cm [message?: string] {
   # Only allow commit on main branch if there's only one main branch.
-  if ((current-branch) == "main" and (branch-count) > 1) {
-    print "⚠️ Do not commit on main branch!"
+  if ((current-branch) == (master-or-main) and (branch-count) > 1) {
+    print "⚠️ Do not commit on master/main branch!"
     return
   }
   if ($message == null) {
@@ -111,12 +119,13 @@ export def his [] {
 export alias ps = git push -u origin HEAD
 export def psf [] {
   # Only allow force push on main branch if there's only one main branch.
-  if ((current-branch) == "main" and (branch-count) > 1) {
-    print "❌ Do not force push on main branch!"
+  if ((current-branch) == (master-or-main) and (branch-count) > 1) {
+    print "❌ Do not force push on master/main branch!"
     return  
   }
   git push -u origin HEAD -f
 }
+export alias pl = git pull --rebase
 
 # For some small personal projects, simply commit and push current branch to remote.
 export def cmp [] {
@@ -135,15 +144,19 @@ export def sync [] {
     return
   }
   let current = (current-branch)
-  if ($current == "main") {
-    print "📢 You are on main branch. This action will only update main branch."
+  let master_or_main = (master-or-main)
+  if ($current == $master_or_main) {
+    print "📢 You are on master/main branch. This action will only update master/main branch."
   }
+
+  # Sync remote fork from its parent.
+  gh repo sync (git remote get-url origin)
   # Update main branch from origin.
-  git switch main
-  git pull --rebase origin main
+  git switch $master_or_main
+  git pull --rebase origin $master_or_main
   # Rebase changes onto our current branch.
   git switch $current
-  git rebase main
+  git rebase $master_or_main
 }
 export def syp [] {
   sync
@@ -152,22 +165,23 @@ export def syp [] {
 
 # For some small personal projects, simply integrate current branch into main branch.
 # Use it after you finish several commits on a branch.
-# After this command, you may want to push main branch to remote.
+# After this command, you may want to push both branches to remote.
 export def inte [] {
   let current = (current-branch)
-  print $current
-  if ($current == "main") {
-    print "❌ This action is not applicable to main branch. Switch to another branch first."
+  let master_or_main = (master-or-main)
+  if ($current == $master_or_main) {
+    print "❌ This action is not applicable to master/main branch. Switch to another branch first."
     return
   }
   sync
-  git switch main
+  git switch $master_or_main
   git merge $current --ff-only
-  git switch $current
+  $current
 }
 export def itp [] {
-  inte
-  ps
+  let current = (inte)
+  ps (master-or-main)
+  ps $current
 }
 
 # ====== Undo Operations ======

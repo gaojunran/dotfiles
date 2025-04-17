@@ -43,7 +43,6 @@ source ~/.asdf/plugins/java/set-java-home.nu
 
 # 🪐 Alias/Command definitions
 
-
 alias q = exit
 alias cat = bat
 alias degit = tiged
