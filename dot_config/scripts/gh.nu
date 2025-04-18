@@ -76,6 +76,7 @@ export def rn --env [
 ] {
     gh repo create $name --source . --push --description $desc --public
 }
+export alias rx = gh repo delete
 
 export alias pr = gh pr
 export alias prn = gh pr create

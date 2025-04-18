@@ -50,11 +50,7 @@ alias hex = hexyl
 alias mac = mac nu
 # alias win = C:\Users\gaoju\scoop\apps\nu\current\nu.exe
 def arch [] {
-	if (is-windows) {
-		Arch.exe runp "nu"
-	} else {
-		orb nu
-	}
+	if (is-windows) { Arch.exe runp "nu" } else { orb nu }
 }
 
 # Find help from `<command> --help`.
