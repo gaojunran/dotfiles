@@ -136,6 +136,7 @@ export def sync [] {
     git-status
     return
   }
+  print "🚀 Syncing your fork from its parent..."
   let current = (current-branch)
   let master_or_main = (master-or-main)
   if ($current == $master_or_main) {
@@ -143,11 +144,18 @@ export def sync [] {
   }
 
   # Sync remote fork from its parent.
-  gh repo sync (git remote get-url origin)
+  let res = gh repo sync (git remote get-url origin) | complete
+  if ($res.exit_code != 0) {
+    print "📢 This repo is not a fork. Skip."
+  } else {
+    print $res.stdout
+  }
   # Update main branch from origin.
+  print "🚀 Updating master/main branch from origin..."
   git switch $master_or_main
   git pull --rebase origin $master_or_main
-  # Rebase changes onto our current branch.
+  # Apply changes onto current branch.
+  print "🚀 Applying changes onto current branch..."
   git switch $current
   git rebase $master_or_main
 }
@@ -163,9 +171,9 @@ export def inte [] {
     return
   }
   sync
+  print "🚀 Integrating current branch into master/main branch..."
   git switch $master_or_main
   git merge $current --ff-only
-  $current
 }
 
 # ====== Undo Operations ======
