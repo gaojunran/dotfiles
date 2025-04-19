@@ -132,9 +132,7 @@ export alias pl = git pull --rebase
 # After this command, you may want to push current branch and open a pull request.
 export def sync [] {
   if not (is-clean) {
-    print "⚠️ Working directory is not clean. Please commit or stash your changes: "
-    git-status
-    return
+    error make { msg: "⚠️ Working directory is not clean. Please commit or stash your changes: " }
   }
   print "🚀 Syncing your fork from its parent..."
   let current = (current-branch)
