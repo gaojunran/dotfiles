@@ -7,8 +7,12 @@ const MY_AUTOLOAD = "~/.config/autoload"
 $env.config.buffer_editor = "code"
 $env.config.show_banner = false
 $env.EDITOR = "code"
+
+# Windows does not have $env.HOME and its default working directory
 $env.HOME = '~' | path expand
-cd $env.HOME
+if (is-windows) {
+	cd $env.HOME
+}
 
 # VPN proxy
 if (not (is-linux)) {
@@ -28,6 +32,8 @@ if (is-windows) {
 if not (is-windows) {
 	ls ($MY_BIN | path expand) | each { |f| chmod +x ($MY_BIN | path join $f.name) }
 }
+
+# source files
 
 # zoxide
 # To initialize it, run `setup-once`.
