@@ -8,6 +8,7 @@ $env.config.buffer_editor = "code"
 $env.config.show_banner = false
 $env.EDITOR = "code"
 $env.HOME = '~' | path expand
+cd $env.HOME
 
 # VPN proxy
 if (not (is-linux)) {
