@@ -20,15 +20,16 @@ export def "setup-apps" [] {
 	}
 }
 
-# 📢 Run once when coming to a new machine. Prepare all the directories.
-export def "setup-dirs" [] {
-	mkdir -v ~/Downloads
-	mkdir -v ~/Documents
-	mkdir -v ~/Pictures/Screenshots
-	mkdir -v ~/Videos
-	mkdir -v ~/Music
-  # For temporary projects.
-	mkdir -v ~/Playground   
-	# My projects.
-	mkdir -v ~/Projects
+export def "setup-once" [] {
+	const MY_AUTOLOAD = "~/.config/autoload"
+	if (is-installed "zoxide") {
+		zoxide init nushell | str replace -a "cd" "!cd" | save -f ($MY_AUTOLOAD | path join "zoxide.nu")
+	} else {
+		print "⚠️ `zoxide` is not installed. Skip."
+	}
+	if (is-installed "starship") {
+		starship init nu | save -f ($MY_AUTOLOAD | path join "starship.nu")
+	} else {
+		print "⚠️ `starship` is not installed. Skip."
+	}
 }

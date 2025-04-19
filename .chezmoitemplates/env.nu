@@ -1,4 +1,5 @@
 const MY_TEMPLATES = "~/.config/templates"
+const MY_AUTOLOAD = "~/.config/autoload"
 
 # 🪐 Utils
 
@@ -33,7 +34,6 @@ use std/util "path add"
 # 🪐 PATH
 path add "~/.config/bin"
 path add "/opt/homebrew/bin"
-# path add "/nix/var/nix/profiles/default/bin"
 path add "/opt/homebrew/opt/openjdk@21/bin"
 path add "/opt/homebrew/bin"
 path add "/opt/homebrew/anaconda3/bin"
@@ -48,40 +48,17 @@ path add "~/.asdf/shims"
 
 # 🪐 Env
 
-# VPN proxy
-if (not (is-linux)) {
-    $env.http_proxy = "http://127.0.0.1:7897"
-    $env.https_proxy = "http://127.0.0.1:7897"
-}
+# Create empty script to avoid errors when `source`.
+touch ~/.db_connections
+mkdir ~/.asdf/plugins/java
+touch ~/.asdf/plugins/java/set-java-home.nu
+touch ($MY_AUTOLOAD | path join "zoxide.nu" | path expand)
+touch ($MY_AUTOLOAD | path join "starship.nu" | path expand)
 
 
-# Yazi, for Windows compatibility
-$env.YAZI_CONFIG_HOME = "~/.config/yazi" | path expand
-
-# if (is-installed "zoxide") {
-#     zoxide init nushell | save -f ~/.zoxide.nu
-# } else {
-#     touch ~/.zoxide.nu
-# }
-
-if not (is-installed "asdf") {
-    mkdir ~/.asdf/plugins/java
-    touch ~/.asdf/plugins/java/set-java-home.nu
-}
-
-if (is-installed "usql") {
-    touch ~/.db_connections
-}
 
 # Redirect default commands
 alias "!cd" = cd
 alias "!cp" = cp
 alias "!cat" = cat
 alias "!ps" = ps
-
-# From https://github.com/AntKazakovv/nix-nushell-env
-# let nixNuScript = ("~/.config/scripts/nix.nu" | path expand)
-
-# if ($nixNuScript | path exists) {
-#     nu $nixNuScript | from json | load-env
-# }

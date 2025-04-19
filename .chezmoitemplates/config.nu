@@ -3,16 +3,24 @@ use std/util "path add"
 const MY_SCRIPTS = "~/.config/scripts"
 const MY_BIN = "~/.config/bin"
 const MY_AUTOLOAD = "~/.config/autoload"
+
 $env.config.buffer_editor = "code"
 $env.config.show_banner = false
 $env.EDITOR = "code"
 $env.HOME = '~' | path expand
 
-# 🪐 Scripts
+# VPN proxy
+if (not (is-linux)) {
+    $env.http_proxy = "http://127.0.0.1:7897"
+    $env.https_proxy = "http://127.0.0.1:7897"
+}
+
+# Yazi, for Windows compatibility
+$env.YAZI_CONFIG_HOME = "~/.config/yazi" | path expand
 
 # Set encoding to UTF-8
 if (is-windows) {
-    chcp 65001
+    chcp 65001 | ignore
 }
 
 # make binaries executable in unix
@@ -21,9 +29,11 @@ if not (is-windows) {
 }
 
 # zoxide
+# To initialize it, run `setup-once`.
 source ($MY_AUTOLOAD | path join "zoxide.nu")
 
 # starship
+# To initialize it, run `setup-once`.
 source ($MY_AUTOLOAD | path join "starship.nu")
 
 # asdf
@@ -60,8 +70,6 @@ def "?" --wrapped [
 ] {
 	nu -l -c (($cmd | str join " ") +  " --help")
 }
-
-
 
 def mix [] {
 	repomix
