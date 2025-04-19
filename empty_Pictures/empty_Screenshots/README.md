@@ -1,0 +1,1 @@
+Store screenshots here.

@@ -49,13 +49,8 @@ path add "~/.asdf/shims"
 # 🪐 Env
 
 # Create empty script to avoid errors when `source`.
-touch ~/.db_connections
 mkdir ~/.asdf/plugins/java
 touch ~/.asdf/plugins/java/set-java-home.nu
-touch ($MY_AUTOLOAD | path join "zoxide.nu" | path expand)
-touch ($MY_AUTOLOAD | path join "starship.nu" | path expand)
-
-
 
 # Redirect default commands
 alias "!cd" = cd
