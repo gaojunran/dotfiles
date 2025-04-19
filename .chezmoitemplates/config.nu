@@ -40,7 +40,7 @@ alias ts = tailscale
 alias ff = fastfetch
 alias of = onefetch
 alias g = lazygit
-alias tree = eza -T
+alias tree = eza -T --hyperlink
 # bottom, to monitor system stats
 alias top = btm
 # https://github.com/antfu/iroiro, to pick colors
