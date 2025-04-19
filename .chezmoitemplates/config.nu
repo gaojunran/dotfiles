@@ -40,6 +40,7 @@ alias ts = tailscale
 alias ff = fastfetch
 alias of = onefetch
 alias g = lazygit
+alias ls = ls -a
 alias tree = eza -T --hyperlink
 # bottom, to monitor system stats
 alias top = btm
@@ -60,9 +61,7 @@ def "?" --wrapped [
 	nu -l -c (($cmd | str join " ") +  " --help")
 }
 
-def gitignore [ category: string ] {
-	curl -o .gitignore 'https://raw.githubusercontent.com/github/gitignore/refs/heads/main/' + $category + '.gitignore'
-}
+
 
 def mix [] {
 	repomix
@@ -89,6 +88,9 @@ def r [] {
 	clear
 	exec nu
 }
+
+# ✨ zoxide
+use $"($MY_SCRIPTS)/zoxide.nu" *
 
 # ✨ asdf
 use $"($MY_SCRIPTS)/asdf.nu" *
@@ -141,5 +143,4 @@ use $"($MY_SCRIPTS)/git.nu" *
 # ✨ sql
 use $"($MY_SCRIPTS)/sql.nu" *
 
-# ✨ zoxide
-use $"($MY_SCRIPTS)/zoxide.nu" *
+

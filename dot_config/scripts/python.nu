@@ -8,10 +8,11 @@ export alias uvx = uv remove
 # 4. Copy a python-specific justfile.
 export def --wrapped --env uvn [ name: string, ...rest ] {
 	mc $name
+	print "🚀 Initializing using uv ..."
 	uv init ...$rest
 	mv "hello.py" "main.py"
 	gitignore Python
-	!cp "~/.config/templates/python.justfile" "justfile"
+	!cp ~/.config/templates/python.justfile justfile
 }
 
 # Sync the env with pyproject.toml, requirements.txt, or simply add a package.
