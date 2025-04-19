@@ -30,11 +30,11 @@ if not (is-windows) {
 
 # zoxide
 # To initialize it, run `setup-once`.
-source ($MY_AUTOLOAD | path join "zoxide.nu")
+source ($MY_AUTOLOAD | path join "zoxide.nu" | path expand)
 
 # starship
 # To initialize it, run `setup-once`.
-source ($MY_AUTOLOAD | path join "starship.nu")
+source ($MY_AUTOLOAD | path join "starship.nu" | path expand)
 
 # asdf
 source ~/.asdf/plugins/java/set-java-home.nu
