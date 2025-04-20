@@ -1,4 +1,5 @@
 const DB_CONNECTIONS_FILE = "~/.db_connections" | path expand
+touch $DB_CONNECTIONS_FILE  # not using chezmoi to avoid to file to be overwritten
 
 # Open a database connection, powered by usql and fzf.
 # Db connections info are stored in `~/.db_connections`.

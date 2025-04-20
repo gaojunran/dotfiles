@@ -32,7 +32,7 @@ desc = "Copy to clipboard"
 
 [[manager.prepend_keymap]]
 on   = [ "c", "v" ]
-run  = 'shell "cb paste"'
+run  = 'shell "cb paste" --block'
 desc = "Paste from clipboard"
 
 [[manager.prepend_keymap]]
