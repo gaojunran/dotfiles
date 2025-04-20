@@ -52,6 +52,8 @@ path add "~/.asdf/shims"
 mkdir ~/.asdf/plugins/java
 touch ~/.asdf/plugins/java/set-java-home.nu
 
+touch ~/.db_connections  # not using chezmoi to avoid to file to be overwritten
+
 # Redirect default commands
 alias "!cd" = cd
 alias "!cp" = cp
