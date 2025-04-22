@@ -41,6 +41,16 @@ run  = 'copy path'
 desc = "Copy file path"
 
 [[manager.prepend_keymap]]
+on = ["C"]
+run = "plugin ouch"
+desc = "Compress with ouch"
+
+[[manager.prepend_keymap]]
 on   = [ "`" ]
+run  = 'quit'
+desc = "Quit Yazi"
+
+[[manager.prepend_keymap]]
+on   = [ "1" ]
 run  = 'shell "code ."'
 desc = "Open current directory in VS Code"
