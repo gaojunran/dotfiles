@@ -78,10 +78,7 @@ def "?" --wrapped [
 	nu -l -c (($cmd | str join " ") +  " --help")
 }
 
-def mix [] {
-	repomix
-	cb copy ./repomix-output.txt
-}
+
 
 # create new files/directories.
 def new [suffix: string, ...rest: string] {
@@ -158,4 +155,5 @@ use $"($MY_SCRIPTS)/git.nu" *
 # ✨ sql
 use $"($MY_SCRIPTS)/sql.nu" *
 
-
+# ✨ repomix 
+use $"($MY_SCRIPTS)/repomix.nu" *
