@@ -7,11 +7,11 @@ export def mix [gh_repo?: string, include?: string, exclude?: string] {
     # print $filepath
     # mix a remote repo
     if ($include != null and $exclude != null) {
-      repomix --copy --output $filepath --remote $gh_repo --include $include --exclude $exclude
+      repomix --copy --output $filepath --remote $gh_repo --include $include --ignore $exclude
     } else if ($include != null) {
       repomix --copy --output $filepath --remote $gh_repo --include $include
     } else if ($exclude != null) {
-      repomix --copy --output $filepath --remote $gh_repo --exclude $exclude
+      repomix --copy --output $filepath --remote $gh_repo --ignore $exclude
     } else {
       repomix --copy --output $filepath --remote $gh_repo
     }
@@ -26,11 +26,11 @@ export def mix [gh_repo?: string, include?: string, exclude?: string] {
       "repomix-output.txt" | save .gitignore
     }
     if ($include != null and $exclude != null) {
-      repomix --copy --output "repomix-output.txt" --include $include --exclude $exclude
+      repomix --copy --output "repomix-output.txt" --include $include --ignore $exclude
     } else if ($include != null) {
       repomix --copy --output "repomix-output.txt" --include $include
     } else if ($exclude != null) {
-      repomix --copy --output "repomix-output.txt" --exclude $exclude
+      repomix --copy --output "repomix-output.txt" --ignore $exclude
     } else {
       repomix --copy --output "repomix-output.txt"
     }

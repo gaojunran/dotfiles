@@ -61,6 +61,14 @@ These keymaps are scattering everywhere, so I simply write them down here.
 
 My justfiles are stored [here](./dot_config/templates/), which are handful language-related recipes for the CLI tool [just](https://github.com/casey/just).
 
+### Password Management
+
+As I have Windows devices, Android devices, it's hard for me to use Apple's keyring.
+
+I choose [Bitwarden](https://bitwarden.com/) as my password manager.
+
+I've heard from that [VaultWarden](https://github.com/dani-garcia/vaultwarden) is a self-hosted, Rust-based Bitwarden server, and I'll try it in the future.
+
 ### Dependences Setup
 
 My manifests for system dependences are listed below:
@@ -83,7 +91,7 @@ Run `setup-apps` in nushell to install all applications!
 
 ## Blog
 
-TODO
+https://codenebula.netlify.app
 
 ## LISENSE
 
