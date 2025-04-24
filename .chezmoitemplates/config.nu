@@ -77,7 +77,7 @@ def arch [] {
 def "?" --wrapped [
 	...cmd
 ] {
-	nu -l -c (($cmd | str join " ") +  " --help")
+	nu -l -c ((...$cmd | str join " ") +  " --help")
 }
 
 

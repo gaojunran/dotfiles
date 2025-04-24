@@ -12,7 +12,7 @@ export def miu [...args] {
       | fzf
       | mise use $in
   } else {
-    mise use $args
+    mise use ...$args
   }
 }
 export def mil [...args] {
