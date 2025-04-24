@@ -106,9 +106,6 @@ def r [] {
 # ✨ zoxide
 use $"($MY_SCRIPTS)/zoxide.nu" *
 
-# ✨ asdf
-use $"($MY_SCRIPTS)/asdf.nu" *
-
 # ✨ setup
 use $"($MY_SCRIPTS)/setup.nu" *
 
