@@ -43,8 +43,10 @@ source ($MY_AUTOLOAD | path join "zoxide.nu" | path expand)
 # To initialize it, run `setup-once`.
 source ($MY_AUTOLOAD | path join "starship.nu" | path expand)
 
-# asdf
-source ~/.asdf/plugins/java/set-java-home.nu
+# mise
+# To initialize it, run `setup-once`.
+use ($MY_AUTOLOAD | path join "mise.nu" | path expand)
+
 
 # ----------------------------
 
@@ -157,3 +159,6 @@ use $"($MY_SCRIPTS)/sql.nu" *
 
 # ✨ repomix 
 use $"($MY_SCRIPTS)/repomix.nu" *
+
+# ✨ mise
+use $"($MY_SCRIPTS)/mise.nu" *
