@@ -16,5 +16,5 @@ export def miu [...args] {
   }
 }
 export def mil [...args] {
-  mise ls-remote $args | bat
+  mise ls-remote ...$args | bat
 }

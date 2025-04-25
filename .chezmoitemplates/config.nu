@@ -72,6 +72,7 @@ alias mac = mac nu
 def arch [] {
 	if (is-windows) { Arch.exe runp "nu" } else { orb nu }
 }
+alias dock = sudo docker
 
 # Find help from `<command> --help`.
 def "?" --wrapped [
