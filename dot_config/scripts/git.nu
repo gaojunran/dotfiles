@@ -27,11 +27,6 @@ export def master-or-main [] {
 }
 
 # ====== Branches ======
-export def branches [] {
-  git branch | lines | to text | fzf | str replace -r '^[\*|\s]{2}' '' | git switch $in
-}
-export alias br = branches
-
 export def has-branch [name: string] {
   return (git branch | lines | each { |it| $it | str trim | str replace '* ' ''  } | any { |it| $it == $name })
 }
@@ -49,10 +44,16 @@ export def branch-count [] {
 }
 
 export def smart-switch [
-  target?: string # by default, switch to master or main
+  target?: string # invoke a interactive chooser if not provided
 ] {
+  
   let source = (current-branch)
-  let target =  ($target | default (master-or-main))
+  let target =  ($target | default (git branch 
+        | lines | to text 
+        | fzf 
+        | str replace -r '^[\*|\s]{2}' ''
+        | if ($in == "") { return } else { $in }
+  ))
   if not (has-branch $target) {
     input $"📢 Create `($target)` branch from `($source)`? (y/n/<from which branch>): " | if ($in == "y") {
       git branch $target 
@@ -78,7 +79,7 @@ export def smart-switch [
     git stash pop ($ref)
   }
 }
-export def sw [target: string] {
+export def sw [target?: string] {
   smart-switch $target
 }
 
