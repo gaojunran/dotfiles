@@ -102,7 +102,7 @@ export def stage-interactive [] {
       | get file 
       | if (($in | length) > 0) { 
         to text 
-        | fzf -m --preview 'output=$(git diff --color=always -- {}); [ -n "$output" ] && echo "$output" || cat {}' --bind 'pgup:preview-page-up' --bind 'pgdn:preview-page-down' --bind 'ctrl-a:select-all+accept'
+        | fzf -m --preview 'output=$(git diff --color=always -- {}); [ -n "$output" ] && echo "$output" || cat {}' --bind 'pgup:preview-page-up' --bind 'pgdn:preview-page-down' --bind 'ctrl-a:select-all+accept' --reverse
         | lines
         | each { |it| git add $it; print $"📢 Staged ($it)" }
         | ignore
@@ -113,7 +113,7 @@ export def unstage-interactive [] {
       | get file 
       | if (($in | length) > 0) { 
         to text
-        | fzf -m --preview 'output=$(git diff --staged --color=always -- {}); [ -n "$output" ] && echo "$output" || cat {}' --bind 'pgup:preview-page-up' --bind 'pgdn:preview-page-down' --bind 'ctrl-a:select-all+accept' 
+        | fzf -m --preview 'output=$(git diff --staged --color=always -- {}); [ -n "$output" ] && echo "$output" || cat {}' --bind 'pgup:preview-page-up' --bind 'pgdn:preview-page-down' --bind 'ctrl-a:select-all+accept' --reverse
         | lines
         | each { |it| git reset $it; print $"📢 Unstaged ($it)" }
         | ignore
@@ -213,7 +213,7 @@ export def discard-interactive [] {
       | get file 
       | if (($in | length) > 0) { 
         to text 
-        | fzf -m --preview 'output=$(git diff HEAD --color=always -- {}); [ -n "$output" ] && echo "$output" || cat {}' --bind 'pgup:preview-page-up' --bind 'pgdn:preview-page-down' --bind 'ctrl-a:select-all+accept'
+        | fzf -m --preview 'output=$(git diff HEAD --color=always -- {}); [ -n "$output" ] && echo "$output" || cat {}' --bind 'pgup:preview-page-up' --bind 'pgdn:preview-page-down' --bind 'ctrl-a:select-all+accept' --reverse
         | lines
         | each { |it| 
           let output = git restore --source=HEAD --worktree --staged $it | complete
