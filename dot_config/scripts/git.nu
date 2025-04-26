@@ -1,19 +1,20 @@
-# Here lists some typical workflows:
-# Personal single-branch projects: update from remote `pl` -> commit `cm` -> push `ps`
-# Personal two-branch (main + dev) projects: update dev from remote `pl` -> commit `cm` on dev -> sync and integrate into main branch `inte` -> push main `ps`
-# Corporate projects: update feat branch from remote if exists `pl` -> commit `cm` -> sync from main `sync` -> push `ps` -> open a pull request
-
-
 # Init
-export def gi [] {
-  git config --global init.defaultBranch main
-  git init
-}
+export alias gi = git init
 
 # ====== Status ======
-export def git-status [] {
-  git status --porcelain | lines | parse "{status} {file}"
+export def git-status [
+  --only-staged (-s) 
+  --only-unstaged (-u)
+] {
+  if ($only_staged) {
+    git-status | where $it.status !~ '^ [^ ]|^\?\?'
+  } else if ($only_unstaged) {
+    git-status | where $it.status =~ '^ [^ ]|^\?\?'
+  } else {
+    git status --porcelain | lines | parse --regex '(?P<status>.{2})\s(?P<file>.*)'
+  }
 }
+export alias gs = git-status
 export def is-clean [] {
   return ((git-status | length) == 0)
 }
@@ -26,7 +27,11 @@ export def master-or-main [] {
 }
 
 # ====== Branches ======
-export alias br = git branch
+export def branches [] {
+  git branch | lines | to text | fzf | str replace -r '^[\*|\s]{2}' '' | git switch $in
+}
+export alias br = branches
+
 export def has-branch [name: string] {
   return (git branch | lines | each { |it| $it | str trim | str replace '* ' ''  } | any { |it| $it == $name })
 }
@@ -43,8 +48,40 @@ export def branch-count [] {
   git branch | lines | length
 }
 
-# `br` conflicts with `brew`.
-export alias bra = git switch -c
+export def smart-switch [
+  target?: string # by default, switch to master or main
+] {
+  let source = (current-branch)
+  let target =  ($target | default (master-or-main))
+  if not (has-branch $target) {
+    input $"📢 Create `($target)` branch from `($source)`? (y/n/<from which branch>): " | if ($in == "y") {
+      git branch $target 
+    } else if ($in == "n") {
+      return
+    } else {
+      git branch $target ($in)
+    }
+  }
+  if ($source == $target) {
+    print $"📢 Already on branch ($target)"
+    return
+  }
+  if not (is-clean) {
+    print "📢 Stashing changes..."
+    git stash -u -m $"STASH-($source)"
+  }
+  git switch $target
+  let msg = $"STASH-($target)"
+  let ref = git stash list --grep=($msg) --format="%gd"
+  if $ref != "" {
+    print "📢 Unstashing changes..."
+    git stash pop ($ref)
+  }
+}
+export def sw [target: string] {
+  smart-switch $target
+}
+
 export def brd [branch?: string] {
   let current = (current-branch)
   if ($current == $branch or $current == "detached HEAD" or $branch == null) {
@@ -56,63 +93,59 @@ export def brd [branch?: string] {
     git branch -d $branch
   }
 }
-export alias mst = git switch (master-or-main)
-export alias dev = git switch -c dev
-export def dev [] {
-  if (has-branch 'dev') {
-    git switch dev
-  } else {
-    input "📢 Create dev branch? (y/n): " | if ($in == "y") {
-      git switch (master-or-main)
-      git switch -c dev
-    }
-  }
+export alias mst = smart-switch (master-or-main)
+export alias dev = smart-switch dev
+
+
+export def stage-interactive [] {
+  git-status --only-unstaged 
+      | get file 
+      | if (($in | length) > 0) { 
+        to text 
+        | fzf -m --preview 'output=$(git diff --color=always -- {}); [ -n "$output" ] && echo "$output" || cat {}' --bind 'pgup:preview-page-up' --bind 'pgdn:preview-page-down' --bind 'ctrl-a:select-all+accept'
+        | lines
+        | each { |it| git add $it; print $"📢 Staged ($it)" }
+        | ignore
+      } else { print "📢 No unstaged changes!" }
 }
-export def feat [name: string] {
-  if (has-branch ('feat/' + $name)) {
-    git switch $name
-  } else {
-    input "📢 Create this branch? (y/n): " | if ($in == "y") {
-      git switch -c ('feat/' + $name)
-    }
-  }
+export def unstage-interactive [] {
+  git-status --only-staged 
+      | get file 
+      | if (($in | length) > 0) { 
+        to text
+        | fzf -m --preview 'output=$(git diff --staged --color=always -- {}); [ -n "$output" ] && echo "$output" || cat {}' --bind 'pgup:preview-page-up' --bind 'pgdn:preview-page-down' --bind 'ctrl-a:select-all+accept' 
+        | lines
+        | each { |it| git reset $it; print $"📢 Unstaged ($it)" }
+        | ignore
+      } else { print "📢 No staged changes!" }
 }
-export def fix [name: string] {
-  if (has-branch ('fix/' + $name)) {
-    git switch $name
-  } else {
-    input "📢 Create this branch? (y/n): " | if ($in == "y") {
-      git switch -c ('fix/' + $name)
-    }
-  }
-}
+export alias st = stage-interactive
+export alias unst = unstage-interactive
 
 # ====== Commit ======
-
-# Run `cm` without args when you want to commit. It'll stage all changes and show diff.
-# After checking diff, you can run `cm` again with a commit message to actually commit.
-export def cm [message?: string] {
+export def commit [
+  message: string
+  --force (-f)  # Force commit
+] {
   # Only allow commit on main branch if there's only one main branch.
-  if ((current-branch) == (master-or-main) and (branch-count) > 1) {
-    print "⚠️ Do not commit on master/main branch!"
+  if ((current-branch) == (master-or-main) and (branch-count) > 1 and not $force) {
+    print "⚠️ Do not commit on master/main branch! Use `--force` to force commit."
     return
   }
-  if ($message == null) {
-    git add .
-    print "📝 All changes are staged. Diff:"
-    git diff --cached --numstat 
-            | lines | parse "{added}\t{removed}\t{file}" 
-            | rename "+" "-" "file" | print
-    git diff --cached | bat --style=grid --color=always
-  } else {
-    git commit -am $message
-  }
+  git commit -am $message
+}
+export def cm [message: string] {
+  commit $message
+}
+export def cmf [message: string] {
+  commit $message --force
 }
 
 # Show commit history.
 export def his [] {
   git log --pretty=%h»¦«%aN»¦«%s»¦«%aD | lines | split column "»¦«" sha1 committer desc merged_at | first 10
 }
+
 
 # ====== Push/Pull/Rebase/Merge ======
 
@@ -127,21 +160,20 @@ export def psf [] {
 }
 export alias pl = git pull --rebase
 
-# Sync latest changes from main branch, and corporate into current branch.
+# Sync latest changes from main branch (by default, or specified branch) and corporate into current branch.
 # Now current branch is: latest main branch -> current branch changes.
 # After this command, you may want to push current branch and open a pull request.
-export def sync [] {
-  if not (is-clean) {
-    error make { msg: "⚠️ Working directory is not clean. Please commit or stash your changes: " }
+export def sync [
+  branch?: string
+] {
+  let target = (current-branch)
+  let source = $branch | default (master-or-main)
+  if ($source == $target) {
+    print "❌ Source branch and target branch are the same. Switch to another branch first."
+    return
   }
-  print "🚀 Syncing your fork from its parent..."
-  let current = (current-branch)
-  let master_or_main = (master-or-main)
-  if ($current == $master_or_main) {
-    print "📢 You are on master/main branch. This action will only update master/main branch."
-  }
-
   # Sync remote fork from its parent.
+  print "🚀 Syncing your fork from its upstream..."
   let res = gh repo sync (git remote get-url origin) | complete
   if ($res.exit_code != 0) {
     print "📢 This repo is not a fork. Skip."
@@ -149,29 +181,61 @@ export def sync [] {
     print $res.stdout
   }
   # Update main branch from origin.
-  print "🚀 Updating master/main branch from origin..."
-  git switch $master_or_main
-  git pull --rebase origin $master_or_main
+  print $"🚀 Updating ($source) branch from origin..."
+  smart-switch $source
+  git pull --rebase origin $source
   # Apply changes onto current branch.
-  print "🚀 Applying changes onto current branch..."
-  git switch $current
-  git rebase $master_or_main
+  print $"🚀 Applying ($source) changes onto ($target)..."
+  smart-switch $target
+  git rebase $source
 }
 
-# For some small personal projects, simply integrate current branch into main branch.
-# Use it after you finish several commits on a branch.
+# Simply integrate current branch into main branch (by default, or specified branch) using fast-forward merge.
 # After this command, you may want to push both branches to remote.
-export def inte [] {
-  let current = (current-branch)
-  let master_or_main = (master-or-main)
-  if ($current == $master_or_main) {
-    print "❌ This action is not applicable to master/main branch. Switch to another branch first."
+export def integrate [
+  branch?: string
+] {
+  let source = (current-branch)
+  let target = $branch | default (master-or-main)
+  if ($source == $target) {
+    print "❌ Source branch and target branch are the same. Switch to another branch first."
     return
   }
-  sync
-  print "🚀 Integrating current branch into master/main branch..."
-  git switch $master_or_main
-  git merge $current --ff-only
+  sync $target
+  print $"🚀 Integrating ($source) branch into ($target) branch..."
+  git switch $target
+  git merge $source --ff-only
 }
+export alias inte = integrate
 
-# ====== Undo Operations ======
+export def discard-interactive [] {
+  git-status
+      | get file 
+      | if (($in | length) > 0) { 
+        to text 
+        | fzf -m --preview 'output=$(git diff HEAD --color=always -- {}); [ -n "$output" ] && echo "$output" || cat {}' --bind 'pgup:preview-page-up' --bind 'pgdn:preview-page-down' --bind 'ctrl-a:select-all+accept'
+        | lines
+        | each { |it| 
+          let output = git restore --source=HEAD --worktree --staged $it | complete
+          if ($output.exit_code != 0) { # untracked
+            rm -rf $it
+            print $"📢 Deleted ($it)"
+          } else {
+            print $"📢 Discarded ($it)"
+          }
+        }
+        | ignore
+      } else { print "📢 No unstaged changes!" }
+}
+export alias dis = discard-interactive
+
+export def reset [
+  count?: int = 1,
+  --hard (-h)  # Hard reset
+] {
+  if ($hard) {
+    git reset --hard ("HEAD~" + ($count | into string))
+  } else {
+    git reset --mixed ("HEAD~" + ($count | into string))
+  }
+}

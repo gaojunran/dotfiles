@@ -18,3 +18,4 @@ export def miu [...args] {
 export def mil [...args] {
   mise ls-remote ...$args | bat
 }
+export alias mii = mise install

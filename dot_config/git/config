@@ -1,0 +1,15 @@
+[user]
+name = gaojunran
+email = nebula2021@126.com
+
+[http]
+postBuffer = 157286400
+
+[core]
+autocrlf = input
+
+[init]
+defaultBranch = main
+
+[core]
+excludesFile = ~/.config/git/exclude
