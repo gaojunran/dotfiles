@@ -54,12 +54,13 @@ use ($MY_AUTOLOAD | path join "mise.nu" | path expand)
 
 alias q = exit
 alias cat = bat
-alias degit = tiged
+alias dg = tiged
 alias ts = tailscale
 alias ff = fastfetch
 alias of = onefetch
 alias g = lazygit
 alias ls = ls -a
+alias rm = rm -rf
 alias tree = eza -T --hyperlink
 # bottom, to monitor system stats
 alias top = btm
@@ -78,7 +79,7 @@ alias dock = sudo docker
 def "?" --wrapped [
 	...cmd
 ] {
-	nu -l -c ((...$cmd | str join " ") +  " --help")
+	nu -l -c (($cmd | str join " ") +  " --help")
 }
 
 

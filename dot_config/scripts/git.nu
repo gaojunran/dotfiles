@@ -44,16 +44,17 @@ export def branch-count [] {
 }
 
 export def smart-switch [
-  target?: string # invoke a interactive chooser if not provided
+  branch?: string # invoke a interactive chooser if not provided
 ] {
   
   let source = (current-branch)
-  let target =  ($target | default (git branch 
+  let target = if $branch == null {
+    git branch 
         | lines | to text 
         | fzf 
         | str replace -r '^[\*|\s]{2}' ''
         | if ($in == "") { return } else { $in }
-  ))
+  } else { $branch }
   if not (has-branch $target) {
     input $"📢 Create `($target)` branch from `($source)`? (y/n/<from which branch>): " | if ($in == "y") {
       git branch $target 
@@ -204,7 +205,7 @@ export def integrate [
   }
   sync $target
   print $"🚀 Integrating ($source) branch into ($target) branch..."
-  git switch $target
+  smart-switch $target
   git merge $source --ff-only
 }
 export alias inte = integrate
