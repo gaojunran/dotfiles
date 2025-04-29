@@ -62,8 +62,8 @@ alias g = lazygit
 alias ls = ls -a
 alias rm = rm -rf
 alias tree = eza -T --hyperlink
-# bottom, to monitor system stats
-alias top = btm
+# bottom, to monitor system stats, using htop style
+alias top = btm -b
 # https://github.com/antfu/iroiro, to pick colors
 alias iro = npx iroiro
 alias hex = hexyl
