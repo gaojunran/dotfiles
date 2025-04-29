@@ -129,22 +129,6 @@ export def unstage-interactive [] {
 export alias st = stage-interactive
 export alias unst = unstage-interactive
 
-# Carry changes to specified branch, and switch to that branch.
-export def carry-switch [
-  target: string  # a branch
-] {
-  let source = (current-branch)
-  if $source == $target {
-    print "❌ Source branch and target branch are the same. Switch to another branch first."
-  }
-  commit --force $"Carry changes from ($source) to ($target)"
-  integrate $target
-  smart-switch $source
-  reset --hard
-}
-
-
-
 # ====== Commit ======
 export def commit [
   message?: string  # If not given, the command will ask you later.
@@ -154,7 +138,7 @@ export def commit [
   if $branch == null {
     # Only allow commit on main branch if there's only one main branch.
     if ((current-branch) == (master-or-main) and (branch-count) > 1 and not $force) {
-      print "⚠️ Do not commit on master/main branch! Use `--force` to force commit."
+      print $"(ansi red_bold)⚠️ Do not commit on master/main branch! Use `--force` to force commit.(ansi reset)"
       return
     }
     stage-interactive
@@ -167,7 +151,7 @@ export def commit [
   } else {
     let source = (current-branch)
     if $source == $branch {
-      print "❌ Source branch and target branch are the same. Switch to another branch first."
+      print $"(ansi red_bold)❌ Source branch and target branch are the same. Switch to another branch first.(ansi reset)"
       return
     }
     commit --force $message
@@ -200,7 +184,7 @@ export alias ps = git push -u origin HEAD
 export def psf [] {
   # Only allow force push on main branch if there's only one main branch.
   if ((current-branch) == (master-or-main) and (branch-count) > 1) {
-    print "❌ Do not force push on master/main branch!"
+    print $"(ansi red_bold)❌ Do not force push on master/main branch!(ansi reset)"
     return  
   }
   git push -u origin HEAD -f
@@ -216,11 +200,11 @@ export def sync [
   let target = (current-branch)
   let source = $branch | default (master-or-main)
   if ($source == $target) {
-    print "❌ Source branch and target branch are the same. Switch to another branch first."
+    print $"(ansi red_bold)❌ Source branch and target branch are the same. Switch to another branch first.(ansi reset)"
     return
   }
   # Sync remote fork from its parent.
-  print "🚀 Syncing your fork from its upstream..."
+  print $"(ansi blue_bold)🚀 Syncing your fork from its upstream...(ansi reset)"
   let remote_status = git remote get-url origin | complete
   if ($remote_status.exit_code != 0) {
     print "📢 No remote origin. Skip."
@@ -233,14 +217,16 @@ export def sync [
       print $remote_sync_status.stdout
     }
     # Update main branch from origin.
-    print $"🚀 Updating ($source) branch from origin..."
+    print $"(ansi blue_bold)🚀 Updating ($source) branch from origin...(ansi reset)"
     smart-switch $source
     git pull --rebase origin $source
   }
   # Apply changes onto current branch.
-  print $"🚀 Applying ($source) changes onto ($target)..."
+  print $"(ansi blue_bold)🚀 Applying ($source) changes onto ($target)...(ansi reset)"
   smart-switch $target
+  git stash -u # to make sure rebase works well
   git rebase $source
+  git stash pop
 }
 
 # Simply integrate current branch into main branch (by default, or specified branch) using fast-forward merge.
@@ -251,11 +237,11 @@ export def integrate [
   let source = (current-branch)
   let target = $branch | default (master-or-main)
   if ($source == $target) {
-    print "❌ Source branch and target branch are the same. Switch to another branch first."
+    print $"(ansi red_bold)❌ Source branch and target branch are the same. Switch to another branch first.(ansi reset)"
     return
   }
   sync $target
-  print $"🚀 Integrating ($source) branch into ($target) branch..."
+  print $"(ansi blue_bold)🚀 Integrating ($source) branch into ($target) branch...(ansi reset)"
   smart-switch $target
   git merge $source --ff-only
 }
