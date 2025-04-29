@@ -11,15 +11,15 @@ export def --env cd [ dir?: string ] {
 }
 
 # mkdir and cd into it.
-export def --env mc [ dir: string ] {
+export def --env mc [ 
+	dir?: string # if is not given, use current time as dirname
+] {
+	let dir = $dir | default (date now | format date "demo-%Y-%m-%d-%H-%M-%S")
 	mkdir $dir
-	if ("justfile" | path exists) {
-		!cp "justfile" ($dir | path join "justfile")
-	} else {
-		# !cp "~/.config/justfile" ($dir | path join "justfile")
-	}
 	cd $dir
 }
+
+
 
 # Only code directories are needed to be cd into.
 # Other dirs (Documents, Downloads, etc.) are included in yazi.nu.

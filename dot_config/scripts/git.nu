@@ -1,5 +1,8 @@
 # Init
-export alias gi = git init
+export def gi [] {
+  git init
+  git commit -m "Initial commit" --allow-empty
+}
 
 # ====== Status ======
 export def git-status [
@@ -56,7 +59,7 @@ export def smart-switch [
         | if ($in == "") { return } else { $in }
   } else { $branch }
   if not (has-branch $target) {
-    input $"📢 Create `($target)` branch from `($source)`? (y/n/<from which branch>): " | if ($in == "y") {
+    input $"📢 Create ($target) branch from ($source)? \(y/n/<from which branch>\): " | if ($in == "y") {
       git branch $target 
     } else if ($in == "n") {
       return
@@ -70,10 +73,10 @@ export def smart-switch [
   }
   if not (is-clean) {
     print "📢 Stashing changes..."
-    git stash -u -m $"STASH-($source)"
+    git stash -u -m $"SWITCH-($source)"
   }
   git switch $target
-  let msg = $"STASH-($target)"
+  let msg = $"SWITCH-($target)"
   let ref = git stash list --grep=($msg) --format="%gd"
   if $ref != "" {
     print "📢 Unstashing changes..."
@@ -104,18 +107,20 @@ export def stage-interactive [] {
       | get file 
       | if (($in | length) > 0) { 
         to text 
-        | fzf -m --preview 'output=$(git diff --color=always -- {}); [ -n "$output" ] && echo "$output" || cat {}' --bind 'pgup:preview-page-up' --bind 'pgdn:preview-page-down' --bind 'ctrl-a:select-all+accept' --reverse
+        | fzf -m --preview 'output=$(git diff --color=always -- {}); [ -n "$output" ] && echo "$output" || cat {}' --bind 'pgup:preview-page-up' --bind 'pgdn:preview-page-down' --bind 'ctrl-a:select-all' --reverse
         | lines
         | each { |it| git add $it; print $"📢 Staged ($it)" }
         | ignore
-      } else { print "📢 No unstaged changes!" }
+      } else { 
+        print "📢 No unstaged changes!" 
+      }
 }
 export def unstage-interactive [] {
   git-status --only-staged 
       | get file 
       | if (($in | length) > 0) { 
         to text
-        | fzf -m --preview 'output=$(git diff --staged --color=always -- {}); [ -n "$output" ] && echo "$output" || cat {}' --bind 'pgup:preview-page-up' --bind 'pgdn:preview-page-down' --bind 'ctrl-a:select-all+accept' --reverse
+        | fzf -m --preview 'output=$(git diff --staged --color=always -- {}); [ -n "$output" ] && echo "$output" || cat {}' --bind 'pgup:preview-page-up' --bind 'pgdn:preview-page-down' --bind 'ctrl-a:select-all' --reverse
         | lines
         | each { |it| git reset $it; print $"📢 Unstaged ($it)" }
         | ignore
@@ -124,23 +129,63 @@ export def unstage-interactive [] {
 export alias st = stage-interactive
 export alias unst = unstage-interactive
 
+# Carry changes to specified branch, and switch to that branch.
+export def carry-switch [
+  target: string  # a branch
+] {
+  let source = (current-branch)
+  if $source == $target {
+    print "❌ Source branch and target branch are the same. Switch to another branch first."
+  }
+  commit --force $"Carry changes from ($source) to ($target)"
+  integrate $target
+  smart-switch $source
+  reset --hard
+}
+
+
+
 # ====== Commit ======
 export def commit [
-  message: string
+  message?: string  # If not given, the command will ask you later.
+  --branch (-b): string  # Commit current changes to a specified branch.
   --force (-f)  # Force commit
 ] {
-  # Only allow commit on main branch if there's only one main branch.
-  if ((current-branch) == (master-or-main) and (branch-count) > 1 and not $force) {
-    print "⚠️ Do not commit on master/main branch! Use `--force` to force commit."
-    return
+  if $branch == null {
+    # Only allow commit on main branch if there's only one main branch.
+    if ((current-branch) == (master-or-main) and (branch-count) > 1 and not $force) {
+      print "⚠️ Do not commit on master/main branch! Use `--force` to force commit."
+      return
+    }
+    stage-interactive
+    let message = if $message == null {
+      input $"📢 Commit message: "
+    } else { $message }
+    if (git-status --only-staged | length) > 0 and $message != "" {
+      git commit -m $message
+    }
+  } else {
+    let source = (current-branch)
+    if $source == $branch {
+      print "❌ Source branch and target branch are the same. Switch to another branch first."
+      return
+    }
+    commit --force $message
+    integrate $branch
+    smart-switch $source
+    reset --hard
   }
-  git commit -am $message
 }
-export def cm [message: string] {
+  
+
+export def cm [message?: string] {
   commit $message
 }
-export def cmf [message: string] {
+export def cmf [message?: string] {
   commit $message --force
+}
+export def cmb [branch: string, message?: string] {
+  commit $message --branch $branch
 }
 
 # Show commit history.
@@ -176,16 +221,22 @@ export def sync [
   }
   # Sync remote fork from its parent.
   print "🚀 Syncing your fork from its upstream..."
-  let res = gh repo sync (git remote get-url origin) | complete
-  if ($res.exit_code != 0) {
-    print "📢 This repo is not a fork. Skip."
+  let remote_status = git remote get-url origin | complete
+  if ($remote_status.exit_code != 0) {
+    print "📢 No remote origin. Skip."
   } else {
-    print $res.stdout
+    let remote = ($remote_status.stdout | str trim)
+    let remote_sync_status = gh repo sync ($remote) | complete
+    if ($remote_sync_status.exit_code != 0) {
+      print "📢 This repo is not a fork. Skip."
+    } else {
+      print $remote_sync_status.stdout
+    }
+    # Update main branch from origin.
+    print $"🚀 Updating ($source) branch from origin..."
+    smart-switch $source
+    git pull --rebase origin $source
   }
-  # Update main branch from origin.
-  print $"🚀 Updating ($source) branch from origin..."
-  smart-switch $source
-  git pull --rebase origin $source
   # Apply changes onto current branch.
   print $"🚀 Applying ($source) changes onto ($target)..."
   smart-switch $target
@@ -227,7 +278,7 @@ export def discard-interactive [] {
           }
         }
         | ignore
-      } else { print "📢 No unstaged changes!" }
+      } else { print "📢 Nothing to discard!" }
 }
 export alias dis = discard-interactive
 
@@ -241,3 +292,6 @@ export def reset [
     git reset --mixed ("HEAD~" + ($count | into string))
   }
 }
+
+
+

@@ -14,3 +14,9 @@ export alias t6 = just test6
 export alias t7 = just test7
 export alias t8 = just test8
 export alias t9 = just test9
+
+# Copy a justfile to current directory
+# Justfiles maybe stored at: ~/.justfiles or ~/.config/templates
+export def jf [category?: string] {
+
+}
