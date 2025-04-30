@@ -67,12 +67,7 @@ alias top = btm -b
 # https://github.com/antfu/iroiro, to pick colors
 alias iro = npx iroiro
 alias hex = hexyl
-# Switch between mac/win and arch linux
-alias mac = mac nu
-# alias win = C:\Users\gaoju\scoop\apps\nu\current\nu.exe
-def arch [] {
-	if (is-windows) { Arch.exe runp "nu" } else { orb nu }
-}
+alias nix = orb nu
 alias dock = sudo docker
 
 # Find help from `<command> --help`.
@@ -161,3 +156,6 @@ use $"($MY_SCRIPTS)/repomix.nu" *
 
 # ✨ mise
 use $"($MY_SCRIPTS)/mise.nu" *
+
+# ✨ mirrors
+use $"($MY_SCRIPTS)/mirrors.nu" *
