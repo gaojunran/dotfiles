@@ -60,7 +60,7 @@ alias ff = fastfetch
 alias of = onefetch
 alias g = lazygit
 alias ls = ls -a
-alias rm = rm -rf
+alias rm = rm -rf --trash
 alias tree = eza -T --hyperlink
 # bottom, to monitor system stats, using htop style
 alias top = btm -b

@@ -14,6 +14,9 @@ export def --env cd [ dir?: string ] {
 export def --env mc [ 
 	dir?: string # if is not given, use current time as dirname
 ] {
+	if $dir == null {
+		cd ~/Playground
+	}
 	let dir = $dir | default (date now | format date "demo-%Y-%m-%d-%H-%M-%S")
 	mkdir $dir
 	cd $dir
