@@ -1,11 +1,20 @@
-def clone-and-cd --env [fullName: string] {
-  gh repo clone $fullName
-  cd ($fullName | str substring (($fullName | str index-of "/") + 1)..)
+def clone-and-cd --env [
+  fullName: string,
+  --degit (-d) # use degit mode, internally use `tiged`
+] {
+  let repoName = ($fullName | str substring (($fullName | str index-of "/") + 1)..)
+  if $degit {
+    mc $repoName
+    tiged $fullName
+  } else {
+    gh repo clone $fullName
+    cd $repoName
+  }
 }
 
 def parse-url [url: string] {
   $url 
-  | parse --regex 'http[s]?\://github.com/(?P<owner>.*?)/(?P<repo>.*?)/.*'
+  | parse --regex 'http[s]?\://github.com/(?P<owner>[^/]+)/(?P<repo>[^/]+).*'
   | first
   | ($in.owner + "/" + $in.repo)
 }
@@ -13,6 +22,7 @@ def parse-url [url: string] {
 # Quickly clone a repo in Github. 📢 Requires `gh`, `glow` and `fzf` installed. 
 export def clone --env [
   name?: string # allow 4 kinds of input: url, owner/repo, @owner, repo
+  --degit (-d) # use degit mode, internally use `tiged`
 ] {
   if $name == null {
     if not (is-macos) {
@@ -30,18 +40,19 @@ export def clone --env [
         | to text
         | fzf --height=~100%  # not full screen
         | if (($in | str length) > 0) {
-            clone-and-cd $in
+            if $degit { clone-and-cd -d $in } else { clone-and-cd $in }
         }
   } else if ($name =~ 'http[s]?\://github.com/.*') {
     # Format: url, allow sub-url of the repo
-    clone-and-cd (parse-url $name)
+    if $degit { clone-and-cd -d (parse-url $name) } else { clone-and-cd (parse-url $name) }
   } else if ($name | str contains "!") {
     # Format: !repo, owner is current user of gh
+    # tiged do not support clone "my" repo, so `-d` does not work here
     gh repo clone ($name | str replace "!" "")
     cd ($name | str replace "!" "")
   } else if ($name | str contains "/") { 
     # Format: owner/repo
-    clone-and-cd $name
+    if $degit { clone-and-cd -d $name } else { clone-and-cd $name }
   } else if ($name | str contains "@") { 
     # Format: @owner
     let owner = $name | str replace "@" ""
@@ -52,7 +63,7 @@ export def clone --env [
       | to text
       | fzf --preview "gh repo view {} | glow - --style=dark" --preview-window right:70%
       | if (($in | str length) > 0) {
-          clone-and-cd $in
+          if $degit { clone-and-cd -d $in } else { clone-and-cd $in }
         }
   } else { 
     # Format: repo name only
@@ -61,10 +72,11 @@ export def clone --env [
       | to text
       | fzf --preview "gh repo view {} | glow - --style=dark" --preview-window right:70%
       | if (($in | str length) > 0) {
-          clone-and-cd $in
+          if $degit { clone-and-cd -d $in } else { clone-and-cd $in }
         }
   }
 }
+export alias dg = clone -d
 
 
 
@@ -111,3 +123,7 @@ export alias rx = gh repo delete
 
 export alias pr = gh pr
 export alias prn = gh pr create
+
+export def demo [--test (-t)] {
+  print $test
+}

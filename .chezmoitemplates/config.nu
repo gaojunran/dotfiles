@@ -54,7 +54,6 @@ use ($MY_AUTOLOAD | path join "mise.nu" | path expand)
 
 alias q = exit
 alias cat = bat
-alias dg = tiged
 alias ts = tailscale
 alias ff = fastfetch
 alias of = onefetch
