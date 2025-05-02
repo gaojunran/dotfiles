@@ -252,7 +252,7 @@ export def discard-interactive [] {
       | get file 
       | if (($in | length) > 0) { 
         to text 
-        | fzf -m --preview 'output=$(git diff HEAD --color=always -- {}); [ -n "$output" ] && echo "$output" || cat {}' --bind 'pgup:preview-page-up' --bind 'pgdn:preview-page-down' --bind 'ctrl-a:select-all+accept' --reverse
+        | fzf -m --preview 'output=$(git diff HEAD --color=always -- {}); [ -n "$output" ] && echo "$output" || cat {}' --bind 'pgup:preview-page-up' --bind 'pgdn:preview-page-down' --bind 'ctrl-a:select-all' --reverse
         | lines
         | each { |it| 
           let output = git restore --source=HEAD --worktree --staged $it | complete
