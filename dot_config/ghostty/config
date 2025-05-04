@@ -2,6 +2,8 @@
 command = "/opt/homebrew/bin/nu"
 
 # Font
+font-family = "JetBrains Mono"
+font-family = "Hei Regular" # fallback font
 font-size = 18
 
 # Toggle Quick Terminal by Hyper + z (It's recommended to re-bind to capslock!)

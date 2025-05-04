@@ -34,7 +34,7 @@ export def clone --env [
     osascript -e $script
         | from json
         | get url
-        | where $it =~ 'http[s]?\://github.com/.*'
+        | where $it =~ 'http[s]?\://github.com/(?P<owner>[^/]+)/(?P<repo>[^/]+).*'
         | each { |it| parse-url $it }
         | uniq
         | to text
