@@ -1,0 +1,17 @@
+layout {
+  tab {
+    pane command="yazi" {
+
+    }
+  }
+  tab {
+    pane command="just" {
+      args "dev"
+    }
+  }
+  tab {
+    pane command="nu" {
+
+    }
+  }
+}

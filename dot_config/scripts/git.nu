@@ -189,7 +189,7 @@ export def psf [] {
   }
   git push -u origin HEAD -f
 }
-export alias pl = git pull --rebase
+export alias pl = git pull --rebase --autostash
 
 # Sync latest changes from main branch (by default, or specified branch) and corporate into current branch.
 # Now current branch is: latest main branch -> current branch changes.
