@@ -1,0 +1,2 @@
+-- require("lyrics")
+-- require("keybindings")
