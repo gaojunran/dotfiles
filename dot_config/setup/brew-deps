@@ -1,9 +1,9 @@
 brew "aichat"
-brew "asdf"
+# brew "asdf" # replaced by mise
 brew "bash"  # bash 5
 brew "bat"
 brew "bottom"
-brew "bun"
+# brew "bun" # replaced by mise
 brew "chezmoi"
 brew "clipboard"
 brew "eza"
@@ -11,19 +11,19 @@ brew "fastfetch"
 brew "fd"
 brew "fzf"
 brew "gh"
-brew "go" # replaced by asdf
-brew "gradle"
+# brew "go" # replaced by mise
+# brew "gradle" # replaced by mise
 brew "hexyl"
-brew "htop"
+# brew "htop" # replaced by bottom
 brew "jc"  # https://github.com/kellyjonbrazil/jc
 brew "just"
 brew "killport" # https://github.com/jkfran/killport
 brew "lazygit"
-brew "maven"
-brew "neovim"
-# brew "node"  # replaced by asdf
+brew "maven" # replaced by mise
+# brew "neovim"
+# brew "node"  # replaced by mise
 # brew "nushell"  # you should install it ahead of brew
-# brew "openjdk" # replaced by asdf
+# brew "openjdk" # replaced by mise
 brew "onefetch"
 brew "ouch"
 brew "pandoc"
@@ -42,3 +42,4 @@ brew "xmake"
 brew "yazi"
 # brew "zellij"
 brew "zoxide"
+brew "zellij"

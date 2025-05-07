@@ -155,7 +155,7 @@ export def commit [
       return
     }
     commit --force $message
-    integrate $branch
+    # integrate $branch
     smart-switch $source
     reset --hard
   }
