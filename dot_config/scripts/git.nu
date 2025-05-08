@@ -304,4 +304,4 @@ export def checkout [
 
 export alias ch = checkout
 export alias cha = checkout --all
-
+export alias chh = checkout HEAD
