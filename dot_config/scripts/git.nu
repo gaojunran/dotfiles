@@ -279,5 +279,29 @@ export def reset [
   }
 }
 
+export def extract-sha1 [
+  text: string
+] {
+  $text | parse --regex '.*?(?P<hash>[0-9a-f]{6,}).*' | get hash
+}
 
+export def checkout [
+  sha1?: string # invoke fzf if not given
+  --all (-a)   # list all actions (git reflog) instead of simply commit history (git log)
+] {
+  if ($sha1 == null) {
+    if $all { git reflog } else { git log --oneline }  
+      | if ($in | str length) > 0 { 
+          fzf --preview="nu -l -c \"extract-sha1 {} | git show\"" 
+          | if ($in | str length) > 0 {
+              git checkout (extract-sha1 $in)
+            }
+        }
+  } else {
+    git checkout $sha1
+  }
+}
+
+export alias ch = checkout
+export alias cha = checkout --all
 
