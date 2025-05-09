@@ -149,15 +149,19 @@ export def commit [
       git commit -m $message
     }
   } else {
+    # Use cherry-pick instead of `integrate`.
     let source = (current-branch)
     if $source == $branch {
       print $"(ansi red_bold)❌ Source branch and target branch are the same. Switch to another branch first.(ansi reset)"
       return
     }
     commit --force $message
-    # integrate $branch
+    let hash = git rev-parse HEAD
+    smart-switch $branch
+    git cherry-pick $hash
     smart-switch $source
     reset --hard
+    smart-switch $branch
   }
 }
   
