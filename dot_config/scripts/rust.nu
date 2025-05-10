@@ -10,8 +10,9 @@ export def --wrapped --env cgn [ name: string, ...rest ] {
 	cargo new $name ...$rest
 	cd $name
 	gitignore Rust
-	!cp "~/.config/templates/rust.justfile" "justfile"
+	!cp ~/.config/templates/rust.justfile justfile
 }
+
 export def --wrapped cgi [...args] {
 	if ($args | length ) == 0 {
 		cargo check

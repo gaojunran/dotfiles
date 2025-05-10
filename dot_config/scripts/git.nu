@@ -230,7 +230,7 @@ export def sync [
   smart-switch $target
   git stash -u # to make sure rebase works well
   git rebase $source
-  git stash pop
+  git stash pop | complete | ignore
 }
 
 # Simply integrate current branch into main branch (by default, or specified branch) using fast-forward merge.

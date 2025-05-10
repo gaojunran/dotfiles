@@ -15,11 +15,11 @@ brew "gh"
 # brew "gradle" # replaced by mise
 brew "hexyl"
 # brew "htop" # replaced by bottom
-brew "jc"  # https://github.com/kellyjonbrazil/jc
+# brew "jc"  # https://github.com/kellyjonbrazil/jc
 brew "just"
 brew "killport" # https://github.com/jkfran/killport
 brew "lazygit"
-brew "maven" # replaced by mise
+# brew "maven" # replaced by mise
 # brew "neovim"
 # brew "node"  # replaced by mise
 # brew "nushell"  # you should install it ahead of brew
@@ -40,6 +40,5 @@ brew "uv"
 brew "watchexec"
 brew "xmake"
 brew "yazi"
-# brew "zellij"
 brew "zoxide"
 brew "zellij"
