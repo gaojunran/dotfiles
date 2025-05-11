@@ -29,6 +29,10 @@ def gitignore [ category: string ] {
     open ($"($MY_TEMPLATES)/general.gitignore" | path expand) | save --append .gitignore
 }
 
+def now-string [] {
+    date now | format date "%Y-%m-%d-%H-%M-%S"
+}
+
 use std/util "path add"
 
 # 🪐 PATH

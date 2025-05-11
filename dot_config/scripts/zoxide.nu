@@ -17,7 +17,7 @@ export def --env mc [
 	if $dir == null {
 		cd ~/Playground
 	}
-	let dir = $dir | default (date now | format date "demo-%Y-%m-%d-%H-%M-%S")
+	let dir = $dir | default ("demo" + (now-string))
 	mkdir $dir
 	cd $dir
 }

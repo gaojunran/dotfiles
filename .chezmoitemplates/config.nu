@@ -158,3 +158,6 @@ use $"($MY_SCRIPTS)/mise.nu" *
 
 # ✨ mirrors
 use $"($MY_SCRIPTS)/mirrors.nu" *
+
+# ✨ pandoc
+use $"($MY_SCRIPTS)/pandoc.nu" *
