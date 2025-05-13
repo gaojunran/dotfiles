@@ -27,10 +27,6 @@ export def c [ arg?: string ] {
 	} else {
 		code $arg
 	}
-	if (is-installed "zellij") {
-		zellij --layout ~/.config/zellij/project-default.kdl
-	}
-	
 }
 
 # use idea to open in pwd, or open a dir.

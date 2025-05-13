@@ -55,7 +55,7 @@ on   = [ "`" ]
 run  = 'quit'
 desc = "Quit Yazi"
 
-[[manager.prepend_keymap]]
-on   = [ "1" ]
-run  = 'shell "code ."'
-desc = "Open current directory in VS Code"
+# [[manager.prepend_keymap]]
+# on   = [ "1" ]
+# run  = 'shell "code ."'
+# desc = "Open current directory in VS Code"

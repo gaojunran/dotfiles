@@ -5,13 +5,14 @@ layout {
     }
   }
   tab {
-    pane command="just" {
-      args "dev"
-    }
-  }
-  tab {
     pane command="nu" {
 
     }
   }
+  tab {
+    pane command="just" {
+      args "dev"
+    }
+  }
+  
 }
