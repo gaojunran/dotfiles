@@ -3,11 +3,11 @@ export alias dota = dot apply --force
 export alias dote = code (dot source-path)
 export def dotu [] {
   dot update --apply
-  setup-once
+  setup-init
   r
 }
 export def dotr [] {
   dota
-  setup-once
+  setup-init
   r
 }

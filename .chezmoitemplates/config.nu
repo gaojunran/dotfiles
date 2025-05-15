@@ -33,15 +33,15 @@ if not (is-windows) {
 # source files
 
 # zoxide
-# To initialize it, run `setup-once`.
+# To initialize it, run `setup-init`.
 source ($MY_AUTOLOAD | path join "zoxide.nu" | path expand)
 
 # starship
-# To initialize it, run `setup-once`.
+# To initialize it, run `setup-init`.
 source ($MY_AUTOLOAD | path join "starship.nu" | path expand)
 
 # mise
-# To initialize it, run `setup-once`.
+# To initialize it, run `setup-init`.
 use ($MY_AUTOLOAD | path join "mise.nu" | path expand)
 
 

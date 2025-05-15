@@ -21,7 +21,8 @@ export def "setup-apps" [] {
 	}
 }
 
-export def "setup-once" [] {
+# Run for each time the config is reloaded.
+export def "setup-init" [] {
 	const MY_AUTOLOAD = "~/.config/autoload"
 	if (is-installed "zoxide") {
 		zoxide init nushell | str replace -a "cd" "!cd" | save -f ($MY_AUTOLOAD | path join "zoxide.nu")
@@ -39,5 +40,17 @@ export def "setup-once" [] {
 											| save -f ($MY_AUTOLOAD | path join "mise.nu")
 	} else {
 		print "⚠️ `mise` is not installed. Skip."
+	}
+}
+
+# Should only run once when the device is brand new.
+export def "setup-once" [] {
+	if (is-windows) and (is-installed "scoop") {
+		# Config mirror for `scoop`.
+		scoop bucket rm main
+		scoop bucket rm extras
+		scoop config SCOOP_REPO "https://gitee.com/scoop-installer/scoop"
+		scoop bucket add main
+		scoop bucket add extras
 	}
 }
