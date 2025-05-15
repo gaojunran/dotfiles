@@ -5,19 +5,16 @@ export def --env cd [ dir?: string ] {
 	} else {
 		z $dir
 	}
-	if (("justfile" | path exists) and (open "justfile" | find "cd:" | length) > 0) {
-		just cd
-	}
 }
 
 # mkdir and cd into it.
 export def --env mc [ 
-	dir?: string # if is not given, use current time as dirname
+	dir?: string # if is not given, use a hash as dirname
 ] {
 	if $dir == null {
 		cd ~/Playground
 	}
-	let dir = $dir | default ("proj_" + (now-string))
+	let dir = $dir | default ("proj_" + (now-hash))
 	mkdir $dir
 	cd $dir
 }
@@ -28,5 +25,4 @@ export def --env mc [
 # Other dirs (Documents, Downloads, etc.) are included in yazi.nu.
 export alias cdp = cd ~/Playground
 export alias cdi = cd ~/Projects
-export alias cdhw = cd ~/Homework
 export alias cdw = cd ~/Work

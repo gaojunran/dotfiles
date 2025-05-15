@@ -5,9 +5,9 @@ run  = "cd ~/Downloads"
 desc = "Cd to ~/Downloads"
 
 [[manager.prepend_keymap]]
-on   = [ "g", "c" ]
-run  = "cd ~/.config"
-desc = "Cd to ~/.config"
+on   = [ "g", "i" ]
+run  = "cd ~/Projects"
+desc = "Cd to ~/Projects"
 
 [[manager.prepend_keymap]]
 on   = [ "g", "s" ]
@@ -20,7 +20,7 @@ run  = "cd ~/Playground"
 desc = "Cd to ~/Playground"
 
 [[manager.prepend_keymap]]
-on   = [ "g", "D" ]
+on   = [ "g", "o" ]
 run  = "cd ~/Documents"
 desc = "Cd to ~/Documents"
 
@@ -54,8 +54,3 @@ desc = "Compress with ouch"
 on   = [ "`" ]
 run  = 'quit'
 desc = "Quit Yazi"
-
-# [[manager.prepend_keymap]]
-# on   = [ "1" ]
-# run  = 'shell "code ."'
-# desc = "Open current directory in VS Code"

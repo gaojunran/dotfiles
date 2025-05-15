@@ -50,3 +50,11 @@ export def o [ arg?: string ] {
 		start $arg
 	}
 }
+
+# open a file interactively, using fd and fzf.
+export def oi [] {
+	let paths = ["~/Documents", "~/Downloads", "~/Pictures", "~/Projects", "~/Playground", "~/Forks", "~/Reproductions", "~/Work"] | each {|p| $p | path expand }
+	fd "" ...$paths --type file | fzf | if $in != "" {
+		o $in
+	}
+}
