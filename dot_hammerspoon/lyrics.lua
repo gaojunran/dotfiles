@@ -19,6 +19,6 @@ function updateLyric()
 end
 
 -- You can change the interval as you want.
-hs.timer.doEvery(0.5, updateLyric)
+myTimer = hs.timer.doEvery(0.5, updateLyric)
 
 updateLyric()

@@ -1,2 +1,2 @@
-local lyrics = require("lyrics")
--- require("keybindings")
+require("lyrics")
+require("keybindings")
