@@ -10,9 +10,6 @@ $env.EDITOR = "code"
 
 # Windows does not have $env.HOME and its default working directory
 $env.HOME = '~' | path expand
-if (is-windows) {
-	cd $env.HOME
-}
 
 # VPN proxy
 if (not (is-linux)) {

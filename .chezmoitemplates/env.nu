@@ -33,6 +33,10 @@ def now-string [] {
     date now | format date "%Y-%m-%d-%H-%M-%S"
 }
 
+def now-hash [] {
+    now-string | hash md5 | str substring 0..5
+}
+
 use std/util "path add"
 
 # 🪐 PATH
@@ -51,10 +55,6 @@ path add "/opt/homebrew/opt/postgresql@17/bin"
 # path add "AppData/Local/mise/shims"
 
 # 🪐 Env
-
-# Create empty script to avoid errors when `source`.
-mkdir ~/.asdf/plugins/java
-touch ~/.asdf/plugins/java/set-java-home.nu
 
 touch ~/.db_connections  # not using chezmoi to avoid to file to be overwritten
 

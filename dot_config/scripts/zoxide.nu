@@ -17,7 +17,7 @@ export def --env mc [
 	if $dir == null {
 		cd ~/Playground
 	}
-	let dir = $dir | default ("demo" + (now-string))
+	let dir = $dir | default ("proj_" + (now-string))
 	mkdir $dir
 	cd $dir
 }
