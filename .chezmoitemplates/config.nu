@@ -65,6 +65,7 @@ alias iro = npx iroiro
 alias hex = hexyl
 alias nix = orb nu
 alias dock = sudo docker
+alias ar = aria2c
 
 # Find help from `<command> --help`.
 def "?" --wrapped [
