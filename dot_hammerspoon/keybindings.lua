@@ -66,3 +66,50 @@ hs.hotkey.bind({"ctrl"}, "Down", function()
   win:setFrame({x = newX, y = newY, w = newWidth, h = newHeight})
 end)
 
+-- IINA：将鼠标侧键映射为左右箭头
+function bindMouseSideButtonsToArrowKeysForIINA()
+    local sideButtonEventTap = nil
+    local isIINAFrontmost = false
+
+    local function updateMouseSideKeyBindings()
+        if isIINAFrontmost then
+            if sideButtonEventTap == nil then
+                sideButtonEventTap = hs.eventtap.new({hs.eventtap.event.types.otherMouseDown}, function(event)
+                    local button = event:getProperty(hs.eventtap.event.properties['mouseEventButtonNumber'])
+                    if button == 3 then -- 左侧键
+                        hs.eventtap.keyStroke({}, "left")
+                        return true
+                    elseif button == 4 then -- 右侧键
+                        hs.eventtap.keyStroke({}, "right")
+                        return true
+                    end
+                    return false
+                end)
+                sideButtonEventTap:start()
+            end
+        else
+            if sideButtonEventTap then
+                sideButtonEventTap:stop()
+                sideButtonEventTap = nil
+            end
+        end
+    end
+
+    hs.application.watcher.new(function(appName, eventType, app)
+        if eventType == hs.application.watcher.activated then
+            isIINAFrontmost = (appName == "IINA")
+            updateMouseSideKeyBindings()
+        end
+    end):start()
+
+    -- 初始化时检测前台应用
+    local frontApp = hs.application.frontmostApplication()
+    if frontApp and frontApp:name() == "IINA" then
+        isIINAFrontmost = true
+        updateMouseSideKeyBindings()
+    end
+end
+
+-- 立即调用函数
+bindMouseSideButtonsToArrowKeysForIINA()
+
