@@ -19,7 +19,7 @@ export def mix [gh_repo?: string, include?: string, exclude?: string] {
     # mix cwd
     # If .gitignore is present, add `repomix-output.txt` to it
     if (".gitignore" | path exists) {
-      if (not (cat ".gitignore" | any { |it| $it | str contains "repomix-output.txt" })) {
+      if (not (cat ".gitignore" | lines | any { |it| $it | str contains "repomix-output.txt" })) {
         "repomix-output.txt" | save --append .gitignore
       }
     } else {

@@ -2,6 +2,10 @@ def clone-and-cd --env [
   fullName: string,
   --degit (-d) # use degit mode, internally use `tiged`
 ] {
+  # Never clone a repo in HOME
+  if ($env.PWD == $env.HOME) {
+    cd ~/Playground
+  }
   let repoName = ($fullName | str substring (($fullName | str index-of "/") + 1)..)
   if $degit {
     mc $repoName
