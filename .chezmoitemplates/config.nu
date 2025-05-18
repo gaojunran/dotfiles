@@ -168,3 +168,6 @@ use $"($MY_SCRIPTS)/mirrors.nu" *
 
 # ✨ pandoc
 use $"($MY_SCRIPTS)/pandoc.nu" *
+
+# ✨ blog
+use $"($MY_SCRIPTS)/blog.nu" *
