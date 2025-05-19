@@ -9,10 +9,12 @@ export def miu [...args] {
         }
       | flatten
       | to text
-      | fzf
-      | mise use $in
+      | fzf -m
+      | split row "\n" 
+      | each { |tool| mise use $tool --path ./mise.toml }
+      | to text
   } else {
-    mise use ...$args
+    mise use ...$args --path ./mise.toml
   }
 }
 export def mil [...args] {
