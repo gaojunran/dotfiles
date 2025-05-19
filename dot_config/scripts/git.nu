@@ -286,7 +286,7 @@ export def reset [
 export def extract-sha1 [
   text: string
 ] {
-  $text | parse --regex '.*?(?P<hash>[0-9a-f]{6,}).*' | get hash
+  $text | parse --regex '.*?(?P<hash>[0-9a-f]{6,}).*' | get hash | get 0
 }
 
 export def checkout [
