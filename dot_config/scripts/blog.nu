@@ -50,3 +50,5 @@ export def "bookmark delete" [
     print $"(ansi red_bold)📢 Bookmark not found.(ansi reset)"
   }
 }
+
+export alias bm = bookmark upsert

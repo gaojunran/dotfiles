@@ -15,7 +15,9 @@ export def --env cd [ dir?: string ] {
 export def --env mc [ 
 	dir?: string # if is not given, use a hash as dirname
 ] {
-	if $dir == null {
+	# If you want to create a dir in HOME, just `mkdir` and `cd`. 
+	# By default, `mc` in HOME is not allowed.
+	if $dir == null or $env.PWD == $env.HOME {
 		cd ~/Playground
 	}
 	let dir = $dir | default ("proj_" + (now-hash))

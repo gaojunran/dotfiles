@@ -2,13 +2,10 @@ def clone-and-cd --env [
   fullName: string,
   --degit (-d) # use degit mode, internally use `tiged`
 ] {
-  # Never clone a repo in HOME
-  if ($env.PWD == $env.HOME) {
-    cd ~/Playground
-  }
   let repoName = ($fullName | str substring (($fullName | str index-of "/") + 1)..)
   if $degit {
     mc $repoName
+    print $"🔥 (ansi blue_bold)Cloning ($fullName) with degit...(ansi reset)"
     tiged $fullName
   } else {
     gh repo clone $fullName
@@ -72,6 +69,8 @@ export def clone --env [
   } else { 
     # Format: repo name only
     gh search repos $name --limit 50 --json fullName
+      | into string
+      | from json
       | get fullName
       | to text
       | fzf --preview "gh repo view {} | glow - --style=dark" --preview-window right:70%
