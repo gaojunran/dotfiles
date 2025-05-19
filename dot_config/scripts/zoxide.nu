@@ -5,8 +5,9 @@ export def --env cd [ dir?: string ] {
 	} else {
 		z $dir
 	}
-	if ("mise.toml" | path exists) {
-		mise trust  # trust config files
+	# support mise and asdf, only use mise.
+	if ("mise.toml" | path exists) or (".tool_versions" | path exists) {
+		mise trust | complete | ignore  # trust config files
 		mise install # auto install dependencies
 	}
 }
