@@ -25,7 +25,7 @@ export def "setup-apps" [] {
 export def "setup-init" [] {
 	const MY_AUTOLOAD = "~/.config/autoload"
 	if (is-installed "zoxide") {
-		zoxide init nushell | str replace -a "cd" "!cd" | save -f ($MY_AUTOLOAD | path join "zoxide.nu")
+		zoxide init nushell | str replace -a "cd" "%cd" | save -f ($MY_AUTOLOAD | path join "zoxide.nu")
 	} else {
 		print "⚠️ `zoxide` is not installed. Skip."
 	}

@@ -59,7 +59,7 @@ path add "/opt/homebrew/opt/postgresql@17/bin"
 touch ~/.db_connections  # not using chezmoi to avoid to file to be overwritten
 
 # Redirect default commands
-alias "!cd" = cd
-alias "!cp" = cp
-alias "!cat" = cat
-alias "!ps" = ps
+alias "%cd" = cd
+alias "%cp" = cp
+alias "%cat" = cat
+alias "%ps" = ps
