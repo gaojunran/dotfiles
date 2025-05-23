@@ -10,7 +10,7 @@ export def --wrapped --env uvn [ name: string, ...rest ] {
 	mc $name
 	print "🚀 Initializing using uv ..."
 	uv init ...$rest
-	mv "hello.py" "main.py"
+	# mv "hello.py" "main.py"  # Disabled because uv has a default main.py now.
 	gitignore Python
 	!cp ~/.config/templates/python.justfile justfile
 }
