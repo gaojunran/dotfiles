@@ -37,6 +37,25 @@ def now-hash [] {
     now-string | hash md5 | str substring 0..5
 }
 
+# Use after `complete` to show hints of a command and error messages if failed.
+# Note that if the command runs successfully, it will not show the output.
+def prompt [
+    prompt: string = ""
+] {
+    if prompt != "" {
+        print $"🚀 (ansi blue_bold)($prompt)(ansi reset)"
+    }
+    $in | if $in.exit_code != 0 {
+        print $"❌ (ansi red)($in.stderr)(ansi reset)"
+    }
+}
+
+def internal [
+    command: string
+] {
+    nu -l -c $command
+}
+
 use std/util "path add"
 
 # 🪐 PATH

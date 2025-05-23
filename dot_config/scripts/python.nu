@@ -8,11 +8,10 @@ export alias uvx = uv remove
 # 4. Copy a python-specific justfile.
 export def --wrapped --env uvn [ name: string, ...rest ] {
 	mc $name
-	print "🚀 Initializing using uv ..."
-	uv init ...$rest
+	uv init ...$rest | complete | prompt "Initializing using uv ..."
 	# mv "hello.py" "main.py"  # Disabled because uv has a default main.py now.
-	gitignore Python
-	!cp ~/.config/templates/python.justfile justfile
+	internal "gitignore Python" | complete | prompt "Downloading .gitignore ..."
+	internal "%cp ~/.config/templates/python.justfile justfile" | complete | prompt "Copying justfile ..."
 }
 
 # Sync the env with pyproject.toml, requirements.txt, or simply add a package.
