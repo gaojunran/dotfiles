@@ -126,3 +126,7 @@ export alias rx = gh repo delete
 
 export alias pr = gh pr
 export alias prn = gh pr create
+
+export def gist [...files] {
+	gh gist create ...$files --public
+}
