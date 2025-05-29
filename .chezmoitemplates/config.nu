@@ -8,6 +8,11 @@ $env.config.buffer_editor = "code"
 $env.config.show_banner = false
 $env.EDITOR = "code"
 
+# Use difft
+if (is-installed "difft") {
+	$env.GIT_EXTERNAL_DIFF = "difft --color=always --display=inline"
+}
+
 # Windows does not have $env.HOME and its default working directory
 $env.HOME = '~' | path expand
 
