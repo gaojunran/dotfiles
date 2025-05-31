@@ -6,7 +6,7 @@ export def --env y [...args] {
 	if $cwd != "" and $cwd != $env.PWD {
 		cd $cwd
 	}
-	rm -fp $tmp
+	%rm -fp $tmp
 }
 # Open in HOME and do not change cwd when quitting. Often used for searching files.
 export alias yy = yazi ~

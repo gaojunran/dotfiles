@@ -82,3 +82,4 @@ alias "%cd" = cd
 alias "%cp" = cp
 alias "%cat" = cat
 alias "%ps" = ps
+alias "%rm" = rm

@@ -61,7 +61,6 @@ alias ff = fastfetch
 alias of = onefetch
 alias g = lazygit
 alias ls = ls -a
-alias rm = rm -rf --trash
 alias tree = eza -T --hyperlink
 # bottom, to monitor system stats, using htop style
 alias top = btm -b
@@ -94,6 +93,19 @@ def new [suffix: string, ...rest: string] {
 			touch ($name + "." + $suffix)
 			print ("Created `" + $name + "." + $suffix + "`")
 		}
+	}
+}
+
+# `rm` with a better default configuration (Auto trash, force, recursive, and able to remove PWD itself.)
+def --env rm [
+	...args
+] {
+	if ($args | length) == 0 {
+	  let path = $env.PWD
+		cd ..
+		%rm -rf --trash $path
+		} else {
+		%rm -rf --trash $args
 	}
 }
 

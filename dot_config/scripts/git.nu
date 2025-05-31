@@ -261,7 +261,7 @@ export def discard-interactive [] {
         | each { |it| 
           let output = git restore --source=HEAD --worktree --staged $it | complete
           if ($output.exit_code != 0) { # untracked
-            rm -rf $it
+            %rm -rf $it
             print $"📢 Deleted ($it)"
           } else {
             print $"📢 Discarded ($it)"

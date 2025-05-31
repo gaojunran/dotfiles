@@ -1,5 +1,7 @@
 # 🛠 dotfiles by gaojunran
 
+> **README TO BE UPDATED**
+
 This repo contains my dotfiles, managed by [chezmoi](https://www.chezmoi.io/).
 
 It's opiniated😏, but is well-organized 🚀, so you can copy some of your favourite snippets to your own dotfiles.
