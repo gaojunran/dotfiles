@@ -50,6 +50,12 @@ def prompt [
     }
 }
 
+def --env away-from-home [] {
+    if $env.PWD == $env.HOME {
+        cd ~/Playground
+    }
+}
+
 def internal [
     command: string
 ] {

@@ -18,3 +18,14 @@ export alias yau = yay -S
 export alias yal = yay -Q
 export alias yax = yay -Rs
 export alias yas = yay -Ss
+
+# uv
+export alias uvii = uv tool install
+export alias uvxx = uv tool uninstall
+export alias uvll = uv tool list
+export alias uvuu = uv tool upgrade
+export alias uvrr = uv tool run
+
+# cargo
+export alias cgii = cargo install
+export alias cgxx = cargo uninstall

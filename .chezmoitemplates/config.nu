@@ -25,6 +25,14 @@ if (not (is-linux)) {
 # Yazi, for Windows compatibility
 $env.YAZI_CONFIG_HOME = "~/.config/yazi" | path expand
 
+# homebrew
+export-env {
+  $env.HOMEBREW_API_DOMAIN = "https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
+  $env.HOMEBREW_BOTTLE_DOMAIN = "https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"
+  $env.HOMEBREW_BREW_GIT_REMOTE = "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git"
+  $env.HOMEBREW_CORE_GIT_REMOTE = "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git"
+}
+
 # Set encoding to UTF-8
 if (is-windows) {
     chcp 65001 | ignore
@@ -139,20 +147,11 @@ use $"($MY_SCRIPTS)/chezmoi.nu" *
 # ✨ just
 use $"($MY_SCRIPTS)/just.nu" *
 
-# ✨ System Installers
-use $"($MY_SCRIPTS)/system-installer.nu" *
+# ✨ Software Managers
+use $"($MY_SCRIPTS)/software-manager.nu" *
 
-# ✨ Python
-use $"($MY_SCRIPTS)/python.nu" *
-
-# ✨ Rust
-use $"($MY_SCRIPTS)/rust.nu" *
-
-# ✨ JavaScript
-use $"($MY_SCRIPTS)/javascript.nu" *
-
-# ✨ Java
-use $"($MY_SCRIPTS)/java.nu" *
+# ✨ Package Managers
+use $"($MY_SCRIPTS)/package-manager.nu" *
 
 # ✨ aichat
 use $"($MY_SCRIPTS)/aichat.nu" *
@@ -163,9 +162,6 @@ use $"($MY_SCRIPTS)/open-with.nu" *
 # ✨ gh
 use $"($MY_SCRIPTS)/gh.nu" *
 
-# ✨ xmake
-use $"($MY_SCRIPTS)/xmake.nu" *
-
 # ✨ bash-env
 use $"($MY_SCRIPTS)/bash-env.nu" *
 
@@ -175,17 +171,11 @@ use $"($MY_SCRIPTS)/git.nu" *
 # ✨ sql
 use $"($MY_SCRIPTS)/sql.nu" *
 
-# ✨ repomix 
-use $"($MY_SCRIPTS)/repomix.nu" *
-
 # ✨ mise
 use $"($MY_SCRIPTS)/mise.nu" *
 
-# ✨ mirrors
-use $"($MY_SCRIPTS)/mirrors.nu" *
-
-# ✨ pandoc
-use $"($MY_SCRIPTS)/pandoc.nu" *
-
 # ✨ blog
 use $"($MY_SCRIPTS)/blog.nu" *
+
+# ✨ himalaya
+use $"($MY_SCRIPTS)/himalaya.nu" *
