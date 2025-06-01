@@ -1,0 +1,20 @@
+[accounts.nebula]
+default = true
+email = "nebula2021@126.com"
+display-name = "nebula2021"
+downloads-dir = "/Volumes/2tb-ssd/nebula/Downloads"
+backend.type = "imap"
+backend.host = "imap.126.com"
+backend.port = 993
+backend.login = "nebula2021@126.com"
+backend.encryption.type = "tls"
+backend.auth.type = "password"
+backend.auth.cmd = "echo $HIMALAYA_NEBULA2021_PASSWORD" # the env var is maintained by mise
+backend.extensions.id.send-after-auth = true  # useful for fxxking 163
+message.send.backend.type = "smtp"
+message.send.backend.host = "smtp.126.com"
+message.send.backend.port = 465
+message.send.backend.login = "nebula2021@126.com"
+message.send.backend.encryption.type = "tls"
+message.send.backend.auth.type = "password"
+message.send.backend.auth.cmd = "echo $HIMALAYA_NEBULA2021_PASSWORD"
