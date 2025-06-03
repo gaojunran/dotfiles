@@ -62,6 +62,12 @@ def internal [
     nu -l -c $command
 }
 
+def success [
+    message: string
+] {
+    print $"✅ (ansi green)($message)(ansi reset)"
+}
+
 use std/util "path add"
 
 # 🪐 PATH

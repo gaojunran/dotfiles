@@ -43,6 +43,9 @@ if not (is-windows) {
 	ls ($MY_BIN | path expand) | each { |f| chmod +x ($MY_BIN | path join $f.name) }
 }
 
+# postgres
+$env.PGDATA = "/opt/homebrew/var/postgresql@17"
+
 # source files
 
 # zoxide
@@ -78,6 +81,9 @@ alias hex = hexyl
 alias nix = orb nu
 alias dock = sudo docker
 alias ar = aria2c
+alias ou = ouch
+alias ouc = ouch compress --gitignore
+alias oud = ouch decompress
 
 
 # Find help from `<command> --help`.
@@ -113,7 +119,7 @@ def --env rm [
 		cd ..
 		%rm -rf --trash $path
 		} else {
-		%rm -rf --trash $args
+		%rm -rf --trash ...$args
 	}
 }
 
