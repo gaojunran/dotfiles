@@ -31,6 +31,7 @@ export-env {
   $env.HOMEBREW_BOTTLE_DOMAIN = "https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"
   $env.HOMEBREW_BREW_GIT_REMOTE = "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git"
   $env.HOMEBREW_CORE_GIT_REMOTE = "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git"
+	$env.HOMEBREW_CASK_OPTS = "--appdir=~/Applications"  # install in HOME instead of in root, to save disk space
 }
 
 # Set encoding to UTF-8
