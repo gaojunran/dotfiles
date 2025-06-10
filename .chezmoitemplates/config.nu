@@ -94,12 +94,6 @@ def "?" --wrapped [
 	nu -l -c (($cmd | str join " ") +  " --help")
 }
 
-# def defi [
-# 	command: string
-# ] {
-# 	rg --hidden --multiline ('def.*' + $command + '\[(?s:.)*\]\s\{(?s:.)*\}')
-# }
-
 # create new files/directories.
 def new [suffix: string, ...rest: string] {
 	if ($suffix == '/') {
@@ -190,3 +184,6 @@ use $"($MY_SCRIPTS)/blog.nu" *
 
 # ✨ himalaya
 use $"($MY_SCRIPTS)/himalaya.nu" *
+
+# ✨ mihome
+use $"($MY_SCRIPTS)/mihome.nu" *

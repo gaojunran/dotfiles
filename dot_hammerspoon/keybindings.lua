@@ -116,3 +116,22 @@ end
 
 bindMouseSideButtonsToArrowKeysForIINA()
 
+-- 米家设备控制 HomeAssistant
+-- 台灯
+hs.hotkey.bind({}, "F8", function()
+  hs.execute("mise exec -- nu -l -c lamp", true) 
+  -- use mise to capture env vars
+end)
+
+-- 空调
+hs.hotkey.bind({}, "F7", function()
+  hs.execute("mise exec -- nu -l -c ac", true) 
+end)
+
+hs.hotkey.bind({}, "F5", function()
+  hs.execute("mise exec -- nu -l -c 'ac dec'", true) 
+end)
+
+hs.hotkey.bind({}, "F6", function()
+  hs.execute("mise exec -- nu -l -c 'ac inc'", true) 
+end)
