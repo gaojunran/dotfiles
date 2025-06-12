@@ -1,0 +1,4 @@
+# https://mirrors.tuna.tsinghua.edu.cn/help/pypi/
+[[index]]
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple/"
+default = true
