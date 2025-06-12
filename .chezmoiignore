@@ -1,1 +1,5 @@
 key.txt.age
+
+{{ if eq .chezmoi.os "linux" }}
+Private/
+{{ end }}

@@ -2,6 +2,7 @@ brew "aichat"
 # brew "asdf" # replaced by mise
 brew "bash"  # bash 5
 brew "bat"
+brew "bore-cli"
 brew "bottom"
 # brew "bun" # replaced by mise
 brew "chezmoi"
@@ -11,14 +12,18 @@ brew "fastfetch"
 brew "fd"
 brew "fzf"
 brew "gh"
+brew "glow"
 # brew "go" # replaced by mise
 # brew "gradle" # replaced by mise
 brew "hexyl"
+brew "himalaya"
+brew "hyperfine"
 # brew "htop" # replaced by bottom
 # brew "jc"  # https://github.com/kellyjonbrazil/jc
 brew "just"
 brew "killport" # https://github.com/jkfran/killport
 brew "lazygit"
+brew "mise"
 # brew "maven" # replaced by mise
 # brew "neovim"
 # brew "node"  # replaced by mise

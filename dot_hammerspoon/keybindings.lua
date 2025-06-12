@@ -135,3 +135,40 @@ end)
 hs.hotkey.bind({}, "F6", function()
   hs.execute("mise exec -- nu -l -c 'ac inc'", true) 
 end)
+
+-- 连击F1三次：使显示器休眠
+local f1KeyCount = 0
+local f1Timer = nil
+local f1ComboMaxInterval = 1.0 -- 1秒内按三次
+
+-- 监听F1键
+local f1Event = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(event)
+    local keyCode = event:getKeyCode()
+    local isF1 = keyCode == hs.keycodes.map["f1"]
+
+    if isF1 then
+        f1KeyCount = f1KeyCount + 1
+
+        -- 启动或重置计时器
+        if f1Timer then
+            f1Timer:stop()
+        end
+
+        f1Timer = hs.timer.doAfter(f1ComboMaxInterval, function()
+            f1KeyCount = 0 -- 超时重置
+        end)
+
+        if f1KeyCount == 3 then
+            f1KeyCount = 0
+            if f1Timer then f1Timer:stop() end
+
+            -- 显示器进入休眠
+            hs.caffeinate.lockScreen() -- 可选：先锁屏
+            -- hs.execute("pmset displaysleepnow")
+        end
+    end
+
+    return false -- 不阻止其他F1的默认行为
+end)
+
+f1Event:start()
