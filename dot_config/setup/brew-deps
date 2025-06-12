@@ -5,7 +5,7 @@ brew "bat"
 brew "bore-cli"
 brew "bottom"
 # brew "bun" # replaced by mise
-brew "chezmoi"
+# brew "chezmoi" # you should install it manually, because this file is synced with chezmoi.
 brew "clipboard"
 brew "eza"
 brew "fastfetch"
@@ -27,7 +27,7 @@ brew "mise"
 # brew "maven" # replaced by mise
 # brew "neovim"
 # brew "node"  # replaced by mise
-# brew "nushell"  # you should install it ahead of brew
+# brew "nushell"  # you should install it manually, because this file is run with nushell.
 # brew "openjdk" # replaced by mise
 brew "onefetch"
 brew "ouch"
@@ -40,7 +40,7 @@ brew "starship"
 brew "tldr"
 brew "tokei"
 brew "typst"
-brew "usql"
+brew "xo/xo/usql"
 brew "uv"
 brew "watchexec"
 brew "xmake"
