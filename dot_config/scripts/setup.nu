@@ -2,12 +2,9 @@
 export def "setup-deps" [] {
 	if (is-windows) {
 		scoop import ~/.config/setup/scoop-deps.json
-	} else if (is-macos) {
-		brew bundle --file ~/.config/setup/brew-deps
 	} else {
-		"Use your own package manager bro! TODO: yay's automation"
+		brew bundle --file ~/.config/setup/brew-deps
 	}
-	asdf plugin 
 }
 
 # 📢 Install all applications. See https://github.com/gaojunran/dotfiles?tab=readme-ov-file#applications-setup.
