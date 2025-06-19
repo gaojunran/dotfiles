@@ -55,6 +55,7 @@ export def --wrapped cgi [...args] {
 }
 export alias cgb = cargo build
 export alias cgt = cargo test
+export alias cgr = cargo run
 
 # ✨ gradle
 # Use wrapper if exists, otherwise use gradle directly (often to init a new project).

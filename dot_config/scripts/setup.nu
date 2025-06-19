@@ -38,6 +38,16 @@ export def "setup-init" [] {
 	} else {
 		print "⚠️ `mise` is not installed. Skip."
 	}
+	if (is-installed "atuin") {
+		atuin init nu --disable-up-arrow | save -f ($MY_AUTOLOAD | path join "atuin.nu")
+	} else {
+		print "⚠️ `atuin` is not installed. Skip."
+	}
+	if (is-installed "jj") {
+		jj util completion nushell | save -f ($MY_AUTOLOAD | path join "completion_jj.nu")
+	} else {
+		print "⚠️ `jj` is not installed. Skip."
+	}
 }
 
 # Should only run once when the device is brand new.

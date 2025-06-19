@@ -62,6 +62,12 @@ source ($MY_AUTOLOAD | path join "starship.nu" | path expand)
 # To initialize it, run `setup-init`.
 use ($MY_AUTOLOAD | path join "mise.nu" | path expand)
 
+# atuin
+# To initialize it, run `setup-init`.
+source ($MY_AUTOLOAD | path join "atuin.nu" | path expand)
+
+# jj
+source ($MY_AUTOLOAD | path join "completion_jj.nu" | path expand)
 
 # ----------------------------
 
