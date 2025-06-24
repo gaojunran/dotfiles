@@ -36,10 +36,14 @@ export def ac [state?: string] {
       "temperature": $temp
     } | to json)
   } else if $state == "dec" {
-    let temp = (mihome-get-state $"climate.($env.MIHOME_AC_ID)" | get attributes | get temperature) - 1
+    let temp = (ac get)
     mihome-post "climate/set_temperature" ({
       "entity_id": $"climate.($env.MIHOME_AC_ID)",
       "temperature": $temp
     } | to json)
-  } # else to do
+  } else if $state == "get" {
+    mihome-get-state $"climate.($env.MIHOME_AC_ID)" | get attributes | get temperature
+  } else {
+    echo "Unknown state: ($state)"
+  }
 }
