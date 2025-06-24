@@ -1,16 +1,30 @@
 # 🛠 dotfiles by gaojunran
 
-> **README TO BE UPDATED**
-
 This repo contains my dotfiles, managed by [chezmoi](https://www.chezmoi.io/).
 
 It's opiniated😏, but is well-organized 🚀, so you can copy some of your favourite snippets to your own dotfiles.
 
 ## How to use 🔨
 
-1. Install [chezmoi](https://www.chezmoi.io/) and [nushell](https://www.nushell.sh/) to your system.
+> I will write a blog to explain how this works.
+
+<!-- 1. Install [chezmoi](https://www.chezmoi.io/) and [nushell](https://www.nushell.sh/) to your system.
 2. Run `chezmoi init --apply gaojunran` to apply my dotfiles to your system.
-3. Install scoop or brew, and run `setup-deps` in `nushell` to install all dependencies!
+3. Install scoop or brew, and run `setup-deps` in `nushell` to install all dependencies! -->
+
+Typically on a brand new macOS / Linux device:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install chezmoi nushell
+nu # (Log in to nushell)
+chezmoi init --apply gaojunran
+setup-deps # (Run this in nushell)
+setup-init # (Run this in nushell)
+r # (Run this in nushell)
+```
+
+> I have encrypted files in this repo, so it'll be definitely not working for you, as you don't have my private key. This repo is meant to guide you to setup your own dotfiles.
 
 ⚠️ My Nushell configs have tried their best to be compatible with Windows, macOS and Linux. However, I assume you have installed many cli tools in advance (see [here](https://github.com/gaojunran/dotfiles?tab=readme-ov-file#dependences-setup)), otherwise you can't use many custom commands and aliases.
 

@@ -99,10 +99,10 @@ export alias bux = bun remove
 
 # ✨ xmake
 
-export alias xm = xmake
-export alias xmb = xmake build
-export def xmr [] {
-    xmake build
-    xmake run
-}
-export alias xmc = xmake clean
+# export alias xm = xmake
+# export alias xmb = xmake build
+# export def xmr [] {
+#     xmake build
+#     xmake run
+# }
+# export alias xmc = xmake clean

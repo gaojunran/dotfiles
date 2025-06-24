@@ -1,4 +1,6 @@
 brew "aichat"
+brew "aria2"
+brew "atuin"
 # brew "asdf" # replaced by mise
 brew "bash"  # bash 5
 brew "bat"
@@ -20,6 +22,7 @@ brew "himalaya"
 brew "hyperfine"
 # brew "htop" # replaced by bottom
 # brew "jc"  # https://github.com/kellyjonbrazil/jc
+brew "jj"
 brew "just"
 brew "killport" # https://github.com/jkfran/killport
 brew "lazygit"
@@ -43,7 +46,7 @@ brew "typst"
 brew "xo/xo/usql"
 brew "uv"
 brew "watchexec"
-brew "xmake"
+# brew "xmake"
 brew "yazi"
 brew "zoxide"
 brew "zellij"
