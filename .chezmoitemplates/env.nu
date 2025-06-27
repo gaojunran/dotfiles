@@ -83,6 +83,7 @@ path add "/usr/local/bin"
 path add "~/.local/bin"
 path add "/home/linuxbrew/.linuxbrew/bin"
 path add "/opt/homebrew/opt/postgresql@17/bin"
+path add "/opt/homebrew/opt/rustup/bin"
 # path add "AppData/Local/mise/shims"
 
 # 🪐 Env
