@@ -6,7 +6,9 @@ const MY_AUTOLOAD = "~/.config/autoload"
 
 $env.config.buffer_editor = "code"
 $env.config.show_banner = false
-$env.EDITOR = "code"
+if (is-installed "edit") {
+	$env.EDITOR = "edit"
+}
 $env.TERM = "xterm-256color"  # for ghostty
 
 # Use difft
