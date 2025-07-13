@@ -1,6 +1,7 @@
 export alias cc = cb copy
 export alias cv = cb paste
 export alias cx = cb cut
+export alias cvc = cb paste | code -
 
 # Save a clipboard item to a file
 export def cs [

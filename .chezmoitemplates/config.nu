@@ -131,19 +131,23 @@ def --env rm [
 	}
 }
 
-# soft link current directory to ~/Projects (by default).
-def lns [
-	target: string = "~/Projects"
-] {
-	let dirname = ($env.PWD | path basename)
-	ln -s $env.PWD $"($target)/($dirname)"
-	print $"(ansi blue_bold)📢 Created a soft link to `($target)/($dirname)`(ansi reset)"
-}
+# # soft link current directory to ~/Projects (by default).
+# def lns [
+# 	target: string = "~/Projects"
+# ] {
+# 	let dirname = ($env.PWD | path basename)
+# 	ln -s $env.PWD $"($target)/($dirname)"
+# 	print $"(ansi blue_bold)📢 Created a soft link to `($target)/($dirname)`(ansi reset)"
+# }
 
 # clear and refresh shell
 def r [] {
 	clear
 	exec nu
+}
+
+def change [] {
+	now-hash | save $"(now-hash).txt"
 }
 
 # ✨ zoxide
