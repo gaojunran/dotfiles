@@ -180,11 +180,11 @@ use $"($MY_SCRIPTS)/open-with.nu" *
 # ✨ gh
 use $"($MY_SCRIPTS)/gh.nu" *
 
-# ✨ bash-env
-use $"($MY_SCRIPTS)/bash-env.nu" *
+# ✨ bash-env, disabled as I've never used it.
+# use $"($MY_SCRIPTS)/bash-env.nu" *
 
-# ✨ git
-use $"($MY_SCRIPTS)/git.nu" *
+# ✨ git, disabled as I use hj.
+# use $"($MY_SCRIPTS)/git.nu" *
 
 # ✨ sql
 use $"($MY_SCRIPTS)/sql.nu" *
