@@ -37,16 +37,6 @@ export-env {
 	$env.HOMEBREW_CASK_OPTS = "--appdir=~/Applications"  # install in HOME instead of in root, to save disk space
 }
 
-# Set encoding to UTF-8
-if (is-windows) {
-    chcp 65001 | ignore
-}
-
-# make binaries executable in unix
-if not (is-windows) {
-	ls ($MY_BIN | path expand) | each { |f| chmod +x ($MY_BIN | path join $f.name) }
-}
-
 # postgres
 $env.PGDATA = "/opt/homebrew/var/postgresql@17"
 
@@ -126,7 +116,7 @@ def --env rm [
 	  let path = $env.PWD
 		cd ..
 		%rm -rf --trash $path
-		} else {
+	} else {
 		%rm -rf --trash ...$args
 	}
 }

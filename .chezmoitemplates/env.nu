@@ -68,6 +68,20 @@ def success [
     print $"✅ (ansi green)($message)(ansi reset)"
 }
 
+# currently support uv/python, later will support bun/deno/js/ts.
+def install-script [
+    script: string
+] {
+    const MY_BIN = "~/.config/bin" | path expand
+    mut content = open $script
+    if not ($content | str starts-with "#!") {
+        $content = "#!/usr/bin/env -S uv run --script\n\n" + $content
+    }
+    let dest = ($MY_BIN | path join ($script | path basename | str replace ".py" ""))
+    cp $script $dest
+    chmod +x $dest
+}
+
 use std/util "path add"
 
 # 🪐 PATH

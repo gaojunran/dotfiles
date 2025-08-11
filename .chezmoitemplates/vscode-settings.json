@@ -142,6 +142,7 @@
     { "rule": "*quotes", "severity": "off" },
     { "rule": "*semi", "severity": "off" }
   ],
+  
 
 
   // ========== File Nesting Patterns ==========

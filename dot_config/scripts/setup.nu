@@ -21,6 +21,7 @@ export def "setup-apps" [] {
 # Run for each time the config is reloaded.
 export def "setup-init" [] {
 	const MY_AUTOLOAD = "~/.config/autoload"
+	const MY_BIN = "~/.config/bin"
 	if (is-installed "zoxide") {
 		zoxide init nushell | str replace -a "cd" "%cd" | save -f ($MY_AUTOLOAD | path join "zoxide.nu")
 	} else {
@@ -47,6 +48,15 @@ export def "setup-init" [] {
 		jj util completion nushell | save -f ($MY_AUTOLOAD | path join "completion_jj.nu")
 	} else {
 		print "⚠️ `jj` is not installed. Skip."
+	}
+	# Set encoding to UTF-8
+	if (is-windows) {
+			chcp 65001 | ignore
+	}
+
+	# make binaries executable in unix
+	if not (is-windows) {
+		ls ($MY_BIN | path expand) | each { |f| chmod +x ($MY_BIN | path join $f.name) }
 	}
 }
 
