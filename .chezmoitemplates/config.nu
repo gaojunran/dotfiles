@@ -84,6 +84,8 @@ alias ar = aria2c
 alias ou = ouch
 alias ouc = ouch compress --gitignore
 alias oud = ouch decompress
+alias mdx = create-mdx
+alias veri = forwarder-parser
 
 
 # Find help from `<command> --help`.
