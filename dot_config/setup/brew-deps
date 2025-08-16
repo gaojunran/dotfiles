@@ -9,6 +9,7 @@ brew "bottom"
 # brew "bun" # replaced by mise
 # brew "chezmoi" # you should install it manually, because this file is synced with chezmoi.
 brew "clipboard"
+brew "dua-cli"
 brew "eza"
 brew "fastfetch"
 brew "fd"
@@ -25,7 +26,7 @@ brew "hyperfine"
 brew "jj"
 brew "just"
 brew "killport" # https://github.com/jkfran/killport
-brew "lazygit"
+# brew "lazygit"  # I prefer jj and hj
 brew "mise"
 # brew "maven" # replaced by mise
 # brew "neovim"

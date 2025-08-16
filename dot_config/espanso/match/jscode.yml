@@ -1,0 +1,7 @@
+matches:
+  - trigger: "~lg"
+    replace: "console.log($|$);\n"
+  - regex: "~(?P<var>[a-zA-Z0-9]+)for"
+    replace: "for (let {{var}} = 0; {{var}} < $|$; {{var}}++) {\n"   # useful in vscodium
+
+
