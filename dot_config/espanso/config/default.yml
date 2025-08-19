@@ -9,6 +9,8 @@
 # To make customization easier, this file contains some of the commonly used
 # parameters. Feel free to uncomment and tune them to fit your needs!
 
+search_shortcut: ALT+SHIFT+SPACE
+
 # --- Toggle key
 
 # Customize the key used to disable and enable espanso (when double tapped)
