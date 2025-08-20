@@ -1,4 +1,7 @@
 # https://github.com/gaojunran/hj
 
-[open_config]
+[open]
 editor = "code"
+
+[clone]
+default_user = "gaojunran"

@@ -3,5 +3,13 @@ matches:
     replace: "console.log($|$);\n"
   - regex: "~(?P<var>[a-zA-Z0-9]+)for"
     replace: "for (let {{var}} = 0; {{var}} < $|$; {{var}}++) {\n"   # useful in vscodium
-
-
+  - trigger: "~max"
+    replace: "Math.max($|$)"
+  - trigger: "~min"
+    replace: "Math.min($|$)"
+  - trigger: "~abs"
+    replace: "Math.abs($|$)"
+  - trigger: "~ceil"
+    replace: "Math.ceil($|$)"
+  - trigger: "~floor"
+    replace: "Math.floor($|$)"
