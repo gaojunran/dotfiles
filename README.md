@@ -15,16 +15,32 @@ It's opiniated😏, but is well-organized 🚀, so you can copy some of your fav
 Typically on a brand new macOS / Linux device:
 
 ```bash
+# Install homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew install chezmoi nushell
 nu # (Log in to nushell)
-chezmoi init --apply gaojunran
-setup-deps # (Run this in nushell)
-setup-init # (Run this in nushell)
+chezmoi init --apply gaojunran -k
+# You'll be asked for a pass phrase. Press Enter to skip.
+setup-deps # (Run in nushell, to install all CLI tools)
+setup-init # (Run in nushell, to init all deps)
 r # (Run this in nushell)
 ```
 
-> I have encrypted files in this repo, so it'll be definitely not working for you, as you don't have my private key. This repo is meant to guide you to setup your own dotfiles.
+On a new Windows device:
+
+```sh
+# Run in PowerShell, to install scoop
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+scoop install chezmoi nushell
+chezmoi init --apply gaojunran -k
+# You'll be asked for a pass phrase. Press Enter to skip.
+setup-deps # (Run in nushell, to install all CLI tools)
+setup-init # (Run in nushell, to init all deps)
+r # (Run this in nushell)
+```
+
+<!-- > I have encrypted files in this repo, so it'll be definitely not working for you, as you don't have my private key. This repo is meant to guide you to setup your own dotfiles. -->
 
 ⚠️ My Nushell configs have tried their best to be compatible with Windows, macOS and Linux. However, I assume you have installed many cli tools in advance (see [here](https://github.com/gaojunran/dotfiles?tab=readme-ov-file#dependences-setup)), otherwise you can't use many custom commands and aliases.
 
@@ -34,9 +50,9 @@ r # (Run this in nushell)
 
 In the year 2025, I decided to switch my workflow to [nushell](https://www.nushell.sh/). Nearly all my handful tools are nushell-related, stored [here](./.chezmoitemplates/). 
 
-Moreover, for compatibility consideration, I will not write `bash/zsh/powershell/bat` scripts in the future. Python3/JavaScript for simple users and Nushell for myself are enough.
+Moreover, for compatibility consideration, I will not write `bash/zsh/powershell/bat` scripts in the future. Now I prefer bun/TS scripts to do the job. 
 
-**I really ❤️ nushell!** And I have written 500-line config for it, including [git workflow](./dot_config/scripts/git.nu), [github workflow](./dot_config/scripts/gh.nu), aliases for tons of CLI tools, and so on.
+**I really ❤️ nushell!**
 
 ### Yazi
 
@@ -60,14 +76,15 @@ These keymaps are scattering everywhere, so I simply write them down here.
 - Keymaps which are managed by Raycast:
   - `opt + space`: to toggle Raycast.
   - `cmd + space`: to toggle Terminal (Ghostty).
-  - `opt + a`: Toggle Arc.
+  - `opt + a`: Toggle Browser.
   - `opt + w`: Toggle Wechat.
   - `opt + q`: Toggle QQ.
-  - `opt + f`: Search for files.
+  - `opt + f`: Search for files. (My plugin!)
   - `opt + t`: Quickly translate.
   - `opt + s`: Search for snippets.
   - `opt + v`: Search in clipboard.
   - `opt + z`: Search for menu items.
+  - `opt + e`: Search for email messages.
 
 ### IDE Configurations
 
@@ -79,23 +96,32 @@ My justfiles are stored [here](./dot_config/templates/), which are handful langu
 
 ### Password Management
 
-As I have Windows devices, Android devices, it's hard for me to use Apple's keyring.
+As I have Windows & Android devices, it's hard for me to use Apple's keyring.
 
 I choose [Bitwarden](https://bitwarden.com/) as my password manager.
 
 I've heard from that [VaultWarden](https://github.com/dani-garcia/vaultwarden) is a self-hosted, Rust-based Bitwarden server, and I'll try it in the future.
+
+### Word Expansion
+
+I use [espanso](https://espanso.org/) to expand words. Now it includes:
+
+- Personal information, such as phone number, name, email, etc.
+- Useful snippets in leetcode in JavaScript.
+
+See [detail](./dot_config/espanso/match/).
 
 ### Dependences Setup
 
 My manifests for system dependences are listed below:
 
 - [**brew dependences for MacOS**](./dot_config/setup/brew-deps): for MacOS.
-- [**scoop dependences for Windows**](./dot_config/setup/scoop-deps.json): for Windows.
+- [**scoop dependences for Windows**](./dot_config/setup/scoop-deps.json): for Windows. Not frequently updated.
 - for Linux? Use your favourite package manager!
 
 Run `setup-deps` in nushell to install all dependences!
 
-### Applications Setup
+<!-- ### Applications Setup
 
 My applications, which usually called `casks` in `brew`, or `extras` in `scoop`, are listed below: 
 
@@ -103,7 +129,7 @@ My applications, which usually called `casks` in `brew`, or `extras` in `scoop`,
 - [**scoop applications for Windows**](./dot_config/setup/scoop-apps.json).
 - for Linux? Are you sure to use GUI apps in Linux? I don't want!
 
-Run `setup-apps` in nushell to install all applications!
+Run `setup-apps` in nushell to install all applications! -->
 
 ## Blog
 

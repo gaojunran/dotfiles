@@ -27,6 +27,9 @@ matches:
         params:
           cmd: "echo $GENERAL_PASSWORD"
 
+  - trigger: "~name"
+    replace: "高浚然"
+
   - trigger: "~gh"
     replace: "https://github.com/gaojunran"
 
