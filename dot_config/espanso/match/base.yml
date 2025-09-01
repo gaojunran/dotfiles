@@ -42,6 +42,15 @@ matches:
   - trigger: "~qq"
     replace: "489601672"
 
+  - trigger: "~id"
+    replace: "{{myid}}"
+    vars:
+      - name: myid
+        type: shell
+        params:
+          cmd: "echo $ID_NUMBER"
+    
+
   # # Print the output of a shell command
   # - trigger: ":shell"
   #   replace: "{{output}}"

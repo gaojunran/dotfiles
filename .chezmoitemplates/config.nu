@@ -123,14 +123,15 @@ def --env rm [
 	}
 }
 
-# # soft link current directory to ~/Projects (by default).
-# def lns [
-# 	target: string = "~/Projects"
-# ] {
-# 	let dirname = ($env.PWD | path basename)
-# 	ln -s $env.PWD $"($target)/($dirname)"
-# 	print $"(ansi blue_bold)📢 Created a soft link to `($target)/($dirname)`(ansi reset)"
-# }
+# backup files in the same place
+def bak [...files] {
+	files | each { |f| cp -rv $f ($f + ".bak") }
+}
+
+# copy file(s) to ~/Public
+def share [...files] {
+	cp -rv ...$files ~/Public
+}
 
 # clear and refresh shell
 def r [] {
