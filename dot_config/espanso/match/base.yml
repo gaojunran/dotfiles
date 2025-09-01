@@ -36,6 +36,12 @@ matches:
   - trigger: "~me"
     replace: "https://codenebula.netlify.app"
 
+  - trigger: "~ph"
+    replace: "13889852088"
+
+  - trigger: "~qq"
+    replace: "489601672"
+
   # # Print the output of a shell command
   # - trigger: ":shell"
   #   replace: "{{output}}"
