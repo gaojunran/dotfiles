@@ -2,3 +2,4 @@
 require("keybindings")
 require("menubar")
 require("input-method")
+require("auto-start")

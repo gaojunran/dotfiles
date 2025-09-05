@@ -25,7 +25,7 @@ matches:
       - name: mypassword
         type: shell
         params:
-          cmd: "echo $GENERAL_PASSWORD"
+          cmd: "/opt/homebrew/bin/mise exec --cd ~ -- sh -c 'echo $GENERAL_PASSWORD'"
 
   - trigger: "~name"
     replace: "高浚然"
@@ -48,16 +48,12 @@ matches:
       - name: myid
         type: shell
         params:
-          cmd: "echo $ID_NUMBER"
-    
+          cmd: "/opt/homebrew/bin/mise exec --cd ~ -- sh -c 'echo $ID_NUMBER'"
 
-  # # Print the output of a shell command
-  # - trigger: ":shell"
-  #   replace: "{{output}}"
-  #   vars:
-  #     - name: output
-  #       type: shell
-  #       params:
-  #         cmd: "echo 'Hello from your shell'"
-
-  # And much more! For more information, visit the docs: https://espanso.org/docs/
+  - trigger: "~ve"
+    replace: "{{myvericode}}"
+    vars:
+      - name: myvericode
+        type: shell
+        params:
+          cmd: "/opt/homebrew/bin/nu -l -c 'forwarder-parser'"

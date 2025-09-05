@@ -3,18 +3,18 @@
 # /// script
 # requires-python = ">=3.13"
 # dependencies = [
-#     "pyperclip",
 #     "python-dateutil",
 # ]
 # ///
 
-import json
-import subprocess
 import datetime
+import json
 import re
+import subprocess
 import sys
-import pyperclip
+
 from dateutil import parser as dateparser
+
 
 def get_emails():
     """获取邮件列表 JSON 数据"""
@@ -22,12 +22,12 @@ def get_emails():
         ["himalaya", "--output", "json"],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        text=True
+        text=True,
     )
     if result.returncode != 0:
-        print("获取邮件列表失败：", result.stderr)
         sys.exit(1)
     return json.loads(result.stdout)
+
 
 def filter_recent_emails(emails, minutes=1):
     """过滤出 minutes 分钟内的邮件"""
@@ -40,18 +40,19 @@ def filter_recent_emails(emails, minutes=1):
             recent.append(mail)
     return sorted(recent, key=lambda m: dateparser.parse(m["date"]), reverse=True)
 
+
 def get_email_body(email_id):
     """获取指定邮件 ID 的正文"""
     result = subprocess.run(
         ["himalaya", "message", "read", email_id, "--no-headers"],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        text=True
+        text=True,
     )
     if result.returncode != 0:
-        print("获取邮件正文失败：", result.stderr)
         sys.exit(1)
     return result.stdout
+
 
 def extract_verification_code(text):
     """
@@ -67,7 +68,6 @@ def main():
     emails = get_emails()
     recent_emails = filter_recent_emails(emails, minutes=1)
     if not recent_emails:
-        print("一分钟内没有新邮件")
         sys.exit(0)
 
     latest_email = recent_emails[0]
@@ -75,10 +75,8 @@ def main():
     code = extract_verification_code(body)
 
     if code:
-        pyperclip.copy(code)
-        print(f"验证码 {code} 已复制到剪贴板（来自邮件：{latest_email['subject']}）")
-    else:
-        print("未在邮件正文中找到验证码")
+        print(code)
+
 
 if __name__ == "__main__":
     main()
