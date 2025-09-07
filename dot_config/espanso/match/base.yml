@@ -57,3 +57,6 @@ matches:
         type: shell
         params:
           cmd: "/opt/homebrew/bin/nu -l -c 'forwarder-parser'"
+  - trigger: "~edu"
+    replace: "cqupt.edu.cn"
+
