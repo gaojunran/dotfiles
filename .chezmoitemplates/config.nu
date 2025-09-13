@@ -72,7 +72,7 @@ alias ff = fastfetch
 alias of = onefetch
 alias g = lazygit
 alias ls = ls -a
-alias tree = eza -T --hyperlink
+alias tree = eza -T --hyperlink --git-ignore
 # bottom, to monitor system stats, using htop style
 alias top = btm -b
 # https://github.com/antfu/iroiro, to pick colors

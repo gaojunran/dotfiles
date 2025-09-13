@@ -14,7 +14,7 @@ export def miu [...args] {
       | each { |tool| mise use $tool --path ./mise.toml }
       | to text
   } else {
-    mise use ...$args --path ./mise.toml
+    mise use ...$args --path .
   }
 }
 export def mil [...args] {
