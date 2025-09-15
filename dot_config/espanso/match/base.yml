@@ -57,6 +57,22 @@ matches:
         type: shell
         params:
           cmd: "/opt/homebrew/bin/nu -l -c 'forwarder-parser'"
+  
   - trigger: "~edu"
     replace: "cqupt.edu.cn"
 
+  - trigger: "~stu"
+    replace: "{{mystuid}}"
+    vars:
+      - name: mystuid
+        type: shell
+        params:
+          cmd: "/opt/homebrew/bin/mise exec --cd ~ -- sh -c 'echo $STU_ID'"
+        
+  - trigger: "~cls"
+    replace: "{{myclassid}}"
+    vars:
+      - name: myclassid
+        type: shell
+        params:
+          cmd: "/opt/homebrew/bin/mise exec --cd ~ -- sh -c 'echo $CLASS_ID'"
