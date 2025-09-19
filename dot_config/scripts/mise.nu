@@ -22,6 +22,15 @@ export def ml [...args] {
 
 
 export alias run = mise run
-export alias d = mise run dev
+
+export def d [] {
+  if (is-installed "zellij") {
+    zellij --layout ~/.config/zellij/project-default.kdl
+  } else {
+    print "zellij is not installed!"
+    mise run dev
+  }
+}
+
 export alias t = mise run test
 export alias b = mise run build
