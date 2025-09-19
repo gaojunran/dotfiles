@@ -99,6 +99,7 @@ path add "/home/linuxbrew/.linuxbrew/bin"
 path add "/opt/homebrew/opt/postgresql@17/bin"
 path add "/opt/homebrew/opt/rustup/bin"
 path add "~/.pnpm"
+path add "~/.bun/bin"
 path add "~/.dotnet/tools"
 # path add "AppData/Local/mise/shims"
 
