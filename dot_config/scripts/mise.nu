@@ -1,5 +1,4 @@
-export alias mi = mise ls
-export def miu [...args] {
+export def mu [...args] {
   if ($args | length) == 0 {
     mise ls --installed --json
       | from json
@@ -17,7 +16,12 @@ export def miu [...args] {
     mise use ...$args --path .
   }
 }
-export def mil [...args] {
+export def ml [...args] {
   mise ls-remote ...$args | bat
 }
-export alias mii = mise install
+
+
+export alias run = mise run
+export alias d = mise run dev
+export alias t = mise run test
+export alias b = mise run build

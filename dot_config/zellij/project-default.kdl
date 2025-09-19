@@ -1,5 +1,10 @@
 layout {
   tab {
+    pane command="mise" {
+      args "run dev"
+    }
+  }
+  tab {
     pane command="yazi" {
 
     }
@@ -9,10 +14,4 @@ layout {
 
     }
   }
-  tab {
-    pane command="just" {
-      args "dev"
-    }
-  }
-  
 }
