@@ -1,0 +1,9 @@
+matches:
+  - trigger: "~ppt"
+    replace: "请你给我详细地讲一下这页 PPT。"
+
+  - trigger: "~exp"
+    replace: "请你帮我详细解释一下。"
+
+  - trigger: "~trans"
+    replace: "请你帮我把这段话翻译成英文。"
