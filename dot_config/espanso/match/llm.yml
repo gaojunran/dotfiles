@@ -7,3 +7,6 @@ matches:
 
   - trigger: "~trans"
     replace: "请你帮我把这段话翻译成英文。"
+
+  - trigger: "~det"
+    replace: "我对这部分知识完全不了解，请你详细地讲讲。"
