@@ -15,4 +15,5 @@ export def dotp [
 ] {
   cd (chezmoi source-path)
   hj cm $"Update: ($desc)" -p
+  dotr
 }
