@@ -7,8 +7,8 @@ $username\
 [](bg:color_yellow fg:color_orange)\
 $directory\
 [](fg:color_yellow bg:color_aqua)\
-$git_branch\
-$git_status\
+${custom.jj_branch}\
+${custom.jj_status}\
 [](fg:color_aqua bg:color_blue)\
 $c\
 $rust\
@@ -167,3 +167,21 @@ vimcmd_symbol = '[](bold fg:color_green)'
 vimcmd_replace_one_symbol = '[](bold fg:color_purple)'
 vimcmd_replace_symbol = '[](bold fg:color_purple)'
 vimcmd_visual_symbol = '[](bold fg:color_yellow)'
+
+[custom.jj_branch]
+symbol = ""
+command = "jj log -r 'heads(::@ & bookmarks())' -T bookmarks --color never --no-graph --ignore-working-copy"
+when = "jj --ignore-working-copy root"
+shell = ["sh", "--norc", "--noprofile"]
+format = '[[ $symbol $output ](fg:color_fg0 bg:color_aqua)]($style)'
+
+[custom.jj_status]
+command = '''
+jj log -r @ --color never --no-graph --ignore-working-copy --limit 1 --template '
+  concat(
+    if(!empty, "M")
+  )'
+'''
+format = '[[$output ](fg:color_fg0 bg:color_aqua bold)]($style)'
+shell = ["sh", "--norc", "--noprofile"]
+when = "jj --ignore-working-copy root"
