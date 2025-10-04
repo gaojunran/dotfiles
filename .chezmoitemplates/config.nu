@@ -86,6 +86,7 @@ alias ouc = ouch compress --gitignore
 alias oud = ouch decompress
 alias mdx = create-mdx
 alias s = zellij attach services --force-run-commands
+alias pf = pitchfork
 
 
 # Find help from `<command> --help`.

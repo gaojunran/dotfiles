@@ -179,7 +179,7 @@ format = '[[ $symbol $output ](fg:color_fg0 bg:color_aqua)]($style)'
 command = '''
 jj log -r @ --color never --no-graph --ignore-working-copy --limit 1 --template '
   concat(
-    if(!empty, "M")
+    if(!empty, "M", "E")
   )'
 '''
 format = '[[$output ](fg:color_fg0 bg:color_aqua bold)]($style)'
