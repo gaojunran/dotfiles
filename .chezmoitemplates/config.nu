@@ -116,7 +116,7 @@ def new [suffix: string, ...rest: string] {
 }
 
 # `rm` with a better default configuration (Auto trash, force, recursive, and able to remove PWD itself.)
-def --env rm [
+def --env tr [
 	...args
 ] {
 	if ($args | length) == 0 {
