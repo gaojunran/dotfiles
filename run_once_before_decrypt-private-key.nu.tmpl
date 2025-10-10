@@ -1,3 +1,5 @@
+#!/usr/bin/env nu
+
 let key = ("~/.config/chezmoi/key.txt" | path expand)
 if not ($key | path exists) {
     mkdir ("~/.config/chezmoi" | path expand)
