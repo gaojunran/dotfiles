@@ -19,11 +19,7 @@ if (is-installed "difft") {
 # Windows does not have $env.HOME and its default working directory
 $env.HOME = '~' | path expand
 
-# VPN proxy
-if (not (is-linux)) {
-    $env.http_proxy = "http://127.0.0.1:7897"
-    $env.https_proxy = "http://127.0.0.1:7897"
-}
+
 
 # Yazi, for Windows compatibility
 $env.YAZI_CONFIG_HOME = "~/.config/yazi" | path expand
@@ -53,13 +49,18 @@ source ($MY_AUTOLOAD | path join "starship.nu" | path expand)
 # mise
 # To initialize it, run `setup-init`.
 use ($MY_AUTOLOAD | path join "mise.nu" | path expand)
+mise mise_hook  # update immediately
 
 # atuin
 # To initialize it, run `setup-init`.
 source ($MY_AUTOLOAD | path join "atuin.nu" | path expand)
 
-# jj
-source ($MY_AUTOLOAD | path join "completion_jj.nu" | path expand)
+# VPN proxy
+
+if not ($env.AVOID_CLASH? == "true") {
+    $env.http_proxy = "http://127.0.0.1:7897"
+    $env.https_proxy = "http://127.0.0.1:7897"
+}
 
 # ----------------------------
 
@@ -87,6 +88,7 @@ alias oud = ouch decompress
 alias mdx = create-mdx
 alias s = zellij attach services --force-run-commands
 alias pf = pitchfork
+alias hf = hyperfine
 
 
 # Find help from `<command> --help`.
@@ -157,7 +159,7 @@ use $"($MY_SCRIPTS)/clipboard.nu" *
 use $"($MY_SCRIPTS)/chezmoi.nu" *
 
 # ✨ just
-use $"($MY_SCRIPTS)/just.nu" *
+# use $"($MY_SCRIPTS)/just.nu" *
 
 # ✨ Software Managers
 use $"($MY_SCRIPTS)/software-manager.nu" *

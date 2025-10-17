@@ -168,6 +168,8 @@ vimcmd_replace_one_symbol = '[](bold fg:color_purple)'
 vimcmd_replace_symbol = '[](bold fg:color_purple)'
 vimcmd_visual_symbol = '[](bold fg:color_yellow)'
 
+
+{{- if not .AVOID_STARSHIP_JJ }}
 [custom.jj_branch]
 symbol = ""
 command = "jj log -r 'heads(::@ & bookmarks())' -T bookmarks --color never --no-graph --ignore-working-copy"
@@ -185,3 +187,4 @@ jj log -r @ --color never --no-graph --ignore-working-copy --limit 1 --template 
 format = '[[$output ](fg:color_fg0 bg:color_aqua bold)]($style)'
 shell = ["sh", "--norc", "--noprofile"]
 when = "jj --ignore-working-copy root"
+{{- end }}

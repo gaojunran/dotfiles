@@ -6,7 +6,7 @@ It's opiniated😏, but is well-organized 🚀, so you can copy some of your fav
 
 ## How to use 🔨
 
-> I will write a blog to explain how this works.
+> I will write a blog to explain how this works. The README maybe outdated.
 
 <!-- 1. Install [chezmoi](https://www.chezmoi.io/) and [nushell](https://www.nushell.sh/) to your system.
 2. Run `chezmoi init --apply gaojunran` to apply my dotfiles to your system.
@@ -22,8 +22,7 @@ nu # (Log in to nushell)
 chezmoi init --apply gaojunran -k
 # You'll be asked for a pass phrase. Press Enter to skip.
 setup-deps # (Run in nushell, to install all CLI tools)
-setup-init # (Run in nushell, to init all deps)
-r # (Run this in nushell)
+dotr # (Run in nushell, to refresh the nushell env)
 ```
 
 On a new Windows device:
@@ -36,8 +35,7 @@ scoop install chezmoi nushell
 chezmoi init --apply gaojunran -k
 # You'll be asked for a pass phrase. Press Enter to skip.
 setup-deps # (Run in nushell, to install all CLI tools)
-setup-init # (Run in nushell, to init all deps)
-r # (Run this in nushell)
+dotr # (Run in nushell, to refresh the nushell env)
 ```
 
 <!-- > I have encrypted files in this repo, so it'll be definitely not working for you, as you don't have my private key. This repo is meant to guide you to setup your own dotfiles. -->

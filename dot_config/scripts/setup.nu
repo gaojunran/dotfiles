@@ -14,7 +14,7 @@ export def "setup-apps" [] {
 	} else if (is-macos) {
 		brew bundle --file ~/.config/setup/brew-apps
 	} else {
-		"Do you want to use GUI apps in Linux? Anyway, I don't."
+		"Use your own package manager in Linux, or use brew if you are X86/64"
 	}
 }
 
@@ -32,9 +32,8 @@ export def "setup-init" [] {
 	} else {
 		print "⚠️ `starship` is not installed. Skip."
 	}
-	# I do not use `activate` in `mise`.
 	if (is-installed "mise") {
-		^mise activate nu 	| str replace -r '\$env\.Path = \(\$env\.Path \| prepend.*\)' "" 
+		^mise activate nu 	| str replace -r  "def --env mise_hook" "export def --env mise_hook"
 											| save -f ($MY_AUTOLOAD | path join "mise.nu")
 	} else {
 		print "⚠️ `mise` is not installed. Skip."
@@ -43,11 +42,6 @@ export def "setup-init" [] {
 		atuin init nu --disable-up-arrow | save -f ($MY_AUTOLOAD | path join "atuin.nu")
 	} else {
 		print "⚠️ `atuin` is not installed. Skip."
-	}
-	if (is-installed "jj") {
-		jj util completion nushell | save -f ($MY_AUTOLOAD | path join "completion_jj.nu")
-	} else {
-		print "⚠️ `jj` is not installed. Skip."
 	}
 	# Set encoding to UTF-8
 	if (is-windows) {
