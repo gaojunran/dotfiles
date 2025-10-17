@@ -25,7 +25,8 @@ matches:
       - name: mypassword
         type: shell
         params:
-          cmd: "/opt/homebrew/bin/mise exec --cd ~ -- sh -c 'echo $GENERAL_PASSWORD'"
+          cmd: "mise set GENERAL_PASSWORD"
+          shell: "nu"
 
   - trigger: "~name"
     replace: "高浚然"
@@ -48,15 +49,17 @@ matches:
       - name: myid
         type: shell
         params:
-          cmd: "/opt/homebrew/bin/mise exec --cd ~ -- sh -c 'echo $ID_NUMBER'"
+          cmd: "mise set ID_NUMBER"
+          shell: "nu"
 
-  - trigger: "~ve"
-    replace: "{{myvericode}}"
-    vars:
-      - name: myvericode
-        type: shell
-        params:
-          cmd: "/opt/homebrew/bin/nu -l -c 'forwarder-parser'"
+  # - trigger: "~ve"
+  #   replace: "{{myvericode}}"
+  #   vars:
+  #     - name: myvericode
+  #       type: shell
+  #       params:
+  #         cmd: "mise set ID_NUMBER"
+  #         shell: "nu"
   
   - trigger: "~edu"
     replace: "cqupt.edu.cn"
@@ -67,7 +70,8 @@ matches:
       - name: mystuid
         type: shell
         params:
-          cmd: "/opt/homebrew/bin/mise exec --cd ~ -- sh -c 'echo $STU_ID'"
+          cmd: "mise set STU_ID"
+          shell: "nu"
         
   - trigger: "~cls"
     replace: "{{myclassid}}"
@@ -75,4 +79,5 @@ matches:
       - name: myclassid
         type: shell
         params:
-          cmd: "/opt/homebrew/bin/mise exec --cd ~ -- sh -c 'echo $CLASS_ID'"
+          cmd: "mise set CLASS_ID"
+          shell: "nu"
