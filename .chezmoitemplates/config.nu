@@ -10,6 +10,7 @@ if (is-installed "edit") {
 	$env.EDITOR = "edit"
 }
 $env.TERM = "xterm-256color"  # for ghostty
+$env.config.shell_integration.osc133 = false # for wezterm
 
 # Use difft
 if (is-installed "difft") {

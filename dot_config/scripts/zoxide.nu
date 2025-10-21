@@ -10,9 +10,9 @@ export def --env cd [ dir?: string ] {
 		mise trust | complete | ignore  # trust config files
 		mise install # auto install dependencies
 	}
-	if (".jj" | path exists) {
-		hj pull main
-	}
+	# if (".jj" | path exists) {
+	# 	hj pull main
+	# }
 }
 
 # mkdir and cd into it.
