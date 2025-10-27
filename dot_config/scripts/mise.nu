@@ -34,3 +34,4 @@ export def d [] {
 
 export alias t = mise run test
 export alias b = mise run build
+

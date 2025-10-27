@@ -33,8 +33,7 @@ export def "setup-init" [] {
 		print "⚠️ `starship` is not installed. Skip."
 	}
 	if (is-installed "mise") {
-		^mise activate nu 	| str replace -r  "def --env mise_hook" "export def --env mise_hook"
-											| save -f ($MY_AUTOLOAD | path join "mise.nu")
+		^mise activate nu | str replace --regex `\$env\.Path\s*=\s*r#'((.|\n)*?)'#\)` '' |  save -f ($MY_AUTOLOAD | path join "mise.nu")
 	} else {
 		print "⚠️ `mise` is not installed. Skip."
 	}

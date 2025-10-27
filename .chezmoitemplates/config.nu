@@ -20,7 +20,7 @@ if (is-installed "difft") {
 # Windows does not have $env.HOME and its default working directory
 $env.HOME = '~' | path expand
 
-
+$env.MISE_WINDOWS_DEFAULT_INLINE_SHELL_ARGS = "powershell -c"
 
 # Yazi, for Windows compatibility
 $env.YAZI_CONFIG_HOME = "~/.config/yazi" | path expand
@@ -47,10 +47,11 @@ source ($MY_AUTOLOAD | path join "zoxide.nu" | path expand)
 # To initialize it, run `setup-init`.
 source ($MY_AUTOLOAD | path join "starship.nu" | path expand)
 
-# mise
-# To initialize it, run `setup-init`.
+# # mise
+# # To initialize it, run `setup-init`.
 use ($MY_AUTOLOAD | path join "mise.nu" | path expand)
-mise mise_hook  # update immediately
+# mise mise_hook  # update immediately
+# use ($nu.default-config-dir | path join mise.nu)
 
 # atuin
 # To initialize it, run `setup-init`.
@@ -197,5 +198,3 @@ use $"($MY_SCRIPTS)/himalaya.nu" *
 
 # ✨ mihome
 use $"($MY_SCRIPTS)/mihome.nu" *
-
-

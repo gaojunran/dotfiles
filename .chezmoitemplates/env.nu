@@ -85,6 +85,10 @@ def install-script [
 use std/util "path add"
 
 # 🪐 PATH
+if (is-windows) {
+    path add "~/scoop/apps/openssl/current/bin"
+    path add "~/scoop/shims"
+}
 path add "~/.config/bin"
 path add "/opt/homebrew/bin"
 path add "/opt/homebrew/opt/openjdk@21/bin"
@@ -116,3 +120,7 @@ alias "%rm" = rm
 
 # pnpm
 $env.PNPM_HOME = "~/.pnpm" | path expand
+
+# # mise
+# let mise_path = $nu.default-config-dir | path join mise.nu
+# ^mise activate nu | save $mise_path --force

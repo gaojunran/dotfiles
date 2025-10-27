@@ -18,14 +18,14 @@ export alias yp = y ~/Playground
 export alias yP = y ~/Projects
 
 
-# use code to open in pwd, or open a dir.
+# use code(zed now) to open in pwd, or open a dir.
 export def c [ arg?: string ] {
   if $in == null and $arg == null {
-		code .
+		zed .
 	} else if $arg == null {
-		code $in
+		zed $in
 	} else {
-		code $arg
+		zed $arg
 	}
 }
 

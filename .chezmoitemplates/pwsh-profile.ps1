@@ -5,3 +5,8 @@ foreach ($alias in $bashConflicts) {
         Remove-Item "Alias:\$alias" -Force -ErrorAction SilentlyContinue
     }
 }
+
+$shimPath = "$env:USERPROFILE\AppData\Local\mise\shims"
+$currentPath = [Environment]::GetEnvironmentVariable('Path', 'User')
+$newPath = $currentPath + ";" + $shimPath
+[Environment]::SetEnvironmentVariable('Path', $newPath, 'User')
