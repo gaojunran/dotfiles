@@ -1,6 +1,6 @@
 export alias dot = chezmoi
 export alias dota = chezmoi apply --force -k --override-data-file ~/env.local.yaml
-export alias dote = code (chezmoi source-path)
+export alias dote = zed (chezmoi source-path)
 export def dotu [] {
   hj pull main
   dotr
