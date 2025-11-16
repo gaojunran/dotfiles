@@ -72,7 +72,7 @@ matches:
         params:
           cmd: "mise set STU_ID"
           shell: "nu"
-        
+
   - trigger: "~cls"
     replace: "{{myclassid}}"
     vars:

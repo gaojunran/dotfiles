@@ -1,0 +1,33 @@
+matches:
+  - trigger: "~branch"
+    replace: "{{branch}}"
+
+    vars:
+      - name: "form1"
+        type: form
+        params:
+          layout: |
+            Kind: [[kind]]
+            Issue ID: [[issue]]
+            Modules (one per line):
+            [[modules]]
+          fields:
+            kind:
+              type: list
+              values:
+                - feat
+                - fix
+                - chore
+            issue:
+              default: ""
+            modules:
+              multiline: true
+
+      - name: "branch"
+        type: script
+        params:
+          args:
+            - deno 
+            - run 
+            - -A 
+            - "%CONFIG%/scripts/branchExpand.js"

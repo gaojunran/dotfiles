@@ -92,6 +92,12 @@ alias s = zellij attach services --force-run-commands
 alias pf = pitchfork
 alias hf = hyperfine
 
+## for hj
+alias nm = hj new --mine
+alias em = hj edit --mine
+alias cm = hj commit
+alias p = hj push
+alias pl = hj pull
 
 # Find help from `<command> --help`.
 def "?" --wrapped [
@@ -193,8 +199,8 @@ use $"($MY_SCRIPTS)/mise.nu" *
 # ✨ blog
 use $"($MY_SCRIPTS)/blog.nu" *
 
-# ✨ himalaya
-use $"($MY_SCRIPTS)/himalaya.nu" *
+# ✨ himalaya, disabled as I'm not using it now.
+# use $"($MY_SCRIPTS)/himalaya.nu" *
 
 # ✨ mihome
 use $"($MY_SCRIPTS)/mihome.nu" *
