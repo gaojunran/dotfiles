@@ -91,21 +91,16 @@ if (is-windows) {
 }
 path add "~/.config/bin"
 path add "/opt/homebrew/bin"
-path add "/opt/homebrew/opt/openjdk@21/bin"
-path add "/opt/homebrew/bin"
 path add "/opt/homebrew/anaconda3/bin"
 path add "~/.cargo/bin"
-path add "~/Library/Application Support/JetBrains/Toolbox/scripts"
 path add "~/Projects/scripts"
 path add "/usr/local/bin"
 path add "~/.local/bin"
 path add "/home/linuxbrew/.linuxbrew/bin"
-path add "/opt/homebrew/opt/postgresql@17/bin"
-path add "/opt/homebrew/opt/rustup/bin"
 path add "~/.pnpm"
 path add "~/.bun/bin"
 path add "~/.dotnet/tools"
-# path add "AppData/Local/mise/shims"
+path add "~/.moon/bin"
 
 # 🪐 Env
 

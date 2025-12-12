@@ -93,10 +93,15 @@ alias pf = pitchfork
 alias hf = hyperfine
 
 ## for hj
-alias nm = hj new --mine
-alias em = hj edit --mine
+# alias nm = hj new --mine
+# alias em = hj edit --mine
 alias cm = hj commit
-alias p = hj push
+alias cmp = hj commit --push
+alias am = hj amend --force
+alias amp = hj amend --force --push
+alias rs = hj reset --force
+alias rsp = hj reset --force --push
+alias pp = hj push
 alias pl = hj pull
 
 # Find help from `<command> --help`.
@@ -104,21 +109,6 @@ def "?" --wrapped [
 	...cmd
 ] {
 	nu -l -c (($cmd | str join " ") +  " --help")
-}
-
-# create new files/directories.
-def new [suffix: string, ...rest: string] {
-	if ($suffix == '/') {
-		for $name in $rest {
-			mkdir $name
-			print ("Created `" + $name + "/`")
-		}
-	} else {
-		for $name in $rest {
-			touch ($name + "." + $suffix)
-			print ("Created `" + $name + "." + $suffix + "`")
-		}
-	}
 }
 
 # `rm` with a better default configuration (Auto trash, force, recursive, and able to remove PWD itself.)
