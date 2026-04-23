@@ -6,5 +6,6 @@
   "files.associations": {
     ".chezmoi*.yaml": "helm",
     "*.tmpl": "helm"
-  }
+  },
+  "git.enabled": false
 }

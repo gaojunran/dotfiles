@@ -1,0 +1,2 @@
+[providers]
+age = { type = "age", recipients = ["age15nqecd9kszshtxpgvppxrlsac9gt22mw5ckx7gpmzj3prmnapfcswjadxa"] }

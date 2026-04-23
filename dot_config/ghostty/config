@@ -1,5 +1,5 @@
 # Use nushell in homebrew folder.
-command = "/opt/homebrew/bin/nu"
+command = "/opt/homebrew/bin/fish"
 
 # Font
 font-family = "JetBrains Mono"
