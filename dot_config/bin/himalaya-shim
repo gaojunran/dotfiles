@@ -1,2 +1,0 @@
-#!/usr/bin/env bash
-/opt/homebrew/bin/mise exec --cd ~ -- /opt/homebrew/bin/himalaya "$@"

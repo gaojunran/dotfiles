@@ -1,7 +1,0 @@
-layout {
-  tab {
-    pane command="syncthing" {
-      
-    }
-  }
-}

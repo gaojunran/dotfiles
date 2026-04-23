@@ -1,6 +1,0 @@
-- [x] nushell -> fish
-- [x] source (starship, mise, ...) in fish
-- [ ] chezmoi
-- [ ] manage env vars with mise + fnox (better not to rely on chezmoi)
-- [ ] add my own skills
-- [ ] remove useless dotfiles ( windows compatibility, ...)  

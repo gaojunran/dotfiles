@@ -1,10 +1,12 @@
-brew "aichat"
+# brew "aichat"
+brew "age"
 brew "aria2"
-brew "atuin"
+brew "ast-grep"
+# brew "atuin"
 # brew "asdf" # replaced by mise
 brew "bash"  # bash 5
 brew "bat"
-brew "bore-cli"
+# brew "bore-cli"
 brew "bottom"
 # brew "bun" # replaced by mise
 # brew "chezmoi" # you should install it manually, because this file is synced with chezmoi.
@@ -13,18 +15,19 @@ brew "dua-cli"
 brew "eza"
 brew "fastfetch"
 brew "fd"
+brew "ffmpeg"
 brew "fzf"
 brew "gh"
-brew "glow"
+# brew "glow"
 # brew "go" # replaced by mise
 # brew "gradle" # replaced by mise
 brew "hexyl"
-brew "himalaya"
+# brew "himalaya"
 brew "hyperfine"
 # brew "htop" # replaced by bottom
 # brew "jc"  # https://github.com/kellyjonbrazil/jc
 brew "jj"
-brew "just"
+# brew "just" # replaced by mise
 brew "killport" # https://github.com/jkfran/killport
 # brew "lazygit"  # I prefer jj and hj
 brew "mise"
@@ -40,13 +43,13 @@ brew "ripgrep"
 brew "repomix"
 # brew "scrcpy"
 brew "sqlite"
-brew "starship"
-brew "tldr"
+# brew "starship"
+# brew "tldr"
 brew "tokei"
 brew "typst"
-brew "xo/xo/usql"
+# brew "xo/xo/usql"
 brew "uv"
-brew "watchexec"
+# brew "watchexec" # more often to use mise 
 # brew "xmake"
 brew "yazi"
 brew "zoxide"

@@ -1,3 +1,4 @@
+# work only
 [env]
 JJ_USER = "{{env.WORK_USER}}"
 JJ_EMAIL = "{{env.WORK_EMAIL}}"

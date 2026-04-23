@@ -1,2 +1,6 @@
 [env]
 '_'.file = ["env.yaml", "env.local.yaml"]
+
+[tools]
+pitchfork = "latest"
+fnox = "latest"

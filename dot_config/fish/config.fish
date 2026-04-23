@@ -14,8 +14,9 @@ end
 
 # 固定的 env vars
 # 注意：动态变化的环境变量应由 mise or fnox 管理
-# 据说在 config.fish 里用 -Ux 才是标准做法（可持久 + 自动 export）
+# 据说在 config.fish 里用 -Ux 才是标准做法
 set -Ux HOMEBREW_CASK_OPTS "--appdir=$HOME/Applications"
+set -Ux TERM "xterm-256color" # ghostty
 
 # yazi
 function y
@@ -32,12 +33,14 @@ end
 alias r "clear && exec fish"
 alias cat bat
 alias ff fastfetch
+alias of onefetch
 alias ls "eza -a -T"
 alias dotr "chezmoi apply -k --force && clear && exec fish"  # FIXME: remove -k --force
 alias hex hexyl
 alias ouc "ouch compress --gitignore"
 alias oud "ouch decompress"
 alias s "zellij attach services --force-run-commands"  # FIXME: find a better way to multi process
+alias top "btm -b"
 alias pf pitchfork
 alias hf hyperfine
 alias cc "cb copy"
@@ -48,16 +51,17 @@ alias use "mise use"
 alias c "code"  # FIXME: maybe later a dynamic env
 alias o "start"
 alias cd z    # FIXME: can be better
-alias cdp "cd ~/Playground"
-alias cdi "cd ~/Projects"
-alias cdw "cd ~/Work"
+alias cdp "builtin cd ~/Playground"
+alias cdi "builtin cd ~/Projects"
+alias cdw "builtin cd ~/Work"
 alias bri "brew install"
 alias bru "brew upgrade"
 alias brl "brew list"
 alias brx "brew uninstall"
 alias brs "brew search"
 
-
+alias pp "hj push"
+alias pl "hj pull"
 
 
 # 如果没有提供参数，则创建一个随机目录
