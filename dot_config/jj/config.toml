@@ -7,3 +7,4 @@ email = "nebula2021@126.com"
 
 [ui]
 default-command = "log"
+ui.diff-editor = ":builtin"
