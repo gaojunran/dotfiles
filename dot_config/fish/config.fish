@@ -55,8 +55,13 @@ alias brl "brew list"
 alias brx "brew uninstall"
 alias brs "brew search"
 
+alias cm "hj commit"
 alias pp "hj push"
 alias pl "hj pull"
+alias desc "hj desc -m"
+alias sh "hj show"  # FIXME: this overrides the default sh
+alias ss "hj show --stat"
+alias df "hj diff"  # FIXME: this overrides the default df
 
 
 # 如果没有提供参数，则创建一个随机目录
