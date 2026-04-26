@@ -4,6 +4,7 @@
 set -Ux HOMEBREW_CASK_OPTS "--appdir=$HOME/Applications"
 set -Ux TERM "xterm-256color" # ghostty
 set -Ux PNPM_HOME "/Users/nebula/Library/pnpm"
+set -Ux EDITOR hx
 
 
 # PATH
