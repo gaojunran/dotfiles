@@ -55,6 +55,11 @@ alias brl "brew list"
 alias brx "brew uninstall"
 alias brs "brew search"
 
+alias new "hj new"
+alias ed "hj edit"
+alias am "hj amend"
+alias rs "hj reset"
+alias th "hj throw"
 alias cm "hj commit"
 alias pp "hj push"
 alias pl "hj pull"
@@ -63,6 +68,8 @@ alias sh "hj show"  # FIXME: this overrides the default sh
 alias ss "hj show --stat"
 alias df "hj diff"  # FIXME: this overrides the default df
 
+alias cb "codebuddy --continue --dangerously-skip-permissions"
+alias ci "claude-internal --continue --dangerously-skip-permissions"
 
 # 如果没有提供参数，则创建一个随机目录
 function mc
