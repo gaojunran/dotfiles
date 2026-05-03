@@ -8,12 +8,15 @@
 
 - 优先使用 `?` 操作符传播错误，而不是 `match` / `unwrap` / `expect`。仅在确实不可能失败的场景使用 `unwrap` / `expect`，并辅以清晰的 `expect` 信息说明不变式。
 - 使用 `Option` / `Result` 的组合子：`map`、`and_then`、`ok_or`、`ok_or_else`、`unwrap_or`、`unwrap_or_else`、`unwrap_or_default`，避免冗长的 `match`。
+- `map_or` 优于 `map(...).unwrap_or(...)`。
+- 避免把 Option 和 Result 来回 map → transpose → ok → flatten 多层折返；例如 `and_then(|t| getopt(t).ok())`，就更简洁。
 - 错误处理：库代码用 `thiserror` 定义具体错误类型；应用代码用 `anyhow` 简化。避免直接 `Box<dyn Error>`。
 - `#[derive(Debug, thiserror::Error)]` + `#[from]` 自动生成错误转换，省掉手写 `impl From`。
 
 #### 模式匹配与控制流
 
 - 使用 `if let` / `let ... else` / `while let` 处理单一分支的模式匹配。`if / while let` chain 比嵌套更好。
+- 用 let-else 替代 early-return 型 match。推荐这种写法：`let Some(v) = x else { return; };`。
 - 熟练使用解构：函数参数、`let` 绑定、`match` 臂中的结构体与元组解构。
 - 用枚举 + 穷尽 `match` 表达有限状态，让编译器帮忙检查遗漏分支。避免 `_ =>` 兜底，除非确实合理。
 - 善用 `matches!` 宏替代 `if let Some(_) = ...` 或 `match` 只为判真假的场景。
@@ -41,7 +44,7 @@
 #### 类型系统与 API 设计
 
 - 用 `From` / `Into` / `TryFrom` 表达类型转换；实现 `From` 即可自动获得 `Into`。
-- 在以下情况下（主键/ID、带单位的参数、带约束或独立逻辑的参数），用 newtype 包装原始类型以表达语义（如 `struct UserId(u64)`），避免原始类型滥用。
+- 在以下情况下（主键/ID、带单位的参数、带约束或独立逻辑的参数），用 newtype 包装原始类型以表达语义（如 `struct UserId(u64)`），避免原始类型滥用。尽量用第三方库（如 `derive_more` crate）而不是手写 newtype 模式。
 - trait 约束复杂时用 `where` 子句换行书写，优于塞满尖括号；`impl Trait` 作参数/返回值，避免暴露具体类型。
 - 需要抽象多种输入时用 `impl AsRef<Path>` / `impl Into<String>` / `impl IntoIterator` 做函数签名，调用端零样板。
 - 用扩展 trait（extension trait）为外部类型加方法：`trait StrExt { ... } impl StrExt for str { ... }`，让调用点链式自然。
