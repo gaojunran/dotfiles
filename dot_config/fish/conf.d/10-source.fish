@@ -14,16 +14,22 @@ fish_add_path -U $HOME/.moon/bin
 fish_add_path -U $PNPM_HOME
 
 # brew
-/opt/homebrew/bin/brew shellenv fish | source
+# /opt/homebrew/bin/brew shellenv fish | source
 
 # zoxide
-zoxide init fish | source
+if type -q zoxide
+  zoxide init fish | source
+end
 
 # pitchfork
 # FIXME: use brew to install pitchfork; now using cargo
-pitchfork activate fish | source
+if type -q pitchfork
+  pitchfork activate fish | source
+end
 
 # fnox
-fnox activate fish | source
+if type -q fnox
+  fnox activate fish | source
+end
 
 # 注意：后面与具体项目相关的开发工具优先用 mise 来安装。
