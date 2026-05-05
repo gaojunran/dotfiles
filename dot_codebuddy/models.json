@@ -1,0 +1,12 @@
+{
+  "models": [
+    {
+      "id": "glm-5.1",
+      "name": "glm-5.1-venus",
+      "vendor": "custom",
+      "apiKey": "${VENUS_TOKEN}",
+      "url": "http://v2.open.venus.oa.com/llmproxy/chat/completions",
+      "supportsToolCall": true
+    }
+  ]
+}
