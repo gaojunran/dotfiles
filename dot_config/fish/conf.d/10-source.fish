@@ -14,7 +14,10 @@ fish_add_path -U $HOME/.moon/bin
 fish_add_path -U $PNPM_HOME
 
 # brew
-# /opt/homebrew/bin/brew shellenv fish | source
+if not type -q brew
+  # 注意：brew + fish 不需要 activate，但其他情况需要
+  mise activate fish | source
+end
 
 # zoxide
 if type -q zoxide
