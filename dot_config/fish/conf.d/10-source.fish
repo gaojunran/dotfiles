@@ -3,7 +3,7 @@
 # 据说在 config.fish 里用 -Ux 才是标准做法
 set -Ux HOMEBREW_CASK_OPTS "--appdir=$HOME/Applications"
 set -Ux TERM "xterm-256color" # ghostty
-set -Ux PNPM_HOME "/Users/nebula/Library/pnpm"
+set -Ux PNPM_HOME $HOME/Library/pnpm
 set -Ux EDITOR hx
 
 
