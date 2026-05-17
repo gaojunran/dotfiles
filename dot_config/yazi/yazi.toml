@@ -12,7 +12,7 @@ run   = 'code -w "$@"'
 block = true
 
 [[open.prepend_rules]]
-name = "bulk-rename.txt"
+url = "bulk-rename.txt"
 use  = "bulk-rename"
 
 # https://github.com/ndtoan96/ouch.yazi

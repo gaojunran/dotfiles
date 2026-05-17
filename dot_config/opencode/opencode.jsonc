@@ -1,0 +1,24 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "venus": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "venus",
+      "options": {
+        "baseURL": "http://v2.open.venus.oa.com/llmproxy",
+        "apiKey": "{env:VENUS_TOKEN}",
+      },
+      "models": {
+        "glm-5.1": {
+          "name": "glm-5.1",
+        },
+        "deepseek-v4-pro": {
+          "name": "deepseek-v4-pro",
+        },
+        "kimi-k2.6": {
+          "name": "kimi-k2.6",
+        },
+      },
+    },
+  },
+}
