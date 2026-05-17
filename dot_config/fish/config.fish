@@ -1,7 +1,14 @@
 set fish_greeting
 
 function fish_prompt
-    set_color blue
+    switch (uname)
+        case Darwin
+            set_color blue
+        case Linux
+            set_color yellow
+        case '*'
+            set_color blue
+    end
     echo -n (prompt_pwd)
     set_color normal
     echo -n ' > '
@@ -70,6 +77,7 @@ alias df "hj diff"  # FIXME: this overrides the default df
 
 alias cbc "codebuddy --continue --dangerously-skip-permissions"
 alias cci "claude-internal --continue --dangerously-skip-permissions"
+alias oc "opencode --continue"
 
 # 如果没有提供参数，则创建一个随机目录
 function mc
