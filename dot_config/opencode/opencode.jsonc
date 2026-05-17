@@ -17,6 +17,10 @@
         },
         "kimi-k2.6": {
           "name": "kimi-k2.6",
+          "limit": {
+            "context": 99072,
+            "output": 32000,
+          },
         },
       },
     },
