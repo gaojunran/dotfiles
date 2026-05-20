@@ -1,9 +1,12 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "compaction": {
+    "auto": true,
+  },
   "permission": {
-      "*": {
-        "*": "allow",
-      }
+    "*": {
+      "*": "allow",
+    },
   },
   "provider": {
     "venus": {
@@ -16,15 +19,23 @@
       "models": {
         "glm-5.1": {
           "name": "glm-5.1",
+          "limit": {
+            "context": 143616,
+            "output": 32768,
+          },
         },
         "deepseek-v4-pro": {
           "name": "deepseek-v4-pro",
+          "limit": {
+            "context": 800000,
+            "output": 32768,
+          },
         },
         "kimi-k2.6": {
           "name": "kimi-k2.6",
           "limit": {
-            "context": 99072,
-            "output": 32000,
+            "context": 193616,
+            "output": 16384,
           },
         },
       },
