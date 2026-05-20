@@ -20,8 +20,8 @@
         "glm-5.1": {
           "name": "glm-5.1",
           "limit": {
-            "context": 143616,
-            "output": 32768,
+            "context": 99072,
+            "output": 32000,
           },
         },
         "deepseek-v4-pro": {
@@ -34,8 +34,8 @@
         "kimi-k2.6": {
           "name": "kimi-k2.6",
           "limit": {
-            "context": 193616,
-            "output": 16384,
+            "context": 99072,
+            "output": 32000,
           },
         },
       },
