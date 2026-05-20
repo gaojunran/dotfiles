@@ -1,4 +1,5 @@
 {
+  "plugin": ["oh-my-openagent@latest"],
   "$schema": "https://opencode.ai/config.json",
   "compaction": {
     "auto": true,
@@ -27,8 +28,8 @@
         "deepseek-v4-pro": {
           "name": "deepseek-v4-pro",
           "limit": {
-            "context": 800000,
-            "output": 32768,
+            "context": 99072,
+            "output": 32000,
           },
         },
         "kimi-k2.6": {

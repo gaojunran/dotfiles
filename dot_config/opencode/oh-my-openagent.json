@@ -1,0 +1,61 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
+  "agents": {
+    "hephaestus": {
+      "model": "venus/kimi-k2.6"
+    },
+    "oracle": {
+      "model": "venus/kimi-k2.6"
+    },
+    "librarian": {
+      "model": "venus/kimi-k2.6"
+    },
+    "explore": {
+      "model": "venus/kimi-k2.6"
+    },
+    "multimodal-looker": {
+      "model": "venus/kimi-k2.6"
+    },
+    "prometheus": {
+      "model": "venus/kimi-k2.6"
+    },
+    "metis": {
+      "model": "venus/kimi-k2.6"
+    },
+    "momus": {
+      "model": "venus/kimi-k2.6"
+    },
+    "atlas": {
+      "model": "venus/kimi-k2.6"
+    },
+    "sisyphus-junior": {
+      "model": "venus/kimi-k2.6"
+    }
+  },
+  "categories": {
+    "visual-engineering": {
+      "model": "venus/kimi-k2.6"
+    },
+    "ultrabrain": {
+      "model": "venus/kimi-k2.6"
+    },
+    "deep": {
+      "model": "venus/kimi-k2.6"
+    },
+    "artistry": {
+      "model": "venus/kimi-k2.6"
+    },
+    "quick": {
+      "model": "venus/kimi-k2.6"
+    },
+    "unspecified-low": {
+      "model": "venus/kimi-k2.6"
+    },
+    "unspecified-high": {
+      "model": "venus/kimi-k2.6"
+    },
+    "writing": {
+      "model": "venus/kimi-k2.6"
+    }
+  }
+}
