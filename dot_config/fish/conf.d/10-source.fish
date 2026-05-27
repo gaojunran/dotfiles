@@ -12,6 +12,7 @@ fish_add_path -U $HOME/.cargo/bin
 fish_add_path -U $HOME/.local/bin
 fish_add_path -U $HOME/.moon/bin
 fish_add_path -U $PNPM_HOME
+fish_add_path -U $PNPM_HOME/bin
 
 # brew
 if not type -q brew
