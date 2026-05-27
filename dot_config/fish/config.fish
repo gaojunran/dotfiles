@@ -70,10 +70,11 @@ alias th "hj throw"
 alias cm "hj commit"
 alias pp "hj push"
 alias pl "hj pull"
-alias desc "hj desc -m"
-alias sh "hj show"  # FIXME: this overrides the default sh
-alias ss "hj show --stat"
-alias df "hj diff"  # FIXME: this overrides the default df
+alias desc "jj desc -m"
+alias sh "jj show"  # FIXME: this overrides the default sh
+alias ss "jj show --stat"
+alias df "jj diff"  # FIXME: this overrides the default df
+alias f "jj git fetch"
 
 alias cbc "codebuddy --continue --dangerously-skip-permissions"
 alias cci "claude-internal --continue --dangerously-skip-permissions"
