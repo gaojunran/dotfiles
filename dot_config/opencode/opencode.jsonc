@@ -38,35 +38,35 @@
         "glm-5.1": {
           "name": "glm-5.1",
           "limit": {
-            "context": 100000,
+            "context": 150000,
             "output": 32000,
           },
         },
         "deepseek-v4-pro": {
           "name": "deepseek-v4-pro",
           "limit": {
-            "context": 100000,
+            "context": 150000,
             "output": 32000,
           },
         },
         "kimi-k2.6": {
           "name": "kimi-k2.6",
           "limit": {
-            "context": 100000,
+            "context": 150000,
             "output": 32000,
           },
         },
         "minimax-m2.7": {
           "name": "minimax-m2.7",
           "limit": {
-            "context": 100000,
+            "context": 150000,
             "output": 32000,
           },
         },
         "deepseek-v4-flash": {
           "name": "minimax-m2.7",
           "limit": {
-            "context": 100000,
+            "context": 150000,
             "output": 32000,
           },
         },
