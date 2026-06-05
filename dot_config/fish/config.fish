@@ -62,8 +62,8 @@ alias brl "brew list"
 alias brx "brew uninstall"
 alias brs "brew search"
 
-alias new "hj new"
-alias ed "hj edit"
+alias new "jj new"
+alias ed "jj edit"
 alias am "hj amend"
 alias rs "hj reset"
 alias th "hj throw"
@@ -71,9 +71,10 @@ alias cm "hj commit"
 alias pp "hj push"
 alias pl "hj pull"
 alias desc "jj desc -m"
-alias sh "jj show"  # FIXME: this overrides the default sh
+alias show "jj show"
 alias ss "jj show --stat"
 alias df "jj diff"  # FIXME: this overrides the default df
+function dfr; jj diff -f "$argv[1]@origin" -t "$argv[1]@git"; end
 alias f "jj git fetch"
 
 alias 0='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))'
