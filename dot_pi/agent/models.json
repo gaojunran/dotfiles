@@ -1,0 +1,69 @@
+{
+  "providers": {
+    "taiji": {
+      "baseUrl": "http://127.0.0.1:8000",
+      "api": "openai-completions",
+      "apiKey": "$TAIJI_TOKEN",
+      "models": [
+        {
+          "id": "GLM-5_1-Online-128k",
+          "name": "GLM-5_1-Online-128k",
+          "input": ["text", "image"],
+          "contextWindow": 130000,
+          "maxTokens": 32000,
+          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
+        }
+      ]
+    },
+    "venus": {
+      "baseUrl": "http://v2.open.venus.oa.com/llmproxy",
+      "api": "openai-completions",
+      "apiKey": "$VENUS_TOKEN",
+      "models": [
+        {
+          "id": "glm-5.1",
+          "name": "GLM 5.1",
+          "input": ["text", "image"],
+          "contextWindow": 130000,
+          "maxTokens": 32000,
+          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
+        },
+        {
+          "id": "deepseek-v4-pro",
+          "name": "DeepSeek V4 Pro",
+          "reasoning": true,
+          "input": ["text"],
+          "contextWindow": 130000,
+          "maxTokens": 32000,
+          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
+        },
+        {
+          "id": "kimi-k2.6",
+          "name": "Kimi K2.6",
+          "reasoning": true,
+          "input": ["text", "image"],
+          "contextWindow": 130000,
+          "maxTokens": 32000,
+          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
+        },
+        {
+          "id": "minimax-m2.7",
+          "name": "MiniMax M2.7",
+          "input": ["text"],
+          "contextWindow": 130000,
+          "maxTokens": 32000,
+          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
+        },
+        {
+          "id": "deepseek-v4-flash",
+          "name": "DeepSeek V4 Flash",
+          "reasoning": true,
+          "input": ["text"],
+          "contextWindow": 130000,
+          "maxTokens": 32000,
+          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
+        }
+      ]
+    }
+  }
+}

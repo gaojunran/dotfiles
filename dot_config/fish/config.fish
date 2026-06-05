@@ -76,6 +76,13 @@ alias ss "jj show --stat"
 alias df "jj diff"  # FIXME: this overrides the default df
 alias f "jj git fetch"
 
+alias 0='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))'
+alias 1='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_1'
+alias 2='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_2'
+alias 3='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_3'
+alias 4='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_4'
+alias 5='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_5'
+
 alias cbc "codebuddy --continue --dangerously-skip-permissions"
 alias cci "claude-internal --continue --dangerously-skip-permissions"
 alias oc "opencode --continue"
