@@ -62,7 +62,8 @@ alias brl "brew list"
 alias brx "brew uninstall"
 alias brs "brew search"
 
-alias new "jj new"
+alias j "jj"
+alias jn "jj new"
 alias ed "jj edit"
 alias am "hj amend"
 alias rs "hj reset"
@@ -70,11 +71,10 @@ alias th "hj throw"
 alias cm "hj commit"
 alias pp "hj push"
 alias pl "hj pull"
-alias desc "jj desc -m"
-alias show "jj show"
+alias jd "jj desc -m"
+alias js "jj show"
 alias ss "jj show --stat"
 alias df "jj diff"  # FIXME: this overrides the default df
-function dfr; jj diff -f "$argv[1]@origin" -t "$argv[1]@git"; end
 alias f "jj git fetch"
 
 alias 0='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))'
@@ -87,6 +87,9 @@ alias 5='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_5'
 alias cbc "codebuddy --continue --dangerously-skip-permissions"
 alias cci "claude-internal --continue --dangerously-skip-permissions"
 alias oc "opencode --continue"
+
+# FIXME: 应该支持默认值为最近的书签
+function dfr; jj diff -f "$argv[1]@origin" -t "$argv[1]@git"; end
 
 # 如果没有提供参数，则创建一个随机目录
 function mc
