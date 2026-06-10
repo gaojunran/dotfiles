@@ -14,7 +14,12 @@ fish_add_path -U $HOME/.moon/bin
 fish_add_path -U $PNPM_HOME
 fish_add_path -U $PNPM_HOME/bin
 
-# brew
+# Linuxbrew. FIXME: 可能需要兼容性更好的方式
+if test -x /home/linuxbrew/.linuxbrew/bin/brew
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv fish)"
+end
+
+# mise
 if not type -q brew
   # 注意：brew + fish 不需要 activate，但其他情况需要
   mise activate fish | source
