@@ -1,0 +1,12 @@
+model_provider = "cctq-codex-plus"
+model = "gpt-5.4"
+model_reasoning_effort = "high"
+disable_response_storage = true
+
+[model_providers.cctq-codex-plus]
+name = "cctq-codex-plus"
+base_url = "https://www.cctq.ai/v1"
+wire_api = "responses"
+requires_openai_auth = true
+model_context_window = 1000000
+model_auto_compact_token_limit = 900000

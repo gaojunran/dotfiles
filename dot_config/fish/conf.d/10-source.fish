@@ -22,6 +22,7 @@ end
 # mise
 if not type -q brew
   # 注意：brew + fish 不需要 activate，但其他情况需要
+  # 现在有 brew 就要用 brew 来管理 mise
   mise activate fish | source
 end
 
