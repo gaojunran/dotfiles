@@ -44,6 +44,37 @@
         },
       },
     },
+    "astra": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "astra",
+      "options": {
+        "baseURL": "https://astra.woa.com/ai-coding/v1",
+        "apiKey": "{env:ASTRA_TOKEN}",
+      },
+      "models": {
+        "kimi_k2d7_code/thinking": {
+          "name": "kimi_k2d7_code/thinking",
+          "limit": {
+            "context": 200000,
+            "output": 32000,
+          },
+        },
+        "glm_5d1_fp8_code": {
+          "name": "glm_5d1_fp8_code",
+          "limit": {
+            "context": 170000,
+            "output": 32000,
+          },
+        },
+        "minimax_m3_code/infer": {
+          "name": "minimax_m3_code/infer",
+          "limit": {
+            "context": 700000,
+            "output": 32000,
+          },
+        },
+      },
+    },
     "venus": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "venus",

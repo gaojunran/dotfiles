@@ -5,6 +5,15 @@
 name = "gaojunran"
 email = "nebula2021@126.com"
 
+[remotes.origin]
+auto-track-bookmarks = "*"
+
 [ui]
 default-command = "log"
 ui.diff-editor = ":builtin"
+
+[aliases]
+open = ["log", "-r", "heads(mine()) ~ ::trunk()"]
+
+[revset-aliases]
+"d:x" = "diff_lines(substring:x)"

@@ -70,12 +70,14 @@ alias rs "hj reset"
 alias th "hj throw"
 alias cm "hj commit"
 alias pp "hj push"
-alias pl "hj pull"
+# alias pl "hj pull"  # FIXME: 几乎不用 pull
 alias jd "jj desc -m"
 alias js "jj show"
 alias ss "jj show --stat"
 alias df "jj diff"  # FIXME: this overrides the default df
 alias f "jj git fetch"
+alias lr "jj log -r"
+alias rb "jj rebase"
 
 alias 0='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))'
 alias 1='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_1'
