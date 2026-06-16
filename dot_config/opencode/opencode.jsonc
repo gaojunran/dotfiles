@@ -1,38 +1,36 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": [
-    "oh-my-opencode-slim"
-  ],
+  "plugin": ["oh-my-opencode-slim"],
   "agent": {
     "explore": {
-      "disable": true
+      "disable": true,
     },
     "general": {
-      "disable": true
+      "disable": true,
     },
     "build": {
-      "disable": true
+      "disable": true,
     },
     "plan": {
-      "disable": true
-    }
+      "disable": true,
+    },
   },
   "lsp": true,
   "compaction": {
-    "auto": true
+    "auto": true,
   },
   "permission": {
     "*": {
-      "*": "allow"
-    }
+      "*": "allow",
+    },
   },
   "mcp": {
     "wecloud_mcp": {
       "type": "remote",
       "url": "https://prod.mcp.it.woa.com/paasfront_cloud_wedesign_woa_com/mcp",
       "enabled": true,
-      "oauth": {}
-    }
+      "oauth": {},
+    },
   },
   "provider": {
     "taiji": {
@@ -40,93 +38,93 @@
       "npm": "@ai-sdk/openai-compatible",
       "name": "taiji",
       "options": {
-        "apiKey": "{env:TAIJI_TOKEN}"
+        "apiKey": "{env:TAIJI_TOKEN}",
       },
       "models": {
         "GLM-5_1-Online-128k": {
           "name": "GLM-5_1-Online-128k",
           "limit": {
             "context": 130000,
-            "output": 32000
-          }
-        }
-      }
+            "output": 32000,
+          },
+        },
+      },
     },
     "astra": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "astra",
       "options": {
-        "baseURL": "https://astra.woa.com/ai-coding/v1",
-        "apiKey": "{env:ASTRA_TOKEN}"
+        "baseURL": "{env:ASTRA_BASE_URL}",
+        "apiKey": "{env:ASTRA_TOKEN}",
       },
       "models": {
         "kimi_k2d7_code/thinking": {
           "name": "kimi_k2d7_code/thinking",
           "limit": {
             "context": 200000,
-            "output": 32000
-          }
+            "output": 32000,
+          },
         },
         "glm_5d1_fp8_code": {
           "name": "glm_5d1_fp8_code",
           "limit": {
             "context": 170000,
-            "output": 32000
-          }
+            "output": 32000,
+          },
         },
         "minimax_m3_code/infer": {
           "name": "minimax_m3_code/infer",
           "limit": {
             "context": 700000,
-            "output": 32000
-          }
-        }
-      }
+            "output": 32000,
+          },
+        },
+      },
     },
     "venus": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "venus",
       "options": {
         "baseURL": "http://v2.open.venus.oa.com/llmproxy",
-        "apiKey": "{env:VENUS_TOKEN}"
+        "apiKey": "{env:VENUS_TOKEN}",
       },
       "models": {
         "glm-5.1": {
           "name": "glm-5.1",
           "limit": {
             "context": 130000,
-            "output": 32000
-          }
+            "output": 32000,
+          },
         },
         "deepseek-v4-pro": {
           "name": "deepseek-v4-pro",
           "limit": {
             "context": 130000,
-            "output": 32000
-          }
+            "output": 32000,
+          },
         },
         "kimi-k2.6": {
           "name": "kimi-k2.6",
           "limit": {
             "context": 130000,
-            "output": 32000
-          }
+            "output": 32000,
+          },
         },
         "minimax-m2.7": {
           "name": "minimax-m2.7",
           "limit": {
             "context": 130000,
-            "output": 32000
-          }
+            "output": 32000,
+          },
         },
         "deepseek-v4-flash": {
           "name": "deepseek-v4-flash",
           "limit": {
             "context": 130000,
-            "output": 32000
-          }
-        }
-      }
-    }
-  }
+            "output": 32000,
+          },
+        },
+      },
+    },
+  },
 }
