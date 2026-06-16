@@ -78,6 +78,9 @@ alias df "jj diff"  # FIXME: this overrides the default df
 alias f "jj git fetch"
 alias lr "jj log -r"
 alias rb "jj rebase"
+alias bt "jj b t"
+alias bs "jj b s"
+alias bd "jj b d"
 
 alias 0='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))'
 alias 1='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_1'
