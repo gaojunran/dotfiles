@@ -4,7 +4,7 @@
   "presets": {
     "venus": {
       "orchestrator": {
-        "model": "venus/glm-5.1",
+        "model": "astra/glm_5d2_fp8_code",
         "skills": ["*"],
         "mcps": ["*", "!context7"]
       },
@@ -21,17 +21,17 @@
         "mcps": []
       },
       "librarian": {
-        "model": "venus/minimax-m2.7",
+        "model": "astra/minimax_m3_code/infer",
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },
       "explorer": {
-        "model": "venus/minimax-m2.7",
+        "model": "astra/minimax_m3_code/infer",
         "skills": [],
         "mcps": []
       },
       "designer": {
-        "model": "venus/kimi-k2.6",
+        "model": "kimi_k2d7_code/thinking",
         "variant": "medium",
         "skills": ["agent-browser"],
         "mcps": []
@@ -43,7 +43,7 @@
         "mcps": []
       },
       "observer": {
-        "model": "venus/kimi-k2.6",
+        "model": "astra/kimi_k2d7_code/thinking",
         "skills": [],
         "mcps": []
       }
