@@ -72,6 +72,13 @@
             "output": 32000,
           },
         },
+        "glm_5d2_fp8_code": {
+          "name": "glm_5d2_fp8_code",
+          "limit": {
+            "context": 170000,
+            "output": 32000,
+          },
+        },
         "minimax_m3_code/infer": {
           "name": "minimax_m3_code/infer",
           "limit": {
