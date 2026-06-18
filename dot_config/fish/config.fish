@@ -50,9 +50,10 @@ alias cv "cb paste"
 alias cx "cb cut"
 alias run "mise run"
 alias use "mise use"
-alias c "code ."  # FIXME: maybe later a dynamic env
 alias o "start"
 alias cd z    # FIXME: can be better
+alias c "code ."
+alias z "zed ."
 alias cdp "builtin cd ~/Playground"
 alias cdi "builtin cd ~/Projects"
 alias cdw "builtin cd ~/Work"
