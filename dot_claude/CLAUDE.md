@@ -8,7 +8,8 @@
 
 ## Working in Shell
 
-- 始终使用 jj 而不是 git 来执行版本控制操作。参见 (references/jj.md)。
+- 当当前 git 状态处于 Detached HEAD 时，使用 `git branch --contains HEAD` 来获取当前分支名称，并切换到指定分支。或者和用户确认应该切换到什么分支。
+- 始终使用 mise 来管理项目中的环境变量、开发工具和任务。当需要全局安装工具时，先询问用户。
 
 ## Coding
 

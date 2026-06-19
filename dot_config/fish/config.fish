@@ -51,9 +51,8 @@ alias cx "cb cut"
 alias run "mise run"
 alias use "mise use"
 alias o "start"
-alias cd z    # FIXME: can be better
-alias c "code ."
-alias z "zed ."
+alias cd z
+alias c "zed ."
 alias cdp "builtin cd ~/Playground"
 alias cdi "builtin cd ~/Projects"
 alias cdw "builtin cd ~/Work"

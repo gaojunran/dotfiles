@@ -1,3 +1,2 @@
-[daemons."sync-fnox-toml"]
-run = "watchexec -w /Users/nebula/fnox.toml -- cp ~/fnox.toml ~/.local/share/chezmoi/fnox.toml"
-ready_delay = 0
+[settings]
+web.auto_start = true
