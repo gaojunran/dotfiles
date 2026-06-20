@@ -2,3 +2,4 @@
 [env]
 JJ_USER = "{{env.WORK_USER}}"
 JJ_EMAIL = "{{env.WORK_EMAIL}}"
+NPM_CONFIG_REGISTRY = "https://mirrors.tencent.com/npm"
