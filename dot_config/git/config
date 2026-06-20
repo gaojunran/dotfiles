@@ -14,3 +14,6 @@ defaultBranch = main
 
 [core]
 excludesFile = ~/.config/git/exclude
+
+[credential]
+helper = store
