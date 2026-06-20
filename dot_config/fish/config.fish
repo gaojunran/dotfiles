@@ -71,6 +71,7 @@ alias th "hj throw"
 alias cm "hj commit"
 alias pp "hj push"
 # alias pl "hj pull"  # FIXME: 几乎不用 pull
+alias ab "jj abandon"
 alias jd "jj desc -m"
 alias js "jj show"
 alias ss "jj show --stat"
