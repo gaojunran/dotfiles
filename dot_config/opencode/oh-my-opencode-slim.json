@@ -31,13 +31,13 @@
         "mcps": []
       },
       "designer": {
-        "model": "kimi_k2d7_code/thinking",
+        "model": "astra/kimi_k2d7_code/thinking",
         "variant": "medium",
         "skills": ["agent-browser"],
         "mcps": []
       },
       "fixer": {
-        "model": "venus/deepseek-v4-flash",
+        "model": "astra/kimi_k2d7_code/thinking",
         "variant": "high",
         "skills": [],
         "mcps": []

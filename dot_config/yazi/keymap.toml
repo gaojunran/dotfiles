@@ -1,56 +1,61 @@
 # Quick jump to directories
-[[manager.prepend_keymap]]
-on   = [ "g", "d" ]
-run  = "cd ~/Downloads"
+[[mgr.prepend_keymap]]
+on = ["g", "d"]
+run = "cd ~/Downloads"
 desc = "Cd to ~/Downloads"
 
-[[manager.prepend_keymap]]
-on   = [ "g", "i" ]
-run  = "cd ~/Projects"
+[[mgr.prepend_keymap]]
+on = ["g", "i"]
+run = "cd ~/Projects"
 desc = "Cd to ~/Projects"
 
-[[manager.prepend_keymap]]
-on   = [ "g", "s" ]
-run  = "cd ~/Pictures/Screenshots"
+[[mgr.prepend_keymap]]
+on = ["g", "s"]
+run = "cd ~/Pictures/Screenshots"
 desc = "Cd to ~/Pictures/Screenshots"
 
-[[manager.prepend_keymap]]
-on   = [ "g", "p" ]
-run  = "cd ~/Playground"
+[[mgr.prepend_keymap]]
+on = ["g", "p"]
+run = "cd ~/Playground"
 desc = "Cd to ~/Playground"
 
-[[manager.prepend_keymap]]
-on   = [ "g", "o" ]
-run  = "cd ~/Documents"
+[[mgr.prepend_keymap]]
+on = ["g", "o"]
+run = "cd ~/Documents"
 desc = "Cd to ~/Documents"
 
+[[mgr.prepend_keymap]]
+on = ["g", "w"]
+run = "cd ~/Work"
+desc = "Cd to ~/Work"
+
 # Actions
-[[manager.prepend_keymap]]
-on   = [ "c", "c" ]
-run  = 'shell "cb copy $@"'
+[[mgr.prepend_keymap]]
+on = ["c", "c"]
+run = 'shell "cb copy $@"'
 desc = "Copy to clipboard"
 
-[[manager.prepend_keymap]]
-on   = [ "c", "x" ]
-run  = 'shell "cb cut $@"'
+[[mgr.prepend_keymap]]
+on = ["c", "x"]
+run = 'shell "cb cut $@"'
 desc = "Copy to clipboard"
 
-[[manager.prepend_keymap]]
-on   = [ "c", "v" ]
-run  = 'shell "cb paste" --block'
+[[mgr.prepend_keymap]]
+on = ["c", "v"]
+run = 'shell "cb paste" --block'
 desc = "Paste from clipboard"
 
-[[manager.prepend_keymap]]
-on   = [ "c", "p" ]
-run  = 'copy path'
+[[mgr.prepend_keymap]]
+on = ["c", "p"]
+run = 'copy path'
 desc = "Copy file path"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = ["C"]
 run = "plugin ouch"
 desc = "Compress with ouch"
 
-[[manager.prepend_keymap]]
-on   = [ "`" ]
-run  = 'quit'
+[[mgr.prepend_keymap]]
+on = ["`"]
+run = 'quit'
 desc = "Quit Yazi"
