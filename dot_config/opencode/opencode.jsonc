@@ -31,6 +31,14 @@
       "enabled": true,
       "oauth": {},
     },
+    "push_lib": {
+      "type": "remote",
+      "url": "https://wxlib-push.mcp.it.woa.com",
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer {env:PUSH_LIB_TOKEN}",
+      },
+    },
   },
   "provider": {
     "taiji": {
