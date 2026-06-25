@@ -65,12 +65,12 @@ alias brs "brew search"
 alias j "jj"
 alias jn "jj new"
 alias ed "jj edit"
+# FIXME: replace with simple function with jj
 alias am "hj amend"
 alias rs "hj reset"
 alias th "hj throw"
-alias cm "hj commit"
-alias pp "hj push"
-# alias pl "hj pull"  # FIXME: 几乎不用 pull
+alias cm "jj commit -im"
+alias pp "jj b a && jj git push -r 'closest_pushable(@)'"
 alias ab "jj abandon"
 alias jd "jj desc -m"
 alias js "jj show"
@@ -82,6 +82,9 @@ alias rb "jj rebase"
 alias bt "jj b t"
 alias bs "jj b s"
 alias bd "jj b d"
+alias ba "jj b a"
+alias jun "jj undo"
+alias jre "jj redo"
 
 alias 0='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))'
 alias 1='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_1'
@@ -95,7 +98,13 @@ alias cci "claude-internal --continue --dangerously-skip-permissions"
 alias oc "opencode --continue"
 
 # FIXME: 应该支持默认值为最近的书签
-function dfr; jj diff -f "$argv[1]@origin" -t "$argv[1]@git"; end
+function dfr
+    jj diff -f "$argv[1]@origin" -t "$argv[1]@git"
+end
+
+function cmp
+    cm $argv[1] && pp
+end
 
 # 如果没有提供参数，则创建一个随机目录
 function mc
