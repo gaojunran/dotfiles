@@ -1,0 +1,80 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "base_keymap": "VSCode",
+  "cli_default_open_behavior": "existing_window",
+  "mouse_wheel_zoom": true,
+  "ui_font_size": 15,
+  "buffer_font_size": 13,
+  "ui_font_family": "JetBrains Mono",
+  "buffer_font_family": "JetBrains Mono",
+  "colorize_brackets": true,
+  "code_lens": "on",
+  "project_panel": {
+    "starts_open": true,
+    "dock": "left"
+  },
+  "outline_panel": {
+    "dock": "left"
+  },
+  "agent": {
+    "dock": "right",
+    "favorite_models": [],
+    "model_parameters": []
+  },
+  "icon_theme": "Catppuccin Latte",
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "Vitesse Refined Black"
+  },
+  "languages": {
+    "TypeScript": {
+      "formatter": [],
+      "format_on_save": "on",
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
+    },
+    "JavaScript": {
+      "formatter": [],
+      "format_on_save": "on",
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
+    }
+  },
+  "agent_servers": {
+    "codex-acp": {
+      "type": "registry"
+    },
+    "cursor": {
+      "type": "registry"
+    },
+    "opencode": {
+      "default_config_options": {
+        "model": "astra/kimi_k2d7_code/thinking"
+      },
+      "type": "registry"
+    }
+  },
+  "terminal": {
+    "shell": {
+      "program": "/opt/homebrew/bin/fish"
+    }
+  },
+  "session": {
+    "trust_all_worktrees": true
+  },
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 500
+    }
+  }
+}
