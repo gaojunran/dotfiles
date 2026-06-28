@@ -4,9 +4,25 @@
 
 我更喜欢地道的 Rust 代码，偏好简洁，可以适当炫技：
 
+#### 一般原则
+
+- 代码正确性与可读性优先，效率和性能其次，除非任务明确要求后者。
+- 不要写那种单纯总结代码功能的组织性注释或段落注释。注释只用来解释"为什么"这样写，尤其是在原因隐晦或不明显时。
+- 优先在现有文件中实现功能，除非它是一个全新的逻辑组件。避免创建大量小文件。
+- 避免自我发挥式的扩展，除非用户明确要求。
+- 变量名用完整单词，不使用缩写（例如不要用 `q` 表示 `queue`）。
+
 #### 错误与可空处理
 
 - 优先使用 `?` 操作符传播错误，而不是 `match` / `unwrap` / `expect`。仅在确实不可能失败的场景使用 `unwrap` / `expect`，并辅以清晰的 `expect` 信息说明不变式。
+- 避免使用 `unwrap()` 等会 panic 的函数，改用 `?` 等机制传播错误。
+- 对索引等可能越界 panic 的操作保持警惕，必要时先检查长度或使用返回 `Option` 的方法。
+- 不要通过 `let _ =` 静默丢弃可失败操作的错误。要正确处理错误：
+  - 调用方应当处理时，用 `?` 传播。
+  - 需要忽略但保留可见性时，使用 `.log_err()` 或类似方法。
+  - 需要自定义逻辑时，用 `match` 或 `if let Err(...)` 显式处理。
+  - 例如避免 `let _ = client.request(...).await?;`，直接写 `client.request(...).await?;`。
+- 实现可能失败的异步操作时，确保错误能传播到 UI 层（如果有），让用户得到有意义的反馈。
 - 使用 `Option` / `Result` 的组合子：`map`、`and_then`、`ok_or`、`ok_or_else`、`unwrap_or`、`unwrap_or_else`、`unwrap_or_default`，避免冗长的 `match`。
 - `map_or` 优于 `map(...).unwrap_or(...)`。
 - 避免把 Option 和 Result 来回 map → transpose → ok → flatten 多层折返；例如 `and_then(|t| getopt(t).ok())`，就更简洁。
@@ -67,8 +83,19 @@
 #### 异步
 
 - 异步：用 `async` / `.await`，而不是手写 `Future` 或链式 `then`。并发组合使用 `tokio::join!` / `tokio::try_join!` / `futures::future::try_join_all`。
+- 在异步上下文中，用变量遮蔽（shadowing）来限定 clone 的生命周期，让借用引用的存活范围更清晰。例如：
+  ```rust
+  executor.spawn({
+      let task_ran = task_ran.clone();
+      async move {
+          *task_ran.borrow_mut() = true;
+      }
+  });
+  ```
 
 #### 工程化
 
 - 测试与文档：单元测试写在同文件 `#[cfg(test)] mod tests` 中；公共 API 提供 doctest 示例。
 - 遵循 `cargo fmt` 与 `cargo clippy -- -D warnings`，默认开启 `clippy::pedantic` 中合理的 lint。
+- 不要创建 `mod.rs` 文件，优先用 `src/some_module.rs` 而不是 `src/some_module/mod.rs`。
+- 创建新 crate 时，推荐在 `Cargo.toml` 中通过 `[lib] path = "...rs"` 显式指定库根路径，而不是默认的 `lib.rs`，以保持命名一致且有描述性（例如 `gpui.rs` 或 `main.rs`）。

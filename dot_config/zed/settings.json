@@ -16,65 +16,66 @@
   "buffer_font_family": "JetBrains Mono",
   "colorize_brackets": true,
   "code_lens": "on",
+  "soft_wrap": "bounded",
   "project_panel": {
     "starts_open": true,
-    "dock": "left"
+    "dock": "left",
   },
   "outline_panel": {
-    "dock": "left"
+    "dock": "left",
   },
   "agent": {
     "dock": "right",
     "favorite_models": [],
-    "model_parameters": []
+    "model_parameters": [],
   },
   "icon_theme": "Catppuccin Latte",
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "Vitesse Refined Black"
+    "dark": "Vitesse Refined Black",
   },
   "languages": {
     "TypeScript": {
       "formatter": [],
       "format_on_save": "on",
       "code_actions_on_format": {
-        "source.fixAll.eslint": true
-      }
+        "source.fixAll.eslint": true,
+      },
     },
     "JavaScript": {
       "formatter": [],
       "format_on_save": "on",
       "code_actions_on_format": {
-        "source.fixAll.eslint": true
-      }
-    }
+        "source.fixAll.eslint": true,
+      },
+    },
   },
   "agent_servers": {
     "codex-acp": {
-      "type": "registry"
+      "type": "registry",
     },
     "cursor": {
-      "type": "registry"
+      "type": "registry",
     },
     "opencode": {
       "default_config_options": {
-        "model": "astra/kimi_k2d7_code/thinking"
+        "model": "astra/kimi_k2d7_code/thinking",
       },
-      "type": "registry"
-    }
+      "type": "registry",
+    },
   },
   "terminal": {
     "shell": {
-      "program": "/opt/homebrew/bin/fish"
-    }
+      "program": "/opt/homebrew/bin/fish",
+    },
   },
   "session": {
-    "trust_all_worktrees": true
+    "trust_all_worktrees": true,
   },
   "autosave": {
     "after_delay": {
-      "milliseconds": 500
-    }
-  }
+      "milliseconds": 500,
+    },
+  },
 }
