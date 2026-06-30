@@ -62,6 +62,9 @@ alias brl "brew list"
 alias brx "brew uninstall"
 alias brs "brew search"
 
+alias aa "aube add"
+alias aag "aube add -g"
+
 alias j "jj"
 alias jn "jj new"
 alias ed "jj edit"
@@ -86,6 +89,8 @@ alias ba "jj b a"
 alias jun "jj undo"
 alias jre "jj redo"
 
+alias d "mise run dev"
+
 alias 0='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))'
 alias 1='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_1'
 alias 2='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_2'
@@ -99,7 +104,7 @@ alias oc "opencode --continue"
 
 # FIXME: 应该支持默认值为最近的书签
 function dfr
-    jj diff -f "$argv[1]@origin" -t "$argv[1]@git"
+    jj interdiff -f "$argv[1]@origin" -t "$argv[1]@git"
 end
 
 function cmp

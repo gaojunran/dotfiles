@@ -16,7 +16,7 @@
   "buffer_font_family": "JetBrains Mono",
   "colorize_brackets": true,
   "code_lens": "on",
-  "soft_wrap": "bounded",
+  "soft_wrap": "editor_width",
   "project_panel": {
     "starts_open": true,
     "dock": "left",
