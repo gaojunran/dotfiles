@@ -73,7 +73,6 @@ alias am "hj amend"
 alias rs "hj reset"
 alias th "hj throw"
 alias cm "jj commit -im"
-alias pp "jj b a && jj git push -r 'closest_pushable(@)'"
 alias ab "jj abandon"
 alias jd "jj desc -m"
 alias js "jj show"
@@ -109,6 +108,28 @@ end
 
 function cmp
     cm $argv[1] && pp
+end
+
+function pp
+    set -l rev 'heads(::@ & mutable() & ~description(exact:"") & (~empty() | merges()))'
+
+    if test (count $argv) -eq 0
+        jj bookmark move \
+            --from 'heads(::@ & bookmarks())' \
+            --to "$rev" &&
+        jj git push
+        return
+    end
+
+    jj bookmark set -r "$rev" $argv
+    or return
+
+    set -l push_args
+    for b in $argv
+        set push_args $push_args -b $b
+    end
+
+    jj git push $push_args
 end
 
 # 如果没有提供参数，则创建一个随机目录
