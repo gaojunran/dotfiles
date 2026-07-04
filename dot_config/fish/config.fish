@@ -112,7 +112,7 @@ end
 
 function pp
     set -l rev 'heads(::@ & mutable() & ~description(exact:"") & (~empty() | merges()))'
-
+    # 未传参
     if test (count $argv) -eq 0
         jj bookmark move \
             --from 'heads(::@ & bookmarks())' \
@@ -121,6 +121,7 @@ function pp
         return
     end
 
+    # 传参了
     jj bookmark set -r "$rev" $argv
     or return
 
