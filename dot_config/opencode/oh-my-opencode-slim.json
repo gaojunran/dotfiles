@@ -1,49 +1,95 @@
 {
   "$schema": "https://unpkg.com/oh-my-opencode-slim@latest/oh-my-opencode-slim.schema.json",
-  "preset": "venus",
+  "preset": "default",
   "presets": {
-    "venus": {
+    "default": {
       "orchestrator": {
-        "model": "astra/glm_5d2_fp8_code",
+        "model": "cctq/gpt-5.5",
         "skills": ["*"],
         "mcps": ["*", "!context7"]
       },
       "oracle": {
-        "model": "venus/deepseek-v4-pro",
+        "model": "venus/deepseek-v4-pro-external",
         "variant": "max",
         "skills": ["simplify"],
         "mcps": []
       },
       "council": {
-        "model": "venus/deepseek-v4-pro",
+        "model": "venus/deepseek-v4-pro-external",
         "variant": "high",
         "skills": [],
         "mcps": []
       },
       "librarian": {
-        "model": "astra/minimax_m3_code/infer",
+        "model": "venus/minimax-m3-external",
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },
       "explorer": {
-        "model": "astra/minimax_m3_code/infer",
+        "model": "venus/minimax-m3-external",
         "skills": [],
         "mcps": []
       },
       "designer": {
-        "model": "astra/kimi_k2d7_code/thinking",
+        "model": "venus/kimi-k2.7-code-external",
         "variant": "medium",
         "skills": ["agent-browser"],
         "mcps": []
       },
       "fixer": {
-        "model": "astra/kimi_k2d7_code/thinking",
+        "model": "venus/kimi-k2.7-code-external",
         "variant": "high",
         "skills": [],
         "mcps": []
       },
       "observer": {
-        "model": "astra/kimi_k2d7_code/thinking",
+        "model": "venus/kimi-k2.7-code-external",
+        "skills": [],
+        "mcps": []
+      }
+    },
+    "free": {
+      "orchestrator": {
+        "model": "venus/glm-5.2-external",
+        "skills": ["*"],
+        "mcps": ["*", "!context7"]
+      },
+      "oracle": {
+        "model": "venus/deepseek-v4-pro-external",
+        "variant": "max",
+        "skills": ["simplify"],
+        "mcps": []
+      },
+      "council": {
+        "model": "venus/deepseek-v4-pro-external",
+        "variant": "high",
+        "skills": [],
+        "mcps": []
+      },
+      "librarian": {
+        "model": "venus/minimax-m3-external",
+        "skills": [],
+        "mcps": ["websearch", "context7", "grep_app"]
+      },
+      "explorer": {
+        "model": "venus/minimax-m3-external",
+        "skills": [],
+        "mcps": []
+      },
+      "designer": {
+        "model": "venus/kimi-k2.7-code-external",
+        "variant": "medium",
+        "skills": ["agent-browser"],
+        "mcps": []
+      },
+      "fixer": {
+        "model": "venus/kimi-k2.7-code-external",
+        "variant": "high",
+        "skills": [],
+        "mcps": []
+      },
+      "observer": {
+        "model": "venus/kimi-k2.7-code-external",
         "skills": [],
         "mcps": []
       }

@@ -41,19 +41,19 @@
     },
   },
   "provider": {
-    "taiji": {
-      "api": "http://127.0.0.1:8000",
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "taiji",
+    "cctq": {
+      "npm": "@ai-sdk/openai",
       "options": {
-        "apiKey": "{env:TAIJI_TOKEN}",
+        "baseURL": "https://www.cctq.ai/v1",
+        "apiKey": "{env:CCTQ_API_KEY}",
+        "setCacheKey": true,
       },
       "models": {
-        "GLM-5_1-Online-128k": {
-          "name": "GLM-5_1-Online-128k",
-          "limit": {
-            "context": 130000,
-            "output": 32000,
+        "gpt-5.5": {
+          "name": "gpt-5.5",
+          "reasoning": true,
+          "options": {
+            // "reasoningEffort": "xhigh",
           },
         },
       },
@@ -73,13 +73,6 @@
             "output": 32000,
           },
         },
-        "glm_5d1_fp8_code": {
-          "name": "glm_5d1_fp8_code",
-          "limit": {
-            "context": 170000,
-            "output": 32000,
-          },
-        },
         "glm_5d2_fp8_code": {
           "name": "glm_5d2_fp8_code",
           "limit": {
@@ -90,7 +83,7 @@
         "minimax_m3_code/infer": {
           "name": "minimax_m3_code/infer",
           "limit": {
-            "context": 700000,
+            "context": 170000,
             "output": 32000,
           },
         },
@@ -104,38 +97,38 @@
         "apiKey": "{env:VENUS_TOKEN}",
       },
       "models": {
-        "glm-5.1": {
-          "name": "glm-5.1",
+        "kimi-k2.7-code-external": {
+          "name": "kimi-k2.7-code-external",
           "limit": {
-            "context": 130000,
+            "context": 200000,
             "output": 32000,
           },
         },
-        "deepseek-v4-pro": {
-          "name": "deepseek-v4-pro",
+        "glm-5.2-external": {
+          "name": "glm-5.2-external",
           "limit": {
-            "context": 130000,
+            "context": 800000,
             "output": 32000,
           },
         },
-        "kimi-k2.6": {
-          "name": "kimi-k2.6",
+        "deepseek-v4-pro-external": {
+          "name": "deepseek-v4-pro-external",
           "limit": {
-            "context": 130000,
+            "context": 800000,
             "output": 32000,
           },
         },
-        "minimax-m2.7": {
-          "name": "minimax-m2.7",
+        "deepseek-v4-flash-external": {
+          "name": "deepseek-v4-flash-external",
           "limit": {
-            "context": 130000,
+            "context": 800000,
             "output": 32000,
           },
         },
-        "deepseek-v4-flash": {
-          "name": "deepseek-v4-flash",
+        "minimax-m3-external": {
+          "name": "minimax-m3-external",
           "limit": {
-            "context": 130000,
+            "context": 800000,
             "output": 32000,
           },
         },
