@@ -61,4 +61,9 @@
       "cmd-shift-g": "git_panel::ToggleFocus",
     },
   },
+  {
+    "bindings": {
+      "cmd-shift-space": "text_finder::Toggle"
+    }
+  }
 ]
