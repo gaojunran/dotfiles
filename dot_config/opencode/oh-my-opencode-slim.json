@@ -31,19 +31,19 @@
         "mcps": []
       },
       "designer": {
-        "model": "venus/kimi-k2.7-code-external",
+        "model": "venus/glm-5.2-external",
         "variant": "medium",
         "skills": ["agent-browser"],
         "mcps": []
       },
       "fixer": {
-        "model": "venus/kimi-k2.7-code-external",
+        "model": "venus/glm-5.2-external",
         "variant": "high",
         "skills": [],
         "mcps": []
       },
       "observer": {
-        "model": "venus/kimi-k2.7-code-external",
+        "model": "venus/glm-5.2-external",
         "skills": [],
         "mcps": []
       }
@@ -77,19 +77,19 @@
         "mcps": []
       },
       "designer": {
-        "model": "venus/kimi-k2.7-code-external",
+        "model": "venus/glm-5.2-external",
         "variant": "medium",
         "skills": ["agent-browser"],
         "mcps": []
       },
       "fixer": {
-        "model": "venus/kimi-k2.7-code-external",
+        "model": "venus/glm-5.2-external",
         "variant": "high",
         "skills": [],
         "mcps": []
       },
       "observer": {
-        "model": "venus/kimi-k2.7-code-external",
+        "model": "venus/glm-5.2-external",
         "skills": [],
         "mcps": []
       }
