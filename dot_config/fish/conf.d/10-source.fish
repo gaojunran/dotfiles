@@ -7,12 +7,13 @@ set -Ux PNPM_HOME $HOME/Library/pnpm
 set -Ux EDITOR hx
 
 
-# PATH 注意因为是 prepend，在后面的反而优先级更高
+# PATH 注意因为是 prepend，在后面的反而优先级更高。
+# 对已存在于 PATH 的目录，需要加 -m 才会被挪到更前面。
 fish_add_path -U $HOME/.cargo/bin
 fish_add_path -U $HOME/.moon/bin
 fish_add_path -U $PNPM_HOME
 fish_add_path -U $PNPM_HOME/bin
-fish_add_path -U $HOME/.local/bin
+fish_add_path -U -m $HOME/.local/bin
 
 
 # Linuxbrew. FIXME: 可能需要兼容性更好的方式

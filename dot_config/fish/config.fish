@@ -102,36 +102,8 @@ alias cbc "codebuddy --continue --dangerously-skip-permissions"
 alias cci "claude-internal --continue --dangerously-skip-permissions"
 alias oc "opencode --continue"
 
-# FIXME: 应该支持默认值为最近的书签
-function dfr
-    jj interdiff -f "$argv[1]@origin" -t "$argv[1]@git"
-end
-
 function cmp
     cm $argv[1] && pp
-end
-
-function pp
-    set -l rev 'heads(::@ & mutable() & ~description(exact:"") & (~empty() | merges()))'
-    # 未传参
-    if test (count $argv) -eq 0
-        jj bookmark move \
-            --from 'heads(::@ & bookmarks())' \
-            --to "$rev" &&
-        jj git push
-        return
-    end
-
-    # 传参了
-    jj bookmark set -r "$rev" $argv
-    or return
-
-    set -l push_args
-    for b in $argv
-        set push_args $push_args -b $b
-    end
-
-    jj git push $push_args
 end
 
 # 如果没有提供参数，则创建一个随机目录

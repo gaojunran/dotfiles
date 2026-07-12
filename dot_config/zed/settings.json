@@ -24,6 +24,9 @@
   "outline_panel": {
     "dock": "left",
   },
+  "edit_predictions": {
+    "provider": "copilot"
+  },
   "agent": {
     "dock": "right",
     "favorite_models": [],

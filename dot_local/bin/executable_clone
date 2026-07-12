@@ -1,0 +1,3 @@
+#!/usr/bin/env -S usage exec bun
+//USAGE about "Clone a repo."
+//TODO
