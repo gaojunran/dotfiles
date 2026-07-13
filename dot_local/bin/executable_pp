@@ -1,5 +1,5 @@
 #!/usr/bin/env -S usage exec bun
-//USAGE about="Set and push bookmarks to the latest mutable described rev."
+//USAGE about "Set and push bookmarks to the latest mutable described rev."
 //USAGE arg "[bookmark]..." help="Bookmarks to set and push. If omitted, move existing bookmarks to the latest mutable described rev and push."
 
 import { $ } from "bun";
