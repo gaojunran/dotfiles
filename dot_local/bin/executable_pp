@@ -8,6 +8,7 @@ const REV = 'heads(::@ & mutable() & ~description(exact:"") & (~empty() | merges
 const args = process.argv.slice(2);
 
 if (args.length === 0) {
+  // FIXME: 如果有超过一个可 advance 书签应该强制用户选一个，而不是默认移动所有书签
   await $`jj bookmark move --from "heads(::@ & bookmarks())" --to ${REV}`;
   await $`jj git push`;
 } else {
