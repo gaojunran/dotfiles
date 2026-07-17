@@ -136,6 +136,9 @@
       "options": {
         "baseURL": "http://v2.open.venus.oa.com/llmproxy",
         "apiKey": "{env:VENUS_TOKEN}",
+        "headers": {
+          "Venus-Sticky-Routing": "token"
+        }
       },
       "models": {
         "kimi-k2.7-code-external": {
