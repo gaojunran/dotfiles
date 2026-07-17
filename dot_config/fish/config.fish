@@ -41,7 +41,6 @@ alias dotr "chezmoi apply -k --force && clear && exec fish"  # FIXME: remove -k 
 alias hex hexyl
 alias ouc "ouch compress --gitignore"
 alias oud "ouch decompress"
-alias s "zellij attach services --force-run-commands"  # FIXME: find a better way to multi process
 alias top "btm -b"
 alias pf pitchfork
 alias hf hyperfine
@@ -69,10 +68,12 @@ alias aag "aube add -g"
 alias j "jj"
 alias jn "jj new"
 alias ed "jj edit"
+
 # FIXME: replace with simple function with jj
 alias am "hj amend"
 alias rs "hj reset"
 alias th "hj throw"
+
 alias cm "jj commit -im"
 alias ab "jj abandon"
 alias jd "jj desc -m"
@@ -98,7 +99,6 @@ alias 3='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_3'
 alias 4='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_4'
 alias 5='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_5'
 
-alias cbc "codebuddy --continue --dangerously-skip-permissions"
 alias cci "claude-internal --continue --dangerously-skip-permissions"
 alias oc "opencode --continue"
 
