@@ -31,7 +31,6 @@
         "mcps": []
       },
       "designer": {
-        "$comment": "FIXME: 后面要把这几个模型换掉",
         "model": "venus/glm-5.2-external",
         "variant": "medium",
         "skills": ["agent-browser"],
