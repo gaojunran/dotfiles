@@ -4,7 +4,7 @@
   "presets": {
     "default": {
       "orchestrator": {
-        "model": "cctq/gpt-5.6-terra",
+        "model": "venus/glm-5.2-external",
         "skills": ["*"],
         "mcps": ["*", "!context7"]
       },
@@ -31,6 +31,7 @@
         "mcps": []
       },
       "designer": {
+        "$comment": "FIXME: 后面要把这几个模型换掉",
         "model": "venus/glm-5.2-external",
         "variant": "medium",
         "skills": ["agent-browser"],
@@ -50,46 +51,46 @@
     },
     "free": {
       "orchestrator": {
-        "model": "venus/glm-5.2-external",
+        "model": "astra/glm_5d2_fp8_1m_code",
         "skills": ["*"],
         "mcps": ["*", "!context7"]
       },
       "oracle": {
-        "model": "venus/deepseek-v4-pro-external",
+        "model": "astra/glm_5d2_fp8_code",
         "variant": "max",
         "skills": ["simplify"],
         "mcps": []
       },
       "council": {
-        "model": "venus/deepseek-v4-pro-external",
+        "model": "astra/glm_5d2_fp8_code",
         "variant": "high",
         "skills": [],
         "mcps": []
       },
       "librarian": {
-        "model": "venus/minimax-m3-external",
+        "model": "astra/minimax_m3_code/infer",
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },
       "explorer": {
-        "model": "venus/minimax-m3-external",
+        "model": "astra/minimax_m3_code/infer",
         "skills": [],
         "mcps": []
       },
       "designer": {
-        "model": "venus/glm-5.2-external",
+        "model": "astra/glm_5d2_fp8_code",
         "variant": "medium",
         "skills": ["agent-browser"],
         "mcps": []
       },
       "fixer": {
-        "model": "venus/glm-5.2-external",
+        "model": "astra/glm_5d2_fp8_code",
         "variant": "high",
         "skills": [],
         "mcps": []
       },
       "observer": {
-        "model": "venus/glm-5.2-external",
+        "model": "astra/glm_5d2_fp8_code",
         "skills": [],
         "mcps": []
       }
