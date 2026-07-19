@@ -1,58 +1,62 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["oh-my-opencode-slim"],
+  "plugin": [
+    "oh-my-opencode-slim",
+    "@cortexkit/opencode-magic-context@latest"
+  ],
   "agent": {
     "explore": {
-      "disable": true,
+      "disable": true
     },
     "general": {
-      "disable": true,
+      "disable": true
     },
     "build": {
-      "disable": true,
+      "disable": true
     },
     "plan": {
-      "disable": true,
-    },
+      "disable": true
+    }
   },
   "lsp": true,
   "compaction": {
-    "auto": true,
+    "auto": false,
+    "prune": false
   },
   "permission": {
     "*": {
-      "*": "allow",
-    },
+      "*": "allow"
+    }
   },
   "mcp": {
     "wecloud_mcp": {
       "type": "remote",
       "url": "https://prod.mcp.it.woa.com/paasfront_cloud_wedesign_woa_com/mcp",
       "enabled": true,
-      "oauth": {},
+      "oauth": {}
     },
     "push_lib": {
       "type": "remote",
       "url": "https://wxlib-push.mcp.it.woa.com",
       "enabled": true,
       "headers": {
-        "Authorization": "Bearer {env:PUSH_LIB_TOKEN}",
-      },
-    },
+        "Authorization": "Bearer {env:PUSH_LIB_TOKEN}"
+      }
+    }
   },
   "provider": {
     "copilot": {
       "npm": "@ai-sdk/openai",
       "options": {
         "baseURL": "https://copilot.code.woa.com/server/hermes-agent/copilot-gateway/v1",
-        "apiKey": "no-key-required",
+        "apiKey": "no-key-required"
       },
       "models": {
         "glm-5.2": {
           "name": "glm-5.2",
           "limit": {
             "context": 200000,
-            "output": 32000,
+            "output": 32000
           },
           "headers": {
             "X-USERNAME": "junrangao",
@@ -63,7 +67,7 @@
             "Accept": "text/event-stream, application/json",
             "X-Model-Name": "GLM 5.2",
             "X-Session-Id": "20260717_171122_8753b8",
-            "X-Trace-Id": "20260717_173946_f5b6b7",
+            "X-Trace-Id": "20260717_173946_f5b6b7"
           }
         }
       }
@@ -73,7 +77,7 @@
       "options": {
         "baseURL": "https://www.cctq.ai/v1",
         "apiKey": "{env:CCTQ_API_KEY}",
-        "setCacheKey": true,
+        "setCacheKey": true
       },
       "models": {
         "gpt-5.5": {
@@ -81,61 +85,61 @@
           "reasoning": true,
           "options": {
             // "reasoningEffort": "xhigh",
-          },
+          }
         },
         "gpt-5.6-terra": {
           "name": "gpt-5.6-terra",
           "reasoning": true,
           "options": {
             // "reasoningEffort": "xhigh",
-          },
+          }
         },
         "gpt-5.6-sol": {
           "name": "gpt-5.6-sol",
           "reasoning": true,
           "options": {
             // "reasoningEffort": "xhigh",
-          },
+          }
         }
-      },
+      }
     },
     "astra": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "astra",
       "options": {
         "baseURL": "{env:ASTRA_BASE_URL}",
-        "apiKey": "{env:ASTRA_TOKEN}",
+        "apiKey": "{env:ASTRA_TOKEN}"
       },
       "models": {
         "kimi_k2d7_code/thinking": {
           "name": "kimi_k2d7_code/thinking",
           "limit": {
             "context": 200000,
-            "output": 32000,
-          },
+            "output": 32000
+          }
         },
         "glm_5d2_fp8_code": {
           "name": "glm_5d2_fp8_code",
           "limit": {
             "context": 170000,
-            "output": 32000,
-          },
+            "output": 32000
+          }
         },
         "glm_5d2_fp8_1m_code": {
           "name": "glm_5d2_fp8_1m_code",
           "limit": {
             "context": 800000,
-            "output": 32000,
-          },
+            "output": 32000
+          }
         },
         "minimax_m3_code/infer": {
           "name": "minimax_m3_code/infer",
           "limit": {
             "context": 170000,
-            "output": 32000,
-          },
-        },
-      },
+            "output": 32000
+          }
+        }
+      }
     },
     "venus": {
       "npm": "@ai-sdk/openai-compatible",
@@ -153,46 +157,46 @@
           "name": "kimi-k2.7-code-external",
           "limit": {
             "context": 200000,
-            "output": 32000,
-          },
+            "output": 32000
+          }
         },
         "kimi-k2.6-external": {
           "name": "kimi-k2.6-external",
           "limit": {
             "context": 200000,
-            "output": 32000,
-          },
+            "output": 32000
+          }
         },
         // FIXME: 后面拆出一个非 1M 的版本
         "glm-5.2-external": {
           "name": "glm-5.2-external",
           "limit": {
             "context": 800000,
-            "output": 32000,
-          },
+            "output": 32000
+          }
         },
         "deepseek-v4-pro-external": {
           "name": "deepseek-v4-pro-external",
           "limit": {
             "context": 800000,
-            "output": 32000,
-          },
+            "output": 32000
+          }
         },
         "deepseek-v4-flash-external": {
           "name": "deepseek-v4-flash-external",
           "limit": {
             "context": 800000,
-            "output": 32000,
-          },
+            "output": 32000
+          }
         },
         "minimax-m3-external": {
           "name": "minimax-m3-external",
           "limit": {
             "context": 800000,
-            "output": 32000,
-          },
-        },
-      },
-    },
-  },
+            "output": 32000
+          }
+        }
+      }
+    }
+  }
 }
