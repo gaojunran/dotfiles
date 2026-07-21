@@ -2,7 +2,8 @@
   "$schema": "https://opencode.ai/config.json",
   "plugin": [
     "oh-my-opencode-slim",
-    "@cortexkit/opencode-magic-context@latest"
+    "@cortexkit/opencode-magic-context@latest",
+    "opencode-codebuddy-auth"
   ],
   "agent": {
     "explore": {
@@ -35,14 +36,6 @@
       "enabled": true,
       "oauth": {}
     },
-    "push_lib": {
-      "type": "remote",
-      "url": "https://wxlib-push.mcp.it.woa.com",
-      "enabled": true,
-      "headers": {
-        "Authorization": "Bearer {env:PUSH_LIB_TOKEN}"
-      }
-    }
   },
   "provider": {
     "copilot": {
