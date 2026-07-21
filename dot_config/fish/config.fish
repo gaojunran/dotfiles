@@ -37,7 +37,7 @@ alias cat bat
 alias ff fastfetch
 alias of onefetch
 alias ls "eza -a"
-alias dotr "chezmoi apply -k --force && clear && exec fish"  # FIXME: remove -k --force
+alias dotr "chezmoi apply -k && clear && exec fish"  # FIXME: 后面看看有没有自动合并配置的方法
 alias hex hexyl
 alias ouc "ouch compress --gitignore"
 alias oud "ouch decompress"

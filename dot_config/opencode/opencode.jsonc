@@ -3,7 +3,7 @@
   "plugin": [
     "oh-my-opencode-slim",
     "@cortexkit/opencode-magic-context@latest",
-    "opencode-codebuddy-auth"
+    
   ],
   "agent": {
     "explore": {

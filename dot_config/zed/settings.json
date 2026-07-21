@@ -36,7 +36,7 @@
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "Vitesse Refined Black",
+    "dark": "Catppuccin Mocha",
   },
   "languages": {
     "TypeScript": {
