@@ -106,6 +106,14 @@ function cmp
     cm $argv[1] && pp
 end
 
+function rbr
+    rb -r $argv[1] -o $argv[2]
+end
+
+function rbb
+    rb -b $argv[1] -o $argv[2]
+end
+
 # 如果没有提供参数，则创建一个随机目录
 function mc
   if test (count $argv) -gt 0
