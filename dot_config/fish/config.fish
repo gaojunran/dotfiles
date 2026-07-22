@@ -67,6 +67,7 @@ alias aag "aube add -g"
 
 alias j "jj"
 alias jn "jj new"
+alias nm "jj new -m"
 alias ed "jj edit"
 
 # FIXME: replace with simple function with jj

@@ -5,6 +5,7 @@ set -Ux HOMEBREW_CASK_OPTS "--appdir=$HOME/Applications"
 set -Ux TERM "xterm-256color" # ghostty
 set -Ux PNPM_HOME $HOME/Library/pnpm
 set -Ux EDITOR hx
+set -Ux PRIVCONF_DIR $HOME/.local/share/chezmoi
 
 
 # PATH 注意因为是 prepend，在后面的反而优先级更高。

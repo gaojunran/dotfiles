@@ -4,6 +4,10 @@
 //
 // 认证值以明文写入 ~/.config/opencode/opencode.json（私有文件），
 // 不再依赖 shell 环境变量或 .zshrc。
+//
+//
+//
+// FIXME: 可能需要写进 opencode.jsonc，或者等 V2 之后再说
 import { $ } from "bun";
 import {
     existsSync,
