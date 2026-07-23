@@ -1,0 +1,136 @@
+[tools]
+node = "22"
+"npm:pnpm" = "8" # 可以指定大版本，而且 aqua 后端装得快
+
+[tasks.reinstall]
+run = "pnpm run reinstall"
+alias = "rei"
+
+[tasks.install]
+run = "pnpm run eachinstall"
+alias = "i"
+
+[tasks."build:one"]
+usage = """
+arg "<submodule>"
+"""
+run = ["cd src/{{ usage.submodule }} && npm run build"]
+env = { MISE_CWD = "{{cwd}}" }
+
+[tasks.dev]
+usage = 'arg "[submodules]" var=#true'
+description = "构建多个子模块、link 并真机推库"
+alias = "d"
+run = """
+#!/usr/bin/env bun
+import { $ } from 'bun'
+
+const submodules = (process.env.usage_submodules ?? '').trim().split(/\\s+/).filter(Boolean)
+if (submodules.length) {
+  await Promise.all(submodules.map(sub => $`mise run build:one ${sub}`))
+} else {
+  await $`npm run build`.cwd(process.env.PWD ?? process.cwd())
+}
+await $`npm run link-app`
+await $`mise run push:device`
+"""
+
+
+[tasks."push:tool"]
+# 通过微信开发者工具 调试器 - console 输入 openVendor() 查看路径
+env.VENDOR = '/Users/nebula/Library/Application Support/微信开发者工具/50a7d9210159a32f006158795f893857/WeappVendor'
+run = 'cp -r ./dist/* "{{env.VENDOR}}/dev"'
+run_windows = 'Copy-Item -Path "./dist/*" -Destination "{{env.VENDOR}}\dev" -Recurse -Force'
+
+[tasks."push:device"]
+description = "推送当前构建产物到真机"
+alias = "pd"
+usage = """
+arg "[uins]" env="UINS" default="3194525725"
+arg "[time]" env="TIME" default="60000"
+"""
+run = 'wxa push-lib -u {{ usage.uins }} --time {{ usage.time }}'
+
+[tasks."push:zip"]
+description = "推送压缩包到真机"
+alias = "pz"
+usage = """
+arg "<zip_path>"
+arg "[uins]" default="3194525725"
+"""
+run = 'wxa push-lib -z {{ usage.zip_path }} -u {{ usage.uins }}'
+
+[tasks."push:version"]
+description = "推送指定版本基础库到真机"
+alias = "pv"
+usage = """
+arg "<version>"
+arg "[uins]" default="3194525725"
+"""
+run = 'wxa push-lib -V {{ usage.version }} -u {{ usage.uins }}'
+
+[tasks.checkout]
+description = "批量切换子模块到指定分支，使用 jj"
+alias = "co"
+usage = """
+arg "<branch>" env="WXAPPLIB_PREFERRED_BASE" default="release"
+"""
+run = """
+#!/usr/bin/env bun
+import { $ } from 'bun'
+
+const rev = process.env.usage_branch ?? 'release'
+const paths = [
+  '.',
+  ...(await $`git submodule foreach --quiet --recursive 'printf "%s\\n" "$displaypath"'`.text())
+    .trim()
+    .split('\\n')
+    .filter(Boolean),
+]
+
+let i = 0
+await Promise.all(Array.from({ length: 8 }, async () => {
+  while (i < paths.length) {
+    const p = paths[i++]
+    console.log('==>', p)
+    await $`jj git fetch && jj new ${rev}@origin`.cwd(p).catch(() => {})
+  }
+}))
+"""
+
+[tasks."branch-list"]
+description = "批量检查子模块分支状态，使用 jj"
+alias = "bl"
+run = """
+#!/usr/bin/env bun
+import { $ } from 'bun'
+
+const paths = [
+  '.',
+  ...(await $`git submodule foreach --quiet --recursive 'printf "%s\\n" "$displaypath"'`.text())
+    .trim()
+    .split('\\n')
+    .filter(Boolean),
+]
+
+const results = await Promise.all(paths.map(async p => {
+  const out = await $`jj bookmark list --no-pager -r 'heads(::@ & bookmarks(glob:"release*" | glob:"v*"))' -T 'if(name.starts_with("release") || name.starts_with("v"), name ++ " ")'`.cwd(p).text().catch(() => '')
+  return { p, names: new Set(out.trim().split(/\\s+/).filter(Boolean)) }
+}))
+
+for (const { p, names } of results) {
+  console.log(`\\x1b[36m==> ${p}\\x1b[0m`)
+  if (names.size) console.log([...names].join(' '))
+  console.log()
+}
+
+const common = results.map(r => r.names).reduce((a, s) => new Set([...a].filter(x => s.has(x))))
+if (common.size) console.log(`\\x1b[32mcommon:\\x1b[0m ${[...common].join(' ')}`)
+"""
+
+[shell_alias]
+lib = 'builtin cd "$(git rev-parse --show-superproject-working-tree | grep . || git rev-parse --show-toplevel)"'
+sky = 'builtin cd "$(git rev-parse --show-superproject-working-tree | grep . || git rev-parse --show-toplevel)/src/skyline"'
+sdk = 'builtin cd "$(git rev-parse --show-superproject-working-tree | grep . || git rev-parse --show-toplevel)/src/sdk"'
+wxc = 'builtin cd "$(git rev-parse --show-superproject-working-tree | grep . || git rev-parse --show-toplevel)/src/wx-component"'
+gls = 'builtin cd "$(git rev-parse --show-superproject-working-tree | grep . || git rev-parse --show-toplevel)/src/glass-easel-adapter"'
