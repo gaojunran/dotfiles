@@ -4,92 +4,92 @@
   "presets": {
     "default": {
       "orchestrator": {
-        "model": "venus/glm-5.2-external",
+        "model": "codebuddy/gpt-5.6-terra",
         "skills": ["*"],
         "mcps": ["*", "!context7"]
       },
       "oracle": {
-        "model": "venus/deepseek-v4-pro-external",
+        "model": "astra/glm_5d2_fp8_code",
         "variant": "max",
         "skills": ["simplify"],
         "mcps": []
       },
       "council": {
-        "model": "venus/deepseek-v4-pro-external",
+        "model": "astra/glm_5d2_fp8_code",
         "variant": "high",
         "skills": [],
         "mcps": []
       },
       "librarian": {
-        "model": "venus/minimax-m3-external",
+        "model": "astra/minimax_m3_code/infer",
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },
       "explorer": {
-        "model": "venus/minimax-m3-external",
+        "model": "astra/minimax_m3_code/infer",
         "skills": [],
         "mcps": []
       },
       "designer": {
-        "model": "venus/kimi-k2.6-external",
+        "model": "astra/kimi-k2.7-code-external",
         "variant": "medium",
         "skills": ["agent-browser"],
         "mcps": []
       },
       "fixer": {
-        "model": "venus/kimi-k2.6-external",
+        "model": "astra/kimi-k2.7-code-external",
         "variant": "high",
         "skills": [],
         "mcps": []
       },
       "observer": {
-        "model": "venus/kimi-k2.6-external",
+        "model": "astra/kimi-k2.7-code-external",
         "skills": [],
         "mcps": []
       }
     },
-    "free": {
+    "venus": {
       "orchestrator": {
         "model": "astra/glm_5d2_fp8_1m_code",
         "skills": ["*"],
         "mcps": ["*", "!context7"]
       },
       "oracle": {
-        "model": "astra/glm_5d2_fp8_code",
+        "model": "venus/deepseek-v4-pro-external",
         "variant": "max",
         "skills": ["simplify"],
         "mcps": []
       },
       "council": {
-        "model": "astra/glm_5d2_fp8_code",
+        "model": "venus/deepseek-v4-pro-external",
         "variant": "high",
         "skills": [],
         "mcps": []
       },
       "librarian": {
-        "model": "astra/minimax_m3_code/infer",
+        "model": "venus/minimax-m3-external",
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },
       "explorer": {
-        "model": "astra/minimax_m3_code/infer",
+        "model": "venus/minimax-m3-external",
         "skills": [],
         "mcps": []
       },
       "designer": {
-        "model": "astra/kimi-k2.7-code-external",
+        "model": "venus/kimi-k2.6-external",
         "variant": "medium",
         "skills": ["agent-browser"],
         "mcps": []
       },
       "fixer": {
-        "model": "astra/kimi-k2.7-code-external",
+        "model": "venus/kimi-k2.6-external",
         "variant": "high",
         "skills": [],
         "mcps": []
       },
       "observer": {
-        "model": "astra/kimi-k2.7-code-external",
+        "model": "venus/kimi-k2.6-external",
         "skills": [],
         "mcps": []
       }

@@ -2,17 +2,17 @@
 // CodeBuddy 环境配置安装脚本（单文件，依赖 bun）
 // 用法: bun install_env.js
 //
-// 认证值以明文写入 ~/.config/opencode/opencode.json（私有文件），
+// 认证值持久化到 ~/.local/share/codebuddy-credentials，并由 opencode.jsonc 读取。
 // 不再依赖 shell 环境变量或 .zshrc。
 //
 //
-//
-// FIXME: 可能需要写进 opencode.jsonc，或者等 V2 之后再说
 import { $ } from "bun";
+import { applyEdits, modify, parse } from "jsonc-parser";
 import {
     existsSync,
     readFileSync,
     writeFileSync,
+    chmodSync,
     mkdirSync,
     realpathSync,
 } from "node:fs";
@@ -28,8 +28,8 @@ const AUTH_FILE = join(
     "Library/Application Support/CodeBuddyExtension/Data/Public/auth/Tencent-Cloud.coding-copilot.info",
 );
 const OPENCODE_EXAMPLE = join(SCRIPT_DIR, "opencode.example.json");
-const OPENCODE_CONFIG_DIR = join(HOME, ".config", "opencode");
-const OPENCODE_CONFIG = join(OPENCODE_CONFIG_DIR, "opencode.json");
+const OPENCODE_CONFIG = join(SCRIPT_DIR, "opencode.jsonc");
+const CODEBUDDY_CREDENTIALS_DIR = join(HOME, ".local", "share", "codebuddy-credentials");
 
 // --- helpers ---
 
@@ -41,17 +41,48 @@ function writeJson(path, obj) {
     writeFileSync(path, JSON.stringify(obj, null, 4) + "\n");
 }
 
-// 递归替换 {env:VAR} 占位符为明文值
-function resolveEnvPlaceholders(obj, values) {
+function writeCredentials(credentials) {
+    mkdirSync(CODEBUDDY_CREDENTIALS_DIR, { recursive: true, mode: 0o700 });
+    chmodSync(CODEBUDDY_CREDENTIALS_DIR, 0o700);
+    for (const [name, value] of Object.entries(credentials)) {
+        const path = join(CODEBUDDY_CREDENTIALS_DIR, name);
+        writeFileSync(path, value);
+        chmodSync(path, 0o600);
+    }
+}
+
+function mergeCodeBuddyProvider(path, codebuddy) {
+    const content = readFileSync(path, "utf8");
+    const errors = [];
+    parse(content, errors, { allowTrailingComma: true, disallowComments: false });
+    if (errors.length > 0) {
+        throw new Error(`${path} 不是有效的 JSONC 配置`);
+    }
+
+    const edits = modify(content, ["provider", "codebuddy"], codebuddy, {
+        formattingOptions: {
+            insertSpaces: true,
+            tabSize: 2,
+            eol: "\n",
+        },
+    });
+    writeFileSync(path, applyEdits(content, edits));
+}
+
+// 递归替换 {env:VAR} 占位符为凭据文件引用
+function resolveEnvPlaceholders(obj) {
     if (typeof obj === "string") {
-        return obj.replace(/\{env:(\w+)\}/g, (_, name) => values[name] ?? "");
+        return obj.replace(
+            /\{env:(\w+)\}/g,
+            (_, name) => `{file:${join(CODEBUDDY_CREDENTIALS_DIR, name)}}`,
+        );
     }
     if (Array.isArray(obj)) {
-        return obj.map((v) => resolveEnvPlaceholders(v, values));
+        return obj.map((v) => resolveEnvPlaceholders(v));
     }
     if (obj !== null && typeof obj === "object") {
         return Object.fromEntries(
-            Object.entries(obj).map(([k, v]) => [k, resolveEnvPlaceholders(v, values)]),
+            Object.entries(obj).map(([k, v]) => [k, resolveEnvPlaceholders(v)]),
         );
     }
     return obj;
@@ -186,7 +217,7 @@ async function syncModels(internetEnv) {
     }
 }
 
-// 把 example 的 codebuddy provider（占位符替换为明文）写入实际 opencode 配置
+// 把 example 的 codebuddy provider（占位符替换为凭据文件引用）合并到实际 opencode JSONC 配置
 function applyOpencode(envValues) {
     if (!existsSync(OPENCODE_EXAMPLE)) {
         console.error(`[CodeBuddy] 警告: ${OPENCODE_EXAMPLE} 不存在，跳过`);
@@ -198,25 +229,20 @@ function applyOpencode(envValues) {
         return;
     }
 
-    // 深拷贝 codebuddy provider，替换占位符为明文，移除 env 声明（不再依赖环境变量）
-    const codebuddy = resolveEnvPlaceholders(
-        structuredClone(example.provider.codebuddy),
-        envValues,
-    );
+    writeCredentials(envValues);
+
+    // 深拷贝 codebuddy provider，替换占位符为凭据文件引用，移除 env 声明
+    const codebuddy = resolveEnvPlaceholders(structuredClone(example.provider.codebuddy));
     delete codebuddy.env;
 
     if (!existsSync(OPENCODE_CONFIG)) {
-        mkdirSync(OPENCODE_CONFIG_DIR, { recursive: true });
         const newConfig = structuredClone(example);
         newConfig.provider = newConfig.provider || {};
         newConfig.provider.codebuddy = codebuddy;
         writeJson(OPENCODE_CONFIG, newConfig);
         console.log(`[CodeBuddy] 已创建: ${OPENCODE_CONFIG}`);
     } else {
-        const current = readJson(OPENCODE_CONFIG);
-        current.provider = current.provider || {};
-        current.provider.codebuddy = codebuddy;
-        writeJson(OPENCODE_CONFIG, current);
+        mergeCodeBuddyProvider(OPENCODE_CONFIG, codebuddy);
         console.log(`[CodeBuddy] 已更新 codebuddy provider: ${OPENCODE_CONFIG}`);
     }
     console.log("[CodeBuddy] 提示: 如果 OpenCode 正在运行，请重启以加载新配置");
@@ -240,7 +266,7 @@ if (!internetEnv && domain) {
     else if (domain.includes("copilot.tencent.com")) internetEnv = "internal";
 }
 
-// 明文值，用于替换 opencode.json 中的 {env:CODEBUDDY_*} 占位符
+// 凭据文件名与对应的认证值
 const envValues = {
     CODEBUDDY_ACCESS_TOKEN: auth.auth.accessToken,
     CODEBUDDY_USER_ID: String(auth.account.uid),
@@ -257,9 +283,9 @@ const answer = await rl.question("[CodeBuddy] 是否配置 OpenCode? (y/N) ");
 rl.close();
 
 if (answer.trim().toLowerCase().startsWith("y")) {
-    // 3. 明文写入 opencode.json，不再需要环境变量或 shell rc
+    // 3. 持久化凭据，并合并使用文件引用的 provider 配置
     applyOpencode(envValues);
-    console.log("\n[CodeBuddy] 完成。认证已写入 opencode.json，无需 source 或环境变量。");
+    console.log(`\n[CodeBuddy] 完成。凭据已保存至 ${CODEBUDDY_CREDENTIALS_DIR}，opencode.jsonc 已使用文件引用。`);
 } else {
     console.log("[CodeBuddy] 跳过工具配置");
 }
