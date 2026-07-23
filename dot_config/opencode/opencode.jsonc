@@ -128,7 +128,7 @@
         "minimax_m3_code/infer": {
           "name": "minimax_m3_code/infer",
           "limit": {
-            "context": 170000,
+            "context": 80000,
             "output": 32000
           }
         }
