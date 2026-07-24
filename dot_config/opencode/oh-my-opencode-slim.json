@@ -31,19 +31,19 @@
         "mcps": []
       },
       "designer": {
-        "model": "astra/kimi-k2.7-code-external",
+        "model": "astra/kimi_k2d7_code/thinking",
         "variant": "medium",
         "skills": ["agent-browser"],
         "mcps": []
       },
       "fixer": {
-        "model": "astra/kimi-k2.7-code-external",
+        "model": "astra/kimi_k2d7_code/thinking",
         "variant": "high",
         "skills": [],
         "mcps": []
       },
       "observer": {
-        "model": "astra/kimi-k2.7-code-external",
+        "model": "astra/kimi_k2d7_code/thinking",
         "skills": [],
         "mcps": []
       }

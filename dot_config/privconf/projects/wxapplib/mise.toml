@@ -37,8 +37,9 @@ await $`mise run push:device`
 
 
 [tasks."push:tool"]
+alias = "pt"
 # 通过微信开发者工具 调试器 - console 输入 openVendor() 查看路径
-env.VENDOR = '/Users/nebula/Library/Application Support/微信开发者工具/50a7d9210159a32f006158795f893857/WeappVendor'
+env.VENDOR = '/Users/nebula/Library/Application Support/微信开发者工具/d1e8765721a6c23d43b14c95b1843e6b/WeappVendor'
 run = 'cp -r ./dist/* "{{env.VENDOR}}/dev"'
 run_windows = 'Copy-Item -Path "./dist/*" -Destination "{{env.VENDOR}}\dev" -Recurse -Force'
 

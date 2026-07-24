@@ -196,12 +196,12 @@
       "npm": "@ai-sdk/openai-compatible",
       "api": "https://copilot.tencent.com/v2",
       "options": {
-        "apiKey": "{file:/Users/nebula/.local/share/codebuddy-credentials/CODEBUDDY_ACCESS_TOKEN}",
+        "apiKey": "{file:~/.local/share/codebuddy-credentials/CODEBUDDY_ACCESS_TOKEN}",
         "headers": {
-          "X-User-Id": "{file:/Users/nebula/.local/share/codebuddy-credentials/CODEBUDDY_USER_ID}",
-          "X-Enterprise-Id": "{file:/Users/nebula/.local/share/codebuddy-credentials/CODEBUDDY_ENTERPRISE_ID}",
-          "X-Tenant-Id": "{file:/Users/nebula/.local/share/codebuddy-credentials/CODEBUDDY_ENTERPRISE_ID}",
-          "X-Domain": "{file:/Users/nebula/.local/share/codebuddy-credentials/CODEBUDDY_DOMAIN}"
+          "X-User-Id": "{file:~/.local/share/codebuddy-credentials/CODEBUDDY_USER_ID}",
+          "X-Enterprise-Id": "{file:~/.local/share/codebuddy-credentials/CODEBUDDY_ENTERPRISE_ID}",
+          "X-Tenant-Id": "{file:~/.local/share/codebuddy-credentials/CODEBUDDY_ENTERPRISE_ID}",
+          "X-Domain": "{file:~/.local/share/codebuddy-credentials/CODEBUDDY_DOMAIN}"
         }
       },
       "models": {
