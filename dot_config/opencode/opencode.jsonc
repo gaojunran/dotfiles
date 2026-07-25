@@ -118,13 +118,6 @@
             "output": 32000
           }
         },
-        "glm_5d2_fp8_1m_code": {
-          "name": "glm_5d2_fp8_1m_code",
-          "limit": {
-            "context": 800000,
-            "output": 32000
-          }
-        },
         "minimax_m3_code/infer": {
           "name": "minimax_m3_code/infer",
           "limit": {
@@ -145,7 +138,6 @@
         }
       },
       "models": {
-        // FIXME: 观察一下什么时候去掉 TPM
         "kimi-k2.7-code-external": {
           "name": "kimi-k2.7-code-external",
           "limit": {
@@ -160,18 +152,17 @@
             "output": 32000
           }
         },
-        // FIXME: 后面拆出一个非 1M 的版本
         "glm-5.2-external": {
           "name": "glm-5.2-external",
           "limit": {
-            "context": 800000,
+            "context": 170000,
             "output": 32000
           }
         },
         "deepseek-v4-pro-external": {
           "name": "deepseek-v4-pro-external",
           "limit": {
-            "context": 800000,
+            "context": 200000,
             "output": 32000
           }
         },
