@@ -33,7 +33,7 @@
     "wecloud_mcp": {
       "type": "remote",
       "url": "https://prod.mcp.it.woa.com/paasfront_cloud_wedesign_woa_com/mcp",
-      "enabled": true,
+      "enabled": false,
       "oauth": {}
     },
   },

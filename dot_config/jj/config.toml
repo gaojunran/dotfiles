@@ -11,6 +11,8 @@ auto-track-bookmarks = "*"
 [ui]
 default-command = "log"
 ui.diff-editor = ":builtin"
+conflict-marker-style = "git"   # 与其他工具兼容
+diff-formatter = ":git"         # git 风格 diff
 
 [revsets]
 bookmark-advance-to = "closest_pushable(@)"

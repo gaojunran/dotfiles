@@ -108,11 +108,20 @@ function cmp
 end
 
 function rbr
-    rb -r $argv[1] -o $argv[2]
+    rb -r $argv[1] -o $argv[2] $argv[3..]
 end
 
 function rbb
-    rb -b $argv[1] -o $argv[2]
+    rb -b $argv[1] -o $argv[2] $argv[3..]
+end
+
+# 获取 PR 形式的 diff，类似 Git 的三点比较
+function dfpr
+  set target trunk
+  if test (count $argv) -gt 0
+    set target $argv[1]
+  end
+  df --from "fork_point(@|$target)"
 end
 
 # 如果没有提供参数，则创建一个随机目录
