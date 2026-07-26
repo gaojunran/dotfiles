@@ -27,7 +27,7 @@
       },
       "explorer": {
         "model": "astra/minimax_m3_code/infer",
-        "skills": [],
+        "skills": ["ccc"],
         "mcps": []
       },
       "designer": {
