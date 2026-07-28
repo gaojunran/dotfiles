@@ -17,6 +17,25 @@
   "colorize_brackets": true,
   "code_lens": "on",
   "soft_wrap": "editor_width",
+  // 排除指定目录: 会同时影响文件扫描、项目搜索和文件树
+  // FIXME: 等 zed 支持了仅搜索排除，需要再改下
+  "file_scan_exclusions": [
+    "/.git",
+    "/.svn",
+    "/.hg",
+    "/.jj",
+    "/.sl",
+    "/.repo",
+    "/CVS",
+    "/.DS_Store",
+    "/Thumbs.db",
+    "/.classpath",
+    "/.settings",
+    "/openspec",
+    "/openspec/",
+    "/specs",
+    "/specs/",
+  ],
   "project_panel": {
     "starts_open": true,
     "dock": "left",
