@@ -128,7 +128,14 @@
             "context": 80000,
             "output": 32000
           }
-        }
+        },
+        "deepseek_v4_flash_code/max": {
+          "name": "deepseek_v4_flash_code/max",
+          "limit": {
+            "context": 200000,
+            "output": 32000
+          }
+        },
       }
     },
     "venus": {

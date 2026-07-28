@@ -21,12 +21,12 @@
         "mcps": []
       },
       "librarian": {
-        "model": "astra/minimax_m3_code/infer",
+        "model": "astra/deepseek_v4_flash_code/max",
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },
       "explorer": {
-        "model": "astra/minimax_m3_code/infer",
+        "model": "astra/deepseek_v4_flash_code/max",
         "skills": ["ccc"],
         "mcps": []
       },
