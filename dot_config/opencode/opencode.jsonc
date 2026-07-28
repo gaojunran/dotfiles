@@ -136,6 +136,13 @@
             "output": 32000
           }
         },
+        "kimi_k3_astra": {
+          "name": "kimi_k3_astra",
+          "limit": {
+            "context": 170000,
+            "output": 32000
+          }
+        }
       }
     },
     "venus": {
