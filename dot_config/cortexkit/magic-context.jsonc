@@ -1,0 +1,12 @@
+{
+  "$schema": "https://raw.githubusercontent.com/cortexkit/magic-context/master/assets/magic-context.schema.json",
+  "historian": {
+    "model": "astra/deepseek_v4_flash_code/max"
+  },
+  "dreamer": {
+    "model": "astra/deepseek_v4_flash_code/max"
+  },
+  "sidekick": {
+    "disable": true
+  }
+}
