@@ -8,7 +8,7 @@
     <array>
         <string>/bin/sh</string>
         <string>-c</string>
-        <string>FNOX="$HOME/.local/share/mise/installs/fnox/latest/fnox"; "$FNOX" export --format env | while IFS='=' read -r k v; do case "$k" in export\ *) k="${k#export }"; v="${v#\'}"; v="${v%\'}"; launchctl setenv "$k" "$v" ;; esac; done</string>
+        <string>launchctl setenv PATH "$HOME/.local/share/mise/shims:$HOME/.local/bin:$HOME/.cargo/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"; FNOX="$HOME/.local/share/mise/installs/fnox/latest/fnox"; "$FNOX" export --format env | while IFS='=' read -r k v; do case "$k" in export\ *) k="${k#export }"; v="${v#\'}"; v="${v%\'}"; launchctl setenv "$k" "$v" ;; esac; done</string>
     </array>
     <key>WorkingDirectory</key>
     <string>/Users/nebula</string>
@@ -17,7 +17,7 @@
         <key>HOME</key>
         <string>/Users/nebula</string>
         <key>PATH</key>
-        <string>/Users/nebula/.local/share/mise/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+        <string>/Users/nebula/.local/share/mise/shims:/Users/nebula/.local/bin:/Users/nebula/.cargo/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
     </dict>
     <key>RunAtLoad</key>
     <true/>
