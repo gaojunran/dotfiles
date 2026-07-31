@@ -4,7 +4,7 @@
   "presets": {
     "default": {
       "orchestrator": {
-        "model": "codebuddy/gpt-5.6-terra",
+        "model": "astra/glm_5d2_fp8_code",
         "skills": ["*"],
         "mcps": ["*", "!context7"]
       },
@@ -31,13 +31,13 @@
         "mcps": []
       },
       "designer": {
-        "model": "astra/kimi_k2d7_code/thinking",
+        "model": "astra/glm_5d2_fp8_code",
         "variant": "medium",
         "skills": ["agent-browser"],
         "mcps": []
       },
       "fixer": {
-        "model": "astra/kimi_k2d7_code/thinking",
+        "model": "astra/glm_5d2_fp8_code",
         "variant": "high",
         "skills": [],
         "mcps": []
