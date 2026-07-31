@@ -1,3 +1,10 @@
 [url "https://git.woa.com/"]
     insteadOf = git@git.woa.com:
     insteadOf = ssh://git@git.woa.com/
+
+[user]
+    name = gaojunran
+    email = nebula2021@126.com
+
+[includeIf "gitdir:~/Work/"]
+    path = ~/.gitconfig-work

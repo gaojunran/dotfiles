@@ -8,5 +8,11 @@
   },
   "sidekick": {
     "disable": true
+  },
+  "embedding": {
+    "provider": "openai-compatible",
+    "model": "openai/server:285236",
+    "endpoint": "http://v2.open.venus.oa.com/llmproxy",
+    "api_key": "{env:OPENAI_API_KEY}"
   }
 }
