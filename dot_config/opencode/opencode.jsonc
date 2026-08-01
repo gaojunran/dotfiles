@@ -4,7 +4,7 @@
     "oh-my-opencode-slim",
     "@cortexkit/opencode-magic-context@latest",
   ],
-  "model": "codebuddy/gpt-5.6-terra",
+  "model": "astra/glm_5d2_fp8_code",
   "agent": {
     "explore": {
       "disable": true
