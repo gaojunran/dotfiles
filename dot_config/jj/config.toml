@@ -21,7 +21,6 @@ bookmark-advance-to = "closest_pushable(@)"
 open = ["log", "-r", "heads(mine()) ~ ::trunk()"]
 
 [revset-aliases]
-"d:x" = "diff_lines(substring:x)"
 'closest_bookmark(to)' = 'heads(::to & bookmarks())'
 'closest_pushable(to)' = 'heads(::to & ~description(exact:"") & (~empty() | merges()))'
 
