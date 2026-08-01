@@ -17,17 +17,15 @@ fish_add_path -U $PNPM_HOME/bin
 fish_add_path -U -m $HOME/.local/bin
 fish_add_path -U -m $HOME/.local/bin/scripts
 
-# Linuxbrew. FIXME: 可能需要兼容性更好的方式
+# linuxbrew
 if test -x /home/linuxbrew/.linuxbrew/bin/brew
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv fish)"
 end
 
 # mise
-if not type -q brew
-  # 注意：brew + fish 不需要 activate，但其他情况需要
-  # 现在有 brew 就要用 brew 来管理 mise
-  mise activate fish | source
-end
+# 为了避免可能存在的激活时序问题，直接在这里手动激活
+set -gx MISE_FISH_AUTO_ACTIVATE 0
+mise activate fish | source
 
 # zoxide
 if type -q zoxide
@@ -35,7 +33,6 @@ if type -q zoxide
 end
 
 # pitchfork
-# FIXME: use brew to install pitchfork; now using cargo
 if type -q pitchfork
   pitchfork activate fish | source
 end
