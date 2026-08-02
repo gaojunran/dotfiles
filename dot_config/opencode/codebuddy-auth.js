@@ -2,9 +2,7 @@
 // CodeBuddy 环境配置安装脚本（单文件，依赖 bun）
 // 用法: bun install_env.js
 //
-// 认证值持久化到 ~/.local/share/codebuddy-credentials，并由 opencode.jsonc 读取。
-// 不再依赖 shell 环境变量或 .zshrc。
-//
+// 认证值通过 fnox set 存储为环境变量，opencode.jsonc 通过 {env:VAR} 引用。
 //
 import { $ } from "bun";
 import { applyEdits, modify, parse } from "jsonc-parser";
@@ -12,8 +10,6 @@ import {
     existsSync,
     readFileSync,
     writeFileSync,
-    chmodSync,
-    mkdirSync,
     realpathSync,
 } from "node:fs";
 import { homedir } from "node:os";
@@ -29,7 +25,6 @@ const AUTH_FILE = join(
 );
 const OPENCODE_EXAMPLE = join(SCRIPT_DIR, "opencode.example.json");
 const OPENCODE_CONFIG = join(SCRIPT_DIR, "opencode.jsonc");
-const CODEBUDDY_CREDENTIALS_DIR = join(HOME, ".local", "share", "codebuddy-credentials");
 
 // --- helpers ---
 
@@ -41,14 +36,18 @@ function writeJson(path, obj) {
     writeFileSync(path, JSON.stringify(obj, null, 4) + "\n");
 }
 
-function writeCredentials(credentials) {
-    mkdirSync(CODEBUDDY_CREDENTIALS_DIR, { recursive: true, mode: 0o700 });
-    chmodSync(CODEBUDDY_CREDENTIALS_DIR, 0o700);
-    for (const [name, value] of Object.entries(credentials)) {
-        const path = join(CODEBUDDY_CREDENTIALS_DIR, name);
-        writeFileSync(path, value);
-        chmodSync(path, 0o600);
+// 通过 fnox set 将认证值存储为环境变量（stdin 传递，避免暴露在 ps 输出中）
+async function fnoxSet(key, value) {
+    const proc = Bun.spawn(["fnox", "set", key], {
+        stdin: new TextEncoder().encode(value),
+        stdout: "inherit",
+        stderr: "inherit",
+    });
+    const exitCode = await proc.exited;
+    if (exitCode !== 0) {
+        throw new Error(`fnox set ${key} 失败 (exit ${exitCode})`);
     }
+    console.log(`[CodeBuddy] fnox: 已设置 ${key}`);
 }
 
 function mergeCodeBuddyProvider(path, codebuddy) {
@@ -67,25 +66,6 @@ function mergeCodeBuddyProvider(path, codebuddy) {
         },
     });
     writeFileSync(path, applyEdits(content, edits));
-}
-
-// 递归替换 {env:VAR} 占位符为凭据文件引用
-function resolveEnvPlaceholders(obj) {
-    if (typeof obj === "string") {
-        return obj.replace(
-            /\{env:(\w+)\}/g,
-            (_, name) => `{file:${join(CODEBUDDY_CREDENTIALS_DIR, name)}}`,
-        );
-    }
-    if (Array.isArray(obj)) {
-        return obj.map((v) => resolveEnvPlaceholders(v));
-    }
-    if (obj !== null && typeof obj === "object") {
-        return Object.fromEntries(
-            Object.entries(obj).map(([k, v]) => [k, resolveEnvPlaceholders(v)]),
-        );
-    }
-    return obj;
 }
 
 // --- CodeBuddy Code 安装路径查找 ---
@@ -217,8 +197,8 @@ async function syncModels(internetEnv) {
     }
 }
 
-// 把 example 的 codebuddy provider（占位符替换为凭据文件引用）合并到实际 opencode JSONC 配置
-function applyOpencode(envValues) {
+// 把 example 的 codebuddy provider（保留 {env:VAR} 占位符）合并到实际 opencode JSONC 配置
+async function applyOpencode(envValues) {
     if (!existsSync(OPENCODE_EXAMPLE)) {
         console.error(`[CodeBuddy] 警告: ${OPENCODE_EXAMPLE} 不存在，跳过`);
         return;
@@ -229,11 +209,13 @@ function applyOpencode(envValues) {
         return;
     }
 
-    writeCredentials(envValues);
+    // 通过 fnox 设置环境变量
+    for (const [key, value] of Object.entries(envValues)) {
+        await fnoxSet(key, value);
+    }
 
-    // 深拷贝 codebuddy provider，替换占位符为凭据文件引用，移除 env 声明
-    const codebuddy = resolveEnvPlaceholders(structuredClone(example.provider.codebuddy));
-    delete codebuddy.env;
+    // 直接使用 example 中的 codebuddy provider（保留 {env:VAR} 占位符和 env 声明）
+    const codebuddy = structuredClone(example.provider.codebuddy);
 
     if (!existsSync(OPENCODE_CONFIG)) {
         const newConfig = structuredClone(example);
@@ -266,7 +248,7 @@ if (!internetEnv && domain) {
     else if (domain.includes("copilot.tencent.com")) internetEnv = "internal";
 }
 
-// 凭据文件名与对应的认证值
+// 环境变量名与对应的认证值
 const envValues = {
     CODEBUDDY_ACCESS_TOKEN: auth.auth.accessToken,
     CODEBUDDY_USER_ID: String(auth.account.uid),
@@ -283,9 +265,9 @@ const answer = await rl.question("[CodeBuddy] 是否配置 OpenCode? (y/N) ");
 rl.close();
 
 if (answer.trim().toLowerCase().startsWith("y")) {
-    // 3. 持久化凭据，并合并使用文件引用的 provider 配置
-    applyOpencode(envValues);
-    console.log(`\n[CodeBuddy] 完成。凭据已保存至 ${CODEBUDDY_CREDENTIALS_DIR}，opencode.jsonc 已使用文件引用。`);
+    // 3. 通过 fnox 设置环境变量，并合并 provider 配置（保留 {env:VAR} 占位符）
+    await applyOpencode(envValues);
+    console.log(`\n[CodeBuddy] 完成。认证值已通过 fnox 设置，opencode.jsonc 使用 {env:VAR} 引用。`);
 } else {
     console.log("[CodeBuddy] 跳过工具配置");
 }

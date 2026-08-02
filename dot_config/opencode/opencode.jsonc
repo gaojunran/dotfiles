@@ -204,13 +204,16 @@
       "name": "CodeBuddy",
       "npm": "@ai-sdk/openai-compatible",
       "api": "https://copilot.tencent.com/v2",
+      "env": [
+        "CODEBUDDY_ACCESS_TOKEN"
+      ],
       "options": {
-        "apiKey": "{file:~/.local/share/codebuddy-credentials/CODEBUDDY_ACCESS_TOKEN}",
+        "apiKey": "{env:CODEBUDDY_ACCESS_TOKEN}",
         "headers": {
-          "X-User-Id": "{file:~/.local/share/codebuddy-credentials/CODEBUDDY_USER_ID}",
-          "X-Enterprise-Id": "{file:~/.local/share/codebuddy-credentials/CODEBUDDY_ENTERPRISE_ID}",
-          "X-Tenant-Id": "{file:~/.local/share/codebuddy-credentials/CODEBUDDY_ENTERPRISE_ID}",
-          "X-Domain": "{file:~/.local/share/codebuddy-credentials/CODEBUDDY_DOMAIN}"
+          "X-User-Id": "{env:CODEBUDDY_USER_ID}",
+          "X-Enterprise-Id": "{env:CODEBUDDY_ENTERPRISE_ID}",
+          "X-Tenant-Id": "{env:CODEBUDDY_ENTERPRISE_ID}",
+          "X-Domain": "{env:CODEBUDDY_DOMAIN}"
         }
       },
       "models": {
