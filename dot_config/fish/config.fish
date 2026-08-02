@@ -14,12 +14,6 @@ function fish_prompt
     echo -n ' > '
 end
 
-# starship
-# 现在工具版本由 mise 管理，没有那么需要 starship
-# 观察一下是否需要分支信息
-# starship init fish | source
-
-
 # yazi
 function y
 	set tmp (mktemp -t "yazi-cwd.XXXXXX")
@@ -63,13 +57,15 @@ alias brl "brew list"
 alias brx "brew uninstall"
 alias brs "brew search"
 
+alias ai "aube install"
 alias aa "aube add"
 alias aag "aube add -g"
 
 alias j "jj"
 alias jn "jj new"
-alias nm "jj new -m"
+alias jnp "jj new @-"
 alias ed "jj edit"
+alias edp "jj edit @-"
 
 # FIXME: replace with simple function with jj
 alias am "hj amend"
@@ -79,16 +75,17 @@ alias th "hj throw"
 alias cm "jj commit -im"
 alias ab "jj abandon"
 alias jd "jj desc -m"
+alias jdp "jj desc -r @- -m"
 alias js "jj show"
+alias jsp "jj show @-"
 alias ss "jj show --stat"
-alias df "jj diff"  # FIXME: this overrides the default df
+alias ssp "jj show --stat @-"
+alias df "jj diff"
 alias f "jj git fetch"
 alias lr "jj log -r"
 alias rb "jj rebase"
-alias bt "jj b t"
 alias bs "jj b s"
 alias bd "jj b d"
-alias ba "jj b a"
 alias jun "jj undo"
 alias jre "jj redo"
 
@@ -101,7 +98,6 @@ alias 3='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_3'
 alias 4='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_4'
 alias 5='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_5'
 
-alias cci "claude-internal --continue --dangerously-skip-permissions"
 alias oc opencode
 alias occ "opencode --continue"
 
