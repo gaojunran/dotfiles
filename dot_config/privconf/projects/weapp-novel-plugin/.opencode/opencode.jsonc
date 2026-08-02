@@ -1,0 +1,12 @@
+{
+  "mcp": {
+    "wecubeopenmcp": {
+      "type": "remote",
+      "url": "https://wecube.mcp.it.woa.com",
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer {env:TAI_TOKEN}"
+      }
+    },
+  },
+}

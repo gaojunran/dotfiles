@@ -10,5 +10,8 @@ ignored = ["deno.lock"]
 [[project]]
 name = "weapp-novel-plugin"
 match_remote = "https://git.woa.com/fifteenth-group/weapp-novel-plugin.git"
-files = ["mise.toml"]
+files = [
+    "mise.toml",
+    ".opencode",
+]
 ignored = []
