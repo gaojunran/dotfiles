@@ -57,9 +57,9 @@ alias brl "brew list"
 alias brx "brew uninstall"
 alias brs "brew search"
 
-alias ai "aube install"
-alias aa "aube add"
-alias aag "aube add -g"
+alias ai "aube install --dangerously-allow-all-builds"
+alias aa "aube add --dangerously-allow-all-builds"
+alias aag "aube add -g --dangerously-allow-all-builds"
 
 alias j "jj"
 alias jn "jj new"
