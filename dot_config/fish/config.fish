@@ -39,6 +39,7 @@ alias of onefetch
 alias ls "eza -a"
 alias dotr "chezmoi apply -k && clear && exec fish"  # FIXME: 后面看看有没有自动合并配置的方法
 alias hex hexyl
+alias pc privconf
 alias ouc "ouch compress --gitignore"
 alias oud "ouch decompress"
 alias top "btm -b"
@@ -101,7 +102,8 @@ alias 4='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_4'
 alias 5='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_5'
 
 alias cci "claude-internal --continue --dangerously-skip-permissions"
-alias oc "opencode --continue"
+alias oc opencode
+alias occ "opencode --continue"
 
 function cmp
     cm $argv[1] && pp
