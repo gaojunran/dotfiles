@@ -12,7 +12,7 @@
   "embedding": {
     "provider": "openai-compatible",
     "model": "server:285236",
-    "endpoint": "http://v2.open.venus.oa.com/llmproxy",
+    "endpoint": "http://127.0.0.1:8788",
     "api_key": "{env:OPENAI_API_KEY}"
   }
 }
