@@ -7,6 +7,58 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "git": {
+    "diff_base": "head"
+  },
+  "ssh_connections": [
+    {
+      "host": "evnIns-76e2foggaliw.ssh-proxy.devcloud.woa.com",
+      "username": "root",
+      "port": 42660,
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/data/tmp/opencode"
+          ]
+        },
+        {
+          "paths": [
+            "/projects"
+          ]
+        },
+        {
+          "paths": [
+            "/root"
+          ]
+        },
+        {
+          "paths": [
+            "/tmp"
+          ]
+        }
+      ]
+    },
+    {
+      "host": "junrangao-any2.devcloud.woa.com",
+      "username": "nebula",
+      "port": 36000,
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/data/home/nebula/.local/share/opencode/worktree/1b31c21c635a6e1062b26f2b5be4e82c4b978342/eager-gopher"
+          ]
+        },
+        {
+          "paths": [
+            "/data/home/nebula/Projects/zed"
+          ]
+        }
+      ]
+    }
+  ],
+  "diff_view_style": "unified",
   "base_keymap": "VSCode",
   "cli_default_open_behavior": "existing_window",
   "mouse_wheel_zoom": true,
@@ -55,7 +107,7 @@
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "Catppuccin Mocha",
+    "dark": "Vitesse Refined Dark",
   },
   "languages": {
     "TypeScript": {
@@ -74,15 +126,9 @@
     },
   },
   "agent_servers": {
-    "codex-acp": {
-      "type": "registry",
-    },
-    "cursor": {
-      "type": "registry",
-    },
     "opencode": {
       "default_config_options": {
-        "model": "astra/kimi_k2d7_code/thinking",
+        "model": "astra/glm_5d2_fp8_code",
       },
       "type": "registry",
     },
