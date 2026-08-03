@@ -69,6 +69,7 @@ alias edp "jj edit @-"
 
 # FIXME: replace with simple function with jj
 alias am "hj amend"
+alias amp "hj amend && pp"
 alias rs "hj reset"
 alias th "hj throw"
 
@@ -102,7 +103,7 @@ alias oc opencode
 alias occ "opencode --continue"
 
 function cmp
-    cm $argv[1] && pp
+    cm $argv[1..] && pp
 end
 
 function rbr
