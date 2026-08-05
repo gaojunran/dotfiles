@@ -121,6 +121,13 @@
         }
       },
       "models": {
+        "deepseek-v4-flash-official": {
+          "name": "deepseek-v4-flash-official",
+          "limit": {
+            "context": 200000,
+            "output": 32000
+          }
+        },
         "kimi-k2.7-code-external": {
           "name": "kimi-k2.7-code-external",
           "limit": {

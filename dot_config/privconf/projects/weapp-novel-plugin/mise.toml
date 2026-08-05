@@ -4,3 +4,4 @@ run = "pnpm run dev"
 
 [tools]
 node = "20"
+opencode = "1.18.13"
