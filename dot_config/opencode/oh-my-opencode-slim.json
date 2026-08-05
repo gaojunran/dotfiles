@@ -4,46 +4,46 @@
   "presets": {
     "default": {
       "orchestrator": {
-        "model": "astra/glm_5d2_fp8_code",
+        "model": "venus/deepseek-v4-flash-official",
         "skills": ["*"],
         "mcps": ["*", "!context7"]
       },
       "oracle": {
-        "model": "astra/glm_5d2_fp8_code",
+        "model": "codebuddy/gpt-5.6-terra",
         "variant": "max",
         "skills": ["simplify"],
         "mcps": []
       },
       "council": {
-        "model": "astra/glm_5d2_fp8_code",
+        "model": "venus/deepseek-v4-flash-official",
         "variant": "high",
         "skills": [],
         "mcps": []
       },
       "librarian": {
-        "model": "astra/deepseek_v4_flash_code/max",
+        "model": "venus/deepseek-v4-flash-official",
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },
       "explorer": {
-        "model": "astra/deepseek_v4_flash_code/max",
+        "model": "venus/deepseek-v4-flash-official",
         "skills": ["ccc"],
         "mcps": []
       },
       "designer": {
-        "model": "astra/glm_5d2_fp8_code",
+        "model": "venus/deepseek-v4-flash-official",
         "variant": "medium",
         "skills": ["agent-browser"],
         "mcps": []
       },
       "fixer": {
-        "model": "astra/glm_5d2_fp8_code",
+        "model": "venus/deepseek-v4-flash-official",
         "variant": "high",
         "skills": [],
         "mcps": []
       },
       "observer": {
-        "model": "astra/kimi_k2d7_code/thinking",
+        "model": "venus/deepseek-v4-flash-official",
         "skills": [],
         "mcps": []
       }

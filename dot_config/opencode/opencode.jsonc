@@ -4,7 +4,7 @@
     "oh-my-opencode-slim",
     "@cortexkit/opencode-magic-context@latest",
   ],
-  "model": "astra/glm_5d2_fp8_code",
+  "model": "venus/deepseek-v4-flash-official",
   "agent": {
     "explore": {
       "disable": true
