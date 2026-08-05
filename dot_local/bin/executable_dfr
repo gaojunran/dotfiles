@@ -3,12 +3,11 @@
 //USAGE arg "[bookmark]" help="Bookmark to diff between origin and git. If omitted, uses the nearest bookmark reachable from @."
 
 import { $ } from "bun";
+import { findNearestBookmark } from "./utils/nearest-bookmark.ts";
 
 const [arg] = process.argv.slice(2);
 
-const bookmark = arg ?? (
-  await $`jj log -r 'heads(::@ & bookmarks())' -n 1 -T 'if(local_bookmarks, local_bookmarks.first().name(), "")' --no-pager -G`.text()
-).trim();
+const bookmark = arg ?? (await findNearestBookmark());
 
 if (!bookmark) {
   throw new Error("No bookmark reachable from @");

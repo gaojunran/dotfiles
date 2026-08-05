@@ -1,0 +1,25 @@
+#!/usr/bin/env -S usage exec bun
+//USAGE about "Rebase a bookmark onto a target commit, then start a new commit on that bookmark."
+//USAGE arg "[bookmark]" help="Bookmark to rebase. If omitted, uses the nearest bookmarked commit in the ancestry of @."
+//USAGE arg "[onto]" help="Target revision to rebase the bookmark onto."
+
+import { $ } from "bun";
+import { findNearestBookmark } from "./utils/nearest-bookmark.ts";
+
+const args = process.argv.slice(2);
+
+if (args.length === 0) {
+  throw new Error("Usage: rbb [bookmark] <onto>");
+}
+
+const [bookmark, onto] = args.length === 2 ? args : [undefined, args[0]];
+
+// 只给一个参数时，自动找距离当前工作副本最近的书签
+let target = bookmark ?? (await findNearestBookmark());
+
+if (!target) {
+  throw new Error("No bookmarked commit found in the ancestry of @");
+}
+
+await $`jj rebase --branch ${target} --onto ${onto}`;
+await $`jj new ${target}`;

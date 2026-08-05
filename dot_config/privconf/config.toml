@@ -16,3 +16,10 @@ files = [
     ".env.local",
 ]
 ignored = []
+
+[all]
+files = []
+ignored = [
+    ".cocoindex_code",
+    ".cortexkit",
+]

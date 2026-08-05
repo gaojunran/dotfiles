@@ -3,12 +3,13 @@
 //USAGE arg "[bookmark]..." help="Bookmarks to set and push. If omitted, move existing bookmarks to the latest mutable described rev and push."
 
 import { $ } from "bun";
+import { findNearestBookmark } from "./utils/nearest-bookmark.ts";
 
 const REV = 'heads(::@ & mutable() & ~description(exact:"") & (~empty() | merges()))';
 const args = process.argv.slice(2);
 
 if (args.length === 0) {
-  await $`jj bookmark move -B --from "heads(::@ & bookmarks())" --to ${REV}`;
+  await $`jj bookmark move -B --from ${await findNearestBookmark()} --to ${REV}`;
   await $`jj git push`;
 } else {
   await $`jj bookmark set -B -r ${REV} ${args}`;
