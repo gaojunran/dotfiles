@@ -1,18 +1,18 @@
 {
   "$schema": "https://raw.githubusercontent.com/cortexkit/magic-context/master/assets/magic-context.schema.json",
   "historian": {
-    "model": "astra/deepseek_v4_flash_code/max"
+    "model": "astra/deepseek_v4_flash_code/max",
+    "fallback_models": [
+      "venus/deepseek-v4-flash-official"
+    ]
   },
   "dreamer": {
-    "model": "astra/deepseek_v4_flash_code/max"
+    "model": "astra/deepseek_v4_flash_code/max",
+    "fallback_models": [
+      "venus/deepseek-v4-flash-official"
+    ]
   },
   "sidekick": {
     "disable": true
-  },
-  "embedding": {
-    "provider": "openai-compatible",
-    "model": "server:285236",
-    "endpoint": "http://127.0.0.1:8788",
-    "api_key": "{env:OPENAI_API_KEY}"
   }
 }
