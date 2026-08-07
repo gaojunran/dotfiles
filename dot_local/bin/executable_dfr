@@ -6,7 +6,6 @@ import { $ } from "bun";
 import { findNearestBookmark } from "./utils/nearest-bookmark.ts";
 
 const [arg] = process.argv.slice(2);
-
 const bookmark = arg ?? (await findNearestBookmark());
 
 if (!bookmark) {

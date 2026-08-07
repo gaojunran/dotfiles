@@ -1,0 +1,12 @@
+#!/usr/bin/env -S usage exec bun
+//USAGE about "Pull with rebase strategy."
+//USAGE arg "[bookmark]" help="Bookmark to rebase onto. If omitted, uses the nearest bookmark reachable from @."
+
+import { $ } from "bun";
+import { findNearestBookmark } from "./utils/nearest-bookmark.ts";
+
+const [arg] = process.argv.slice(2);
+const bookmark = arg ?? (await findNearestBookmark());
+
+await $`jj git fetch`;
+await $`jj rebase -o ${bookmark}@origin`;

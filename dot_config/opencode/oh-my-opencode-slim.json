@@ -48,7 +48,7 @@
         "mcps": []
       }
     },
-    "venus": {
+    "astra": {
       "orchestrator": {
         "model": "astra/glm_5d2_fp8_1m_code",
         "skills": ["*"],
