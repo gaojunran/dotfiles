@@ -4,6 +4,10 @@
 - 不要猜测 API、版本、标志、提交 SHA 值或包名。在断言之前，请先阅读代码或文档进行验证。
 - 与用户沟通时，总是使用中文。代码注释的语言应该尊重现有项目的惯例。
 
+## Using Plugins
+
+- 积极调用 ctx_reduce。每轮对话中只要产生大量工具输出，就需要调用 ctx_reduce 来减少上下文长度。
+
 ## Working in Shell
 
 - 当当前 git 状态处于 Detached HEAD 时，使用 `git branch --contains HEAD` 来获取当前提交所在的分支，并切换到指定分支。或者和用户确认应该切换到什么分支。
