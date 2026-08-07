@@ -1,7 +1,0 @@
-# CocoIndex Code — global settings.
-# After editing this file, run `ccc doctor` to verify your configuration.
-
-embedding:
-  model: openai/server:285236
-envs:
-  OPENAI_BASE_URL: http://v2.open.venus.oa.com/llmproxy

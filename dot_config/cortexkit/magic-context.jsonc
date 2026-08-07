@@ -14,5 +14,7 @@
   },
   "sidekick": {
     "disable": true
-  }
+  },
+  // 默认 300s，提高一些
+  "historian_timeout_ms": 600000
 }
