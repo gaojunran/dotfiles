@@ -67,11 +67,9 @@ alias jnp "jj new @-"
 alias ed "jj edit"
 alias edp "jj edit @-"
 
-# FIXME: replace with simple function with jj
-alias am "hj amend"
-alias amp "hj amend && pp"
-alias rs "hj reset"
-alias th "hj throw"
+alias am "jj squash -i --into"
+alias rs "jj squash -i --from"
+alias th "jj restore -i --changes-in"
 
 alias cm "jj commit -im"
 alias ab "jj abandon"
@@ -104,6 +102,10 @@ alias occ "opencode --continue"
 
 function cmp
     cm $argv[1..] && pp
+end
+
+function amp
+    am $argv[1] && pp
 end
 
 function rbr
