@@ -70,6 +70,8 @@ alias edp "jj edit @-"
 alias am "jj squash -i --into"
 alias rs "jj squash -i --from"
 alias th "jj restore -i --changes-in"
+alias sq "jj squash"
+alias sp "jj split"
 
 alias cm "jj commit -im"
 alias ab "jj abandon"

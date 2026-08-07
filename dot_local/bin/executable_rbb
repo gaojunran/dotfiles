@@ -4,7 +4,6 @@
 //USAGE arg "[onto]" help="Target revision to rebase the bookmark onto."
 
 import { $ } from "bun";
-import { findNearestBookmark } from "./utils/nearest-bookmark.ts";
 
 const args = process.argv.slice(2);
 
@@ -14,12 +13,7 @@ if (args.length === 0) {
 
 const [bookmark, onto] = args.length === 2 ? args : [undefined, args[0]];
 
-// 只给一个参数时，自动找距离当前工作副本最近的书签
-let target = bookmark ?? (await findNearestBookmark());
-
-if (!target) {
-  throw new Error("No bookmarked commit found in the ancestry of @");
-}
+const target = bookmark ?? '@'
 
 await $`jj rebase --branch ${target} --onto ${onto}`;
-await $`jj new ${target}`;
+await $`jj new ${target}`; // FIXME: maybe tip commit on this branch
