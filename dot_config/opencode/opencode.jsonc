@@ -124,7 +124,8 @@
         "deepseek-v4-flash-official": {
           "name": "deepseek-v4-flash-official",
           "limit": {
-            "context": 200000,
+            // 注意：1M 模型通常应该设在 300k 左右，其 Compact 界限约为 65% (200k)，是 1M 有效上下文的上界
+            "context": 300000,
             "output": 32000
           }
         },
