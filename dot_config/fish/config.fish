@@ -27,7 +27,6 @@ end
 
 # 别名
 alias r "clear && exec fish"
-alias cat bat
 alias ff fastfetch
 alias of onefetch
 alias ls "eza -a"
