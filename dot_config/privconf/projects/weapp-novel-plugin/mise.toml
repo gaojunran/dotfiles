@@ -1,6 +1,6 @@
 [tasks.dev]
 alias = "d"
-run = "pnpm run dev"
+run = "pnpm run dev:once"
 
 [tools]
 node = "20"
