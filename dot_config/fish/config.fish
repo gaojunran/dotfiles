@@ -66,6 +66,10 @@ alias jnp "jj new @-"
 alias ed "jj edit"
 alias edp "jj edit @-"
 
+function jnb
+    jj new (eval $BASE_BRANCH_COMMAND)
+end
+
 function am
     set -q argv[1]; or set argv @-
     jj squash -i --from @ --into $argv
@@ -98,6 +102,7 @@ alias lr "jj log -r"
 alias rb "jj rebase"
 alias bs "jj b s"
 alias bd "jj b d"
+alias bl "jj b l --sort committer-date-"
 alias jun "jj undo"
 alias jre "jj redo"
 
