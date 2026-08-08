@@ -66,9 +66,21 @@ alias jnp "jj new @-"
 alias ed "jj edit"
 alias edp "jj edit @-"
 
-alias am "jj squash -i --into"
-alias rs "jj squash -i --from"
-alias th "jj restore -i --changes-in"
+function am
+    set -q argv[1]; or set argv @-
+    jj squash -i --from @ --into $argv
+end
+
+function rs
+    set -q argv[1]; or set argv @-
+    jj squash -i --from $argv --into @
+end
+
+function th
+    et -q argv[1]; or set argv @
+    jj restore -i --changes-in $argv
+end
+
 alias sq "jj squash"
 alias sp "jj split"
 
