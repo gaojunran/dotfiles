@@ -85,7 +85,7 @@ function rs
 end
 
 function th
-    et -q argv[1]; or set argv @
+    set -q argv[1]; or set argv @
     jj restore -i --changes-in $argv
 end
 
