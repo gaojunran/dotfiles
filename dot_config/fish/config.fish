@@ -56,6 +56,10 @@ alias brl "brew list"
 alias brx "brew uninstall"
 alias brs "brew search"
 
+# SSH remote
+alias s1 "ssh jr"
+alias s2 "ssh wxapplib"
+
 alias ai "aube install --dangerously-allow-all-builds"
 alias aa "aube add --dangerously-allow-all-builds"
 alias aag "aube add -g --dangerously-allow-all-builds"
