@@ -112,7 +112,7 @@ alias jre "jj redo"
 
 # jj log
 alias lrm "lr 'mine() & ~description(\"\")' --no-graph"
-alias lrme "lr 'mine() & description(\"\")' --no-graph --stat"
+alias lrme "lr 'mine() & description(\"\")' --no-graph --summary"
 
 alias d "mise run dev"
 
