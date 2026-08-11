@@ -110,6 +110,10 @@ alias bl "jj b l --sort committer-date-"
 alias jun "jj undo"
 alias jre "jj redo"
 
+# jj log
+alias lrm "lr 'mine() & ~description(\"\")' --no-graph"
+alias lrme "lr 'mine() & description(\"\")' --no-graph"
+
 alias d "mise run dev"
 
 alias 0='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))'

@@ -9,3 +9,4 @@ run = "pnpm run dev:once"
 
 [tools]
 node = "20"
+pnpm = "8"
