@@ -1,0 +1,2114 @@
+<!--
+  XLog Tree Viewer — iOS 视图层级 3D 可视化工具
+
+  ========== 使用方式 ==========
+
+  1. 直接打开：浏览器打开 xlog_tree_viewer.html，拖拽或选择 xlog 日志文件
+  2. 通过 URL 参数打开：在 URL 后附加参数自动加载文件并定位截图
+
+  ========== 支持的 URL 参数 ==========
+
+  file      加载同源/相对路径的日志文件
+            示例: xlog_tree_viewer.html?file=log.txt
+
+  url       加载远程日志文件 (需支持 CORS)
+            示例: xlog_tree_viewer.html?url=https://example.com/logs/view-tree.log
+
+  snapshot  自动定位到指定截图 (日志中包含多张截图时生效)
+            支持以下格式:
+            - 数字索引 (1-based):  ?snapshot=2        → 定位到第 2 张截图
+            - 精确时间:            ?snapshot=14:30:25  → 匹配该时间的截图
+            - 带毫秒:              ?snapshot=14:30:25.123
+            - 前缀匹配:            ?snapshot=14:30     → 匹配 14:30 开头的截图
+            - 最近匹配: 若无精确/前缀命中，自动选择时间最接近的截图
+            未传入时默认加载第 1 张截图
+
+  ========== 组合示例 ==========
+
+  xlog_tree_viewer.html?file=log.txt&snapshot=3
+  xlog_tree_viewer.html?url=https://server.com/log.txt&snapshot=14:30:25
+
+  ========== 交互操作 ==========
+
+  3D 视图:
+    - 左键拖拽: 旋转
+    - 右键拖拽: 平移
+    - 滚轮: 缩放
+    - 右键点击节点: 弹出上下文菜单
+
+  左侧树视图:
+    - 点击节点: 选中并在 3D 中高亮
+    - 右键节点: 上下文菜单 (聚焦/展开/折叠/复制/隐藏)
+    - Cmd/Ctrl+F: 搜索
+
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iOS View Tree Viewer</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #1e1e2e;
+  --bg2: #181825;
+  --surface: #313244;
+  --overlay: #45475a;
+  --text: #cdd6f4;
+  --subtext: #a6adc8;
+  --blue: #89b4fa;
+  --green: #a6e3a1;
+  --red: #f38ba8;
+  --yellow: #f9e2af;
+  --mauve: #cba6f7;
+  --teal: #94e2d5;
+  --peach: #fab387;
+  --border: #585b70;
+}
+html, body { height: 100%; font-family: -apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+
+/* Layout */
+#app { display: flex; flex-direction: column; height: 100vh; }
+#toolbar { display: flex; align-items: center; gap: 12px; padding: 8px 16px; background: var(--bg2); border-bottom: 1px solid var(--border); flex-shrink: 0; min-height: 48px; flex-wrap: wrap; }
+#toolbar .logo { font-size: 16px; font-weight: 700; color: var(--blue); white-space: nowrap; }
+#toolbar .sep { width: 1px; height: 24px; background: var(--border); }
+#toolbar button { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 5px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; white-space: nowrap; transition: background .15s; }
+#toolbar button:hover { background: var(--overlay); }
+#toolbar button.active { background: var(--blue); color: var(--bg); border-color: var(--blue); }
+#toolbar button.hidden { display: none; }
+#search-box { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 5px 10px; border-radius: 6px; font-size: 13px; width: 220px; outline: none; }
+#search-box:focus { border-color: var(--blue); }
+#search-box::placeholder { color: var(--subtext); }
+.stats { font-size: 12px; color: var(--subtext); white-space: nowrap; margin-left: auto; }
+
+#main { display: flex; flex: 1; overflow: hidden; }
+
+/* 3D spacing slider */
+.slider-group { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--subtext); }
+.slider-group input[type="range"] { width: 80px; accent-color: var(--blue); }
+.slider-btn { width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 4px; cursor: pointer; font-size: 14px; line-height: 1; padding: 0; transition: background .15s; }
+.slider-btn:hover { background: var(--overlay); }
+
+/* Tree Panel */
+#tree-panel { width: 380px; min-width: 280px; background: var(--bg2); border-right: 1px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; }
+#tree-panel .panel-header { padding: 8px 12px; font-size: 13px; font-weight: 600; color: var(--subtext); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+#tree-container { flex: 1; overflow: auto; padding: 4px 0; font-size: 12px; font-family: 'SF Mono', 'Menlo', 'Monaco', monospace; }
+#tree-container::-webkit-scrollbar { width: 6px; }
+#tree-container::-webkit-scrollbar-track { background: transparent; }
+#tree-container::-webkit-scrollbar-thumb { background: var(--overlay); border-radius: 3px; }
+
+.tree-node { padding: 2px 8px 2px 0; cursor: pointer; white-space: nowrap; display: flex; align-items: center; line-height: 22px; }
+.tree-node:hover { background: rgba(137,180,250,0.08); }
+.tree-node.selected { background: rgba(137,180,250,0.18); }
+.tree-node.search-match { background: rgba(249,226,175,0.15); }
+.tree-node.hidden-view { opacity: 0.45; }
+.tree-toggle { width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; color: var(--subtext); flex-shrink: 0; user-select: none; }
+.tree-toggle.has-children { cursor: pointer; }
+.tree-toggle.has-children:hover { color: var(--blue); }
+.tree-icon { width: 14px; height: 14px; border-radius: 3px; margin-right: 5px; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.1); }
+.tree-class { color: #5aeaca; font-weight: 500; }
+.tree-addr { color: var(--subtext); font-size: 11px; margin-left: 4px; }
+.tree-frame-info { color: var(--overlay); font-size: 11px; margin-left: 6px; }
+.tree-hidden-badge { background: var(--red); color: var(--bg); font-size: 9px; padding: 0 4px; border-radius: 3px; margin-left: 4px; font-weight: 600; }
+
+/* 3D Canvas Panel */
+#canvas-panel { flex: 1; position: relative; overflow: hidden; background: #11111b; perspective: 1500px; }
+#scene-container {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 32px;
+  perspective: 1500px;
+  overflow: hidden;
+}
+#scene {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  position: relative;
+}
+#view-layers-root {
+  position: absolute;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+}
+.view-layer {
+  position: absolute;
+  transform-style: preserve-3d;
+  border: 0.5px solid rgba(88, 91, 112, 0.3);
+  overflow: visible;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: box-shadow 0.15s;
+}
+.view-layer.hidden-layer {
+  border: 1px dashed rgba(243, 139, 168, 0.4);
+  opacity: 0.2;
+}
+.view-layer.hovered-layer {
+  outline: 2.5px solid rgba(166,227,161,0.9);
+  outline-offset: -1px;
+  box-shadow: 0 0 8px 2px rgba(166,227,161,0.5), inset 0 0 0 1px rgba(166,227,161,0.4);
+  z-index: 9999;
+}
+.view-layer.hovered-layer > .view-layer-label {
+  background: rgba(166,227,161,0.85);
+  color: #1e1e2e;
+  padding: 0 4px;
+  border-radius: 2px;
+  font-weight: 600;
+}
+.view-layer.selected-layer {
+  outline: 3px solid rgba(137,180,250,0.95);
+  outline-offset: -1px;
+  box-shadow: 0 0 12px 3px rgba(137,180,250,0.5), inset 0 0 0 1px rgba(137,180,250,0.4);
+  z-index: 10000;
+}
+.view-layer.selected-layer > .view-layer-label {
+  background: rgba(137,180,250,0.9);
+  color: #1e1e2e;
+  padding: 0 4px;
+  border-radius: 2px;
+  font-weight: 600;
+}
+.view-layer-label {
+  position: absolute;
+  top: 1px;
+  left: 2px;
+  font-size: 9px;
+  font-family: 'SF Mono', Menlo, monospace;
+  color: rgba(205, 214, 244, 0.7);
+  white-space: nowrap;
+  pointer-events: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 4px);
+}
+.view-layer.hidden-layer .view-layer-label {
+  color: rgba(243, 139, 168, 0.6);
+}
+
+/* Info bar at bottom of canvas */
+#info-bar { position: absolute; bottom: 0; left: 0; right: 0; padding: 6px 12px; background: rgba(24,24,37,0.92); backdrop-filter: blur(8px); border-top: 1px solid var(--border); font-size: 12px; color: var(--subtext); display: flex; gap: 16px; align-items: center; z-index: 10; }
+#info-bar .info-item { display: flex; gap: 4px; }
+#info-bar .info-label { color: var(--overlay); }
+
+/* Properties Panel */
+#props-panel { width: 320px; min-width: 240px; background: var(--bg2); border-left: 1px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden; }
+#props-panel .panel-header { padding: 8px 12px; font-size: 13px; font-weight: 600; color: var(--subtext); border-bottom: 1px solid var(--border); }
+#props-content { flex: 1; overflow: auto; padding: 8px 12px; font-size: 12px; }
+#props-content::-webkit-scrollbar { width: 6px; }
+#props-content::-webkit-scrollbar-track { background: transparent; }
+#props-content::-webkit-scrollbar-thumb { background: var(--overlay); border-radius: 3px; }
+.prop-section { margin-bottom: 12px; }
+.prop-section-title { font-size: 11px; font-weight: 600; color: var(--subtext); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid var(--border); }
+.prop-row { display: flex; padding: 3px 0; gap: 8px; }
+.prop-key { color: var(--subtext); min-width: 90px; flex-shrink: 0; }
+.prop-val { color: var(--text); word-break: break-all; }
+.prop-val.type-color { display: flex; align-items: center; gap: 6px; }
+.color-swatch { width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.2); flex-shrink: 0; }
+
+/* Drop overlay */
+.snapshot-switcher { border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.snapshot-switcher.hidden { display: none; }
+.snapshot-switcher-header { padding: 6px 12px; font-size: 11px; font-weight: 600; color: var(--subtext); text-transform: uppercase; letter-spacing: 0.5px; background: var(--bg2); cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
+.snapshot-switcher-header:hover { background: var(--overlay); }
+.snapshot-switcher-header .snap-toggle { font-size: 10px; transition: transform 0.2s; }
+.snapshot-switcher-header .snap-toggle.collapsed { transform: rotate(-90deg); }
+.snapshot-list { display: flex; flex-direction: column; max-height: min(150px, 25vh); overflow-y: auto; }
+.snapshot-list.collapsed { display: none; }
+.snapshot-item { padding: 6px 12px; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--text); transition: background 0.15s; border-left: 3px solid transparent; min-height: 28px; }
+.snapshot-item:hover { background: rgba(137,180,250,0.08); }
+.snapshot-item.active { background: rgba(137,180,250,0.15); border-left-color: var(--blue); }
+.snapshot-item .snap-index { color: var(--blue); font-weight: 600; min-width: 20px; }
+.snapshot-item .snap-time { color: var(--peach); font-family: 'SF Mono', Menlo, monospace; font-size: 11px; }
+.snapshot-item .snap-vc { color: var(--subtext); font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Drop overlay */
+#drop-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(30,30,46,0.95); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; }
+#drop-overlay.drag-over { background: rgba(137,180,250,0.15); }
+#drop-overlay .drop-icon { font-size: 64px; margin-bottom: 20px; }
+#drop-overlay h2 { font-size: 24px; color: var(--text); margin-bottom: 8px; }
+#drop-overlay p { color: var(--subtext); font-size: 14px; margin-bottom: 24px; }
+#drop-overlay button { background: var(--blue); color: var(--bg); border: none; padding: 10px 28px; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; }
+#drop-overlay button:hover { opacity: 0.9; }
+#drop-overlay.hidden { display: none; }
+
+/* Loading progress */
+#load-progress { margin-top: 20px; text-align: center; width: 300px; }
+#load-progress.hidden { display: none; }
+#load-progress .progress-bar { width: 100%; height: 6px; background: var(--surface); border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
+#load-progress .progress-fill { height: 100%; width: 0%; background: var(--blue); border-radius: 3px; transition: width 0.15s; }
+#load-progress #progress-text { font-size: 12px; color: var(--subtext); }
+
+/* Resize handles */
+.resize-handle { width: 4px; cursor: col-resize; background: transparent; flex-shrink: 0; z-index: 5; }
+.resize-handle:hover, .resize-handle.active { background: var(--blue); }
+
+/* Tooltip */
+#tooltip { position: fixed; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; font-size: 12px; pointer-events: none; z-index: 2000; max-width: 400px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); display: none; }
+#tooltip .tt-class { color: var(--teal); font-weight: 600; }
+#tooltip .tt-addr { color: var(--subtext); margin-left: 4px; }
+#tooltip .tt-frame { color: var(--peach); margin-top: 2px; }
+
+/* Guide lines for selected node */
+.guide-line {
+  position: absolute;
+  background: rgba(137,180,250,0.3);
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* Focus mode bar */
+#focus-bar {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(24,24,37,0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--blue);
+  border-radius: 8px;
+  padding: 6px 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+}
+#focus-bar.hidden { display: none; }
+#focus-bar #focus-info { font-size: 12px; color: var(--teal); font-weight: 500; white-space: nowrap; }
+#focus-bar button {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 4px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background .15s;
+  white-space: nowrap;
+}
+#focus-bar button:hover { background: var(--red); color: var(--bg); border-color: var(--red); }
+
+/* Context menu */
+.context-menu {
+  position: fixed;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 4px 0;
+  z-index: 3000;
+  min-width: 180px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  font-size: 13px;
+  font-family: -apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+}
+.context-menu.hidden { display: none; }
+.ctx-item {
+  padding: 7px 14px;
+  cursor: pointer;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background .1s;
+}
+.ctx-item:hover { background: rgba(137,180,250,0.15); }
+.ctx-separator { height: 1px; background: var(--border); margin: 4px 8px; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="toolbar">
+    <span class="logo">🌳 View Tree Viewer</span>
+    <span class="sep"></span>
+    <input id="search-box" type="text" placeholder="搜索类名 / 地址 (⌘F)">
+    <button id="btn-toggle-hidden" title="切换隐藏视图显示">👁 显示隐藏视图</button>
+    <button id="btn-fit" title="适应窗口">⊞ 适应</button>
+    <button id="btn-reset" title="重置视图">↺ 重置</button>
+    <button id="btn-restore-hidden" title="还原所有手动隐藏的节点" class="hidden" style="background:var(--red);color:var(--bg);border-color:var(--red);">🚫 还原隐藏 (<span id="hidden-count">0</span>)</button>
+    <button id="btn-reset-rotation" title="重置旋转角度为正面">🔄 正面视图</button>
+    <span class="sep"></span>
+    <div class="slider-group">
+      <span>3D 层间距:</span>
+      <button class="slider-btn" id="spacing-dec" title="减少层间距">−</button>
+      <input type="range" id="layer-spacing" min="0" max="60" value="1" step="1">
+      <button class="slider-btn" id="spacing-inc" title="增加层间距">+</button>
+      <span id="spacing-value">1</span>
+    </div>
+    <span style="color:var(--subtext); font-size:11px; white-space:nowrap;">左键拖拽旋转 · 右键拖拽平移 · 滚轮缩放</span>
+    <span class="stats" id="stats-info"></span>
+  </div>
+  <div id="main">
+    <div id="tree-panel">
+      <div id="snapshot-switcher" class="snapshot-switcher hidden">
+        <div class="snapshot-switcher-header" id="snapshot-header">
+          <span>📸 截图时间点 <span id="snapshot-summary" style="font-weight:400; color:var(--peach);"></span></span>
+          <span class="snap-toggle" id="snap-toggle">▼</span>
+        </div>
+        <div id="snapshot-list" class="snapshot-list"></div>
+      </div>
+      <div class="panel-header">
+        <span>视图层级</span>
+        <span id="tree-count" style="font-size:11px; font-weight:400;"></span>
+      </div>
+      <div id="tree-container"></div>
+    </div>
+    <div class="resize-handle" id="resize-left"></div>
+    <div id="canvas-panel">
+      <div id="scene-container">
+        <div id="scene">
+          <div id="view-layers-root"></div>
+        </div>
+      </div>
+      <div id="focus-bar" class="hidden">
+        <span id="focus-info"></span>
+        <button id="btn-exit-focus">✕ 退出聚焦模式</button>
+      </div>
+      <div id="info-bar">
+        <div class="info-item"><span class="info-label">缩放:</span><span id="zoom-info">100%</span></div>
+        <div class="info-item"><span class="info-label">旋转:</span><span id="rotate-info">0°, 0°</span></div>
+        <div class="info-item"><span class="info-label">选中:</span><span id="select-info">-</span></div>
+      </div>
+    </div>
+    <div class="resize-handle" id="resize-right"></div>
+    <div id="props-panel">
+      <div class="panel-header">属性详情</div>
+      <div id="props-content">
+        <p style="color:var(--subtext); text-align:center; margin-top:40px;">选中视图查看属性</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="drop-overlay">
+  <div class="drop-icon">📄</div>
+  <h2>iOS View Tree Viewer</h2>
+  <p>拖入 xlog 日志文件，或点击按钮选择文件</p>
+  <button id="btn-open-file">选择日志文件</button>
+  <input type="file" id="file-input" accept=".txt,.log,.xlog" style="display:none">
+  <div id="load-progress" class="hidden">
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    <span id="progress-text"></span>
+  </div>
+</div>
+
+<div id="tooltip"></div>
+
+<div id="context-menu" class="context-menu hidden">
+  <div class="ctx-item" data-action="focus">🔍 聚焦此节点</div>
+  <div class="ctx-item" data-action="expand-all">📂 全部展开</div>
+  <div class="ctx-item" data-action="collapse-all">📁 全部折叠</div>
+  <div class="ctx-separator"></div>
+  <div class="ctx-item" data-action="copy-class">📋 复制类名</div>
+  <div class="ctx-item" data-action="copy-address">📋 复制地址</div>
+  <div class="ctx-separator"></div>
+  <div class="ctx-item" data-action="hide-node">🚫 隐藏此节点</div>
+</div>
+
+<script>
+// ===================== DATA MODEL =====================
+class ViewNode {
+  constructor() {
+    this.id = 0;
+    this.className = '';
+    this.address = '';
+    this.frame = { x: 0, y: 0, w: 0, h: 0 };
+    this.bkgColor = null;
+    this.hidden = false;
+    this.alpha = 1.0;
+    this.userInteractionEnabled = true;
+    this.textLen = null;
+    this.textColor = null;
+    this.imageSize = null;
+    this.gestures = [];
+    this.gestureCount = 0;
+    this.extInfo = '';
+    this.layerName = '';
+    this.rootVc = '';
+    this.windowLevel = null;
+    this.isKeyWindow = false;
+    this.superview = '';
+    this.scrollInfo = null;
+    this.transform = '';
+    this.zPosition = null;
+    this.orientations = '';
+    this.visualEffectMaskSize = '';
+    this.rawAttrs = '';
+    this.depth = 0;
+    this.parent = null;
+    this.children = [];
+    this.collapsed = false;
+    this.treeEl = null;
+    this.layerEl = null; // DOM element for 3D rendering
+    this.absFrame = { x: 0, y: 0, w: 0, h: 0 };
+    this.flatIndex = 0; // for z-ordering in 3D
+    this.siblingOrder = 0; // index among siblings (0-based), for overlay ordering
+  }
+}
+
+// ===================== PARSER =====================
+let nodeIdCounter = 0;
+
+// Process a single line and update parsing state. Returns a snapshot object when one is complete.
+function processLine(line, state) {
+  // Strip trailing \r if present (Windows/mixed line endings)
+  if (line.endsWith('\r')) line = line.slice(0, -1);
+  if (!line) return null;
+
+  // Fast path: if not in tree and line doesn't contain key markers, skip entirely
+  if (!state.inTree) {
+    if (line.indexOf('did take snapshot') === -1 && line.indexOf('wc tree view begin') === -1) {
+      return null;
+    }
+  }
+
+  // Detect snapshot marker: "did take snapshot at <XXXViewController: 0xXXX>"
+  const snapMatch = line.match(/\[(\d{4}-\d{2}-\d{2}\s\+[\d.]+\s[\d:.]+)\].*did take snapshot at <([^>]+)>/);
+  if (snapMatch) {
+    state.pendingTimestamp = snapMatch[1];
+    state.pendingVc = snapMatch[2];
+    return null;
+  }
+
+  if (line.includes('wc tree view begin')) {
+    state.inTree = true;
+    state.currentTreeLines = [];
+    if (state.pendingTimestamp) {
+      state.currentTimestamp = state.pendingTimestamp;
+      state.currentVc = state.pendingVc;
+      state.pendingTimestamp = '';
+      state.pendingVc = '';
+    } else {
+      const tsMatch = line.match(/\[(\d{4}-\d{2}-\d{2}\s\+[\d.]+\s[\d:.]+)\]/);
+      state.currentTimestamp = tsMatch ? tsMatch[1] : 'Unknown';
+      state.currentVc = '';
+    }
+    return null;
+  }
+
+  if (line.includes('wc tree view end')) {
+    state.inTree = false;
+    if (state.currentTreeLines.length > 0) {
+      const snapshot = {
+        timestamp: state.currentTimestamp,
+        vc: state.currentVc,
+        lines: state.currentTreeLines
+      };
+      state.currentTreeLines = [];
+      return snapshot;
+    }
+    return null;
+  }
+
+  if (state.inTree) {
+    const idx = line.lastIndexOf('][');
+    if (idx >= 0) {
+      let content = line.substring(idx + 2);
+      // Remove trailing ']'
+      if (content.endsWith(']')) content = content.slice(0, -1);
+      state.currentTreeLines.push(content);
+    }
+  }
+
+  return null;
+}
+
+function createParseState() {
+  return {
+    inTree: false,
+    currentTreeLines: [],
+    currentTimestamp: '',
+    currentVc: '',
+    pendingTimestamp: '',
+    pendingVc: ''
+  };
+}
+
+// Synchronous extraction for small files (kept for backward compatibility)
+function extractAllSnapshots(rawText) {
+  const lines = rawText.split('\n');
+  const snapshots = [];
+  const state = createParseState();
+
+  for (const line of lines) {
+    const snap = processLine(line, state);
+    if (snap) snapshots.push(snap);
+  }
+
+  return snapshots;
+}
+
+// Streaming extraction for large files using File.stream()
+async function extractSnapshotsStreaming(file, onProgress) {
+  const snapshots = [];
+  const state = createParseState();
+  const fileSize = file.size;
+  let bytesRead = 0;
+  let leftover = '';
+  let lastProgressTime = 0;
+
+  const stream = file.stream();
+  const reader = stream.getReader();
+  const decoder = new TextDecoder('utf-8');
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    bytesRead += value.byteLength;
+    const chunk = decoder.decode(value, { stream: true });
+    const text = leftover + chunk;
+    const lines = text.split('\n');
+
+    // Last element may be incomplete line – save for next chunk
+    leftover = lines.pop();
+
+    for (const line of lines) {
+      const snap = processLine(line, state);
+      if (snap) snapshots.push(snap);
+    }
+
+    // Throttled progress reporting (max ~15fps) to keep UI responsive
+    const now = performance.now();
+    if (onProgress && (now - lastProgressTime > 66 || done)) {
+      lastProgressTime = now;
+      onProgress(bytesRead, fileSize, snapshots.length);
+      // Yield to event loop so the browser can repaint
+      await new Promise(r => setTimeout(r, 0));
+    }
+  }
+
+  // Process any remaining leftover
+  if (leftover) {
+    const snap = processLine(leftover, state);
+    if (snap) snapshots.push(snap);
+  }
+
+  return snapshots;
+}
+
+function parseDepth(prefix) {
+  let depth = 0;
+  let i = 0;
+  while (i < prefix.length) {
+    if (prefix[i] === '+') break;
+    if (prefix[i] === '|' || prefix[i] === ' ') {
+      depth++;
+      i += 4;
+    } else {
+      i++;
+    }
+  }
+  return depth;
+}
+
+function parseNodeLine(content) {
+  const node = new ViewNode();
+  node.id = nodeIdCounter++;
+
+  let attrStr;
+  const plusIdx = content.indexOf('+---');
+  if (plusIdx >= 0) {
+    const prefix = content.substring(0, plusIdx);
+    node.depth = parseDepth(prefix);
+    attrStr = content.substring(plusIdx + 4);
+  } else {
+    node.depth = -1;
+    attrStr = content;
+  }
+
+  node.rawAttrs = attrStr;
+
+  const nameMatch = attrStr.match(/^([\w_]+)-0x([0-9a-fA-F]+)\s*/);
+  if (nameMatch) {
+    node.className = nameMatch[1];
+    node.address = '0x' + nameMatch[2];
+    attrStr = attrStr.substring(nameMatch[0].length);
+  } else {
+    const spaceIdx = attrStr.indexOf(' ');
+    if (spaceIdx > 0) {
+      node.className = attrStr.substring(0, spaceIdx);
+      attrStr = attrStr.substring(spaceIdx + 1);
+    } else {
+      node.className = attrStr;
+      attrStr = '';
+    }
+  }
+
+  // Parse attributes
+  const layerMatch = attrStr.match(/layer\.name=(\S+)/);
+  if (layerMatch) node.layerName = layerMatch[1];
+
+  if (attrStr.includes('superview=nil')) node.superview = 'nil';
+
+  const frameMatch = attrStr.match(/frame=\(([^)]+)\)/);
+  if (frameMatch) {
+    const parts = frameMatch[1].replace(/;/g, ' ').trim().split(/\s+/);
+    if (parts.length >= 4) {
+      node.frame = { x: parseFloat(parts[0]), y: parseFloat(parts[1]), w: parseFloat(parts[2]), h: parseFloat(parts[3]) };
+    }
+  }
+
+  const bkgMatch = attrStr.match(/bkgColor=([0-9a-fA-F]{6}),([0-9.]+)\s*(dynamicColor)?/);
+  if (bkgMatch) {
+    node.bkgColor = { hex: '#' + bkgMatch[1], alpha: parseFloat(bkgMatch[2]), dynamic: !!bkgMatch[3] };
+  }
+
+  if (/\bhidden=YES\b/.test(attrStr)) node.hidden = true;
+
+  const alphaMatch = attrStr.match(/\balpha=([0-9.]+)/);
+  if (alphaMatch) node.alpha = parseFloat(alphaMatch[1]);
+
+  if (attrStr.includes('userInteractionEnabled=NO')) node.userInteractionEnabled = false;
+
+  const textLenMatch = attrStr.match(/textLen=(\d+)/);
+  if (textLenMatch) node.textLen = parseInt(textLenMatch[1]);
+
+  const textColorMatch = attrStr.match(/textColor=([0-9a-fA-F]{6}),([0-9.]+)\s*(dynamic|fixed)?/);
+  if (textColorMatch) {
+    node.textColor = { hex: '#' + textColorMatch[1], alpha: parseFloat(textColorMatch[2]), type: textColorMatch[3] || '' };
+  }
+
+  const imgMatch = attrStr.match(/imageSize\(([^)]+)\)/);
+  if (imgMatch) {
+    const p = imgMatch[1].split(',');
+    node.imageSize = { w: parseFloat(p[0]), h: parseFloat(p[1] || 0) };
+  }
+
+  const gestMatch = attrStr.match(/gesture:(\d+)/);
+  if (gestMatch) node.gestureCount = parseInt(gestMatch[1]);
+
+  const gestureNames = attrStr.match(/(\w+GestureRecognizer|_\w+Gesture\w*):(\d)/g);
+  if (gestureNames) {
+    node.gestures = gestureNames.map(g => {
+      const [name, enabled] = g.split(':');
+      return { name, enabled: enabled === '1' };
+    });
+  }
+
+  const extMatch = attrStr.match(/extInfo=\(([^)]*)\)/);
+  if (extMatch) node.extInfo = extMatch[1];
+
+  const wlMatch = attrStr.match(/windowLevel:([\d.]+)/);
+  if (wlMatch) node.windowLevel = parseFloat(wlMatch[1]);
+
+  const rootVcMatch = attrStr.match(/rootVc:<([^>]+)>/);
+  if (rootVcMatch) node.rootVc = rootVcMatch[1];
+
+  if (attrStr.includes('isKeyWindow=YES')) node.isKeyWindow = true;
+
+  const offsetMatch = attrStr.match(/offset:([-\d.]+),([-\d.]+)/);
+  const contentSizeMatch = attrStr.match(/contentSize:([-\d.]+),([-\d.]+)/);
+  if (offsetMatch || contentSizeMatch) {
+    node.scrollInfo = {};
+    if (offsetMatch) node.scrollInfo.offset = { x: parseFloat(offsetMatch[1]), y: parseFloat(offsetMatch[2]) };
+    if (contentSizeMatch) node.scrollInfo.contentSize = { w: parseFloat(contentSizeMatch[1]), h: parseFloat(contentSizeMatch[2]) };
+    if (attrStr.includes('scrollsToTop:1')) node.scrollInfo.scrollsToTop = true;
+    const insetMatch = attrStr.match(/inset top:([-\d.]+) bottom:([-\d.]+) left:([-\d.]+) right:([-\d.]+)/);
+    if (insetMatch) {
+      node.scrollInfo.inset = { top: parseFloat(insetMatch[1]), bottom: parseFloat(insetMatch[2]), left: parseFloat(insetMatch[3]), right: parseFloat(insetMatch[4]) };
+    }
+  }
+
+  const transMatch = attrStr.match(/transform=\(([^)]+)\)/);
+  if (transMatch) node.transform = transMatch[1];
+
+  const zMatch = attrStr.match(/zPosition=([-\d.e+]+)/);
+  if (zMatch) node.zPosition = parseFloat(zMatch[1]);
+
+  const oriMatch = attrStr.match(/orientations=\(([^)]+)\)/);
+  if (oriMatch) node.orientations = oriMatch[1];
+
+  const veMatch = attrStr.match(/visualEffectMaskSize\(([^)]+)\)/);
+  if (veMatch) node.visualEffectMaskSize = veMatch[1];
+
+  return node;
+}
+
+function buildTree(lines) {
+  const allNodes = [];
+  const roots = [];
+  const stack = [];
+
+  for (const line of lines) {
+    if (!line.trim()) continue;
+    const node = parseNodeLine(line);
+    allNodes.push(node);
+
+    if (node.depth === -1) {
+      node.depth = 0;
+      roots.push(node);
+      stack.length = 0;
+      stack.push({ node, depth: 0 });
+      continue;
+    }
+
+    const actualDepth = node.depth + 1;
+    node.depth = actualDepth;
+
+    while (stack.length > 0 && stack[stack.length - 1].depth >= actualDepth) {
+      stack.pop();
+    }
+
+    if (stack.length > 0) {
+      const parent = stack[stack.length - 1].node;
+      node.parent = parent;
+      node.siblingOrder = parent.children.length; // original subview index = draw order
+      parent.children.push(node);
+    } else {
+      node.siblingOrder = roots.length;
+      roots.push(node);
+    }
+
+    stack.push({ node, depth: actualDepth });
+  }
+
+  // ======= 新增：按布局顺序排序子视图 =======
+  // 按 frame.y 从上到下，相同 y 时按 frame.x 从左到右
+  function sortChildren(node) {
+    if (node.children.length > 1) {
+      node.children.sort((a, b) => {
+        const dy = a.frame.y - b.frame.y;
+        if (Math.abs(dy) > 0.5) return dy;
+        return a.frame.x - b.frame.x;
+      });
+    }
+    for (const child of node.children) {
+      sortChildren(child);
+    }
+  }
+  roots.forEach(sortChildren);
+
+  // Compute absolute frames
+  // For UIScrollView parents: child position is adjusted by contentOffset and contentInset.
+  // In UIKit, a subview at frame.origin (x, y) inside a UIScrollView appears at:
+  //   visualX = scrollView.absFrame.x + child.frame.x - contentOffset.x
+  //   visualY = scrollView.absFrame.y + child.frame.y - contentOffset.y
+  // contentInset shifts the content origin, effectively:
+  //   visualX += contentInset.left   (already accounted for in contentOffset by UIKit, 
+  //   but we apply inset only when offset is 0 to approximate the visual layout)
+  function computeAbsFrame(node) {
+    if (node.parent) {
+      let parentOriginX = node.parent.absFrame.x;
+      let parentOriginY = node.parent.absFrame.y;
+
+      // If parent is a scroll view, adjust for contentOffset
+      if (node.parent.scrollInfo) {
+        const scroll = node.parent.scrollInfo;
+        if (scroll.offset) {
+          parentOriginX -= scroll.offset.x;
+          parentOriginY -= scroll.offset.y;
+        }
+      }
+
+      node.absFrame = {
+        x: parentOriginX + node.frame.x,
+        y: parentOriginY + node.frame.y,
+        w: node.frame.w,
+        h: node.frame.h
+      };
+    } else {
+      node.absFrame = { ...node.frame };
+    }
+    for (const child of node.children) {
+      computeAbsFrame(child);
+    }
+  }
+  roots.forEach(computeAbsFrame);
+
+  // Assign flat index for z-ordering in 3D
+  let flatIdx = 0;
+  function assignFlatIndex(node) {
+    node.flatIndex = flatIdx++;
+    for (const child of node.children) {
+      assignFlatIndex(child);
+    }
+  }
+  roots.forEach(assignFlatIndex);
+
+  return { roots, allNodes };
+}
+
+// ===================== GLOBALS =====================
+let treeData = null;
+let selectedNode = null;
+let hoveredNode = null;
+let showHidden = true;
+let searchTerm = '';
+let searchResults = new Set();
+let userHiddenNodes = new Set(); // nodes manually hidden by user via context menu
+let allSnapshots = [];      // all parsed snapshots
+let currentSnapshotIndex = 0; // currently displayed snapshot
+let rawFileText = '';        // raw file content for re-parsing
+let focusedNode = null;      // focused node for focus mode (null = show all)
+
+// 3D Scene state
+const scene3D = {
+  rotX: 0,       // rotation around X axis (degrees)
+  rotY: 0,       // rotation around Y axis (degrees)
+  zoom: 1,
+  panX: 0,
+  panY: 0,
+  layerSpacing: 1, // Z spacing between layers (px)
+  isDragging: false,
+  isPanning: false,
+  lastX: 0,
+  lastY: 0,
+};
+
+// ===================== TREE PANEL =====================
+function renderTree() {
+  const container = document.getElementById('tree-container');
+  container.innerHTML = '';
+  if (!treeData) return;
+
+  let totalCount = 0;
+  let visibleCount = 0;
+
+  function renderNode(node, indent) {
+    if (userHiddenNodes.has(node)) return; // skip user-hidden nodes and their subtrees
+    totalCount++;
+    const isHidden = isNodeHidden(node);
+    if (!showHidden && isHidden) return;
+    visibleCount++;
+
+    const el = document.createElement('div');
+    el.className = 'tree-node';
+    if (isHidden) el.classList.add('hidden-view');
+    if (selectedNode === node) el.classList.add('selected');
+    if (searchResults.has(node)) el.classList.add('search-match');
+
+    const paddingLeft = 8 + indent * 16;
+    el.style.paddingLeft = paddingLeft + 'px';
+
+    // Toggle arrow
+    const toggle = document.createElement('span');
+    toggle.className = 'tree-toggle';
+    if (node.children.length > 0) {
+      toggle.classList.add('has-children');
+      toggle.textContent = node.collapsed ? '▶' : '▼';
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        node.collapsed = !node.collapsed;
+        renderTree();
+      });
+    }
+    el.appendChild(toggle);
+
+    // Color icon
+    const icon = document.createElement('span');
+    icon.className = 'tree-icon';
+    if (node.bkgColor) {
+      icon.style.background = node.bkgColor.hex;
+      icon.style.opacity = node.bkgColor.alpha;
+    } else {
+      icon.style.background = 'transparent';
+    }
+    el.appendChild(icon);
+
+    // Class name
+    const cls = document.createElement('span');
+    cls.className = 'tree-class';
+    cls.textContent = node.className;
+    el.appendChild(cls);
+
+    // Address
+    const addr = document.createElement('span');
+    addr.className = 'tree-addr';
+    addr.textContent = node.address;
+    el.appendChild(addr);
+
+    // Frame info
+    const fi = document.createElement('span');
+    fi.className = 'tree-frame-info';
+    fi.textContent = `${Math.round(node.frame.w)}×${Math.round(node.frame.h)}`;
+    el.appendChild(fi);
+
+    // Hidden badge
+    if (node.hidden) {
+      const badge = document.createElement('span');
+      badge.className = 'tree-hidden-badge';
+      badge.textContent = 'H';
+      el.appendChild(badge);
+    }
+
+    el.addEventListener('click', () => selectNode(node));
+    el.addEventListener('dblclick', (e) => {
+      e.preventDefault();
+      enterFocusMode(node);
+    });
+    el.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      selectNode(node);
+      showContextMenu(node, e.clientX, e.clientY);
+    });
+    el.addEventListener('mouseenter', () => { setHovered(node); });
+    el.addEventListener('mouseleave', () => { setHovered(null); });
+
+    container.appendChild(el);
+    node.treeEl = el;
+
+    if (!node.collapsed) {
+      for (const child of node.children) {
+        renderNode(child, indent + 1);
+      }
+    }
+  }
+
+  treeData.roots.forEach(r => renderNode(r, 0));
+  document.getElementById('tree-count').textContent = `${visibleCount} / ${totalCount}`;
+}
+
+function isNodeHidden(node) {
+  if (node.hidden) return true;
+  if (node.alpha === 0) return true;
+  return false;
+}
+
+function isNodeEffectivelyHidden(node) {
+  let n = node;
+  while (n) {
+    if (isNodeHidden(n)) return true;
+    n = n.parent;
+  }
+  return false;
+}
+
+function setHovered(node) {
+  if (hoveredNode === node) return;
+  // Remove old hover
+  if (hoveredNode && hoveredNode.layerEl) {
+    hoveredNode.layerEl.classList.remove('hovered-layer');
+  }
+  hoveredNode = node;
+  // Add new hover
+  if (hoveredNode && hoveredNode.layerEl) {
+    hoveredNode.layerEl.classList.add('hovered-layer');
+  }
+  // Update tree highlight (lightweight: just toggle classes)
+  document.querySelectorAll('.tree-node').forEach(el => el.classList.remove('hovered'));
+}
+
+function selectNode(node) {
+  // Remove old selection class
+  if (selectedNode && selectedNode.layerEl) {
+    selectedNode.layerEl.classList.remove('selected-layer');
+  }
+
+  selectedNode = node;
+
+  // Add new selection class
+  if (selectedNode && selectedNode.layerEl) {
+    selectedNode.layerEl.classList.add('selected-layer');
+  }
+
+  // Ensure all ancestors are expanded so the node is visible in the tree
+  if (node) {
+    let p = node.parent;
+    while (p) { p.collapsed = false; p = p.parent; }
+  }
+
+  renderTree();
+  renderProps();
+
+  // Scroll tree to selected (after renderTree so treeEl is fresh)
+  if (node && node.treeEl) {
+    node.treeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+
+  document.getElementById('select-info').textContent = node ? `${node.className} ${node.address}` : '-';
+}
+
+// ===================== PROPERTIES PANEL =====================
+function renderProps() {
+  const container = document.getElementById('props-content');
+  if (!selectedNode) {
+    container.innerHTML = '<p style="color:var(--subtext); text-align:center; margin-top:40px;">选中视图查看属性</p>';
+    return;
+  }
+  const n = selectedNode;
+  let html = '';
+
+  // Identity
+  html += '<div class="prop-section">';
+  html += '<div class="prop-section-title">Identity</div>';
+  html += propRow('类名', `<span style="color:var(--teal)">${esc(n.className)}</span>`);
+  html += propRow('地址', n.address);
+  if (n.layerName) html += propRow('Layer Name', esc(n.layerName));
+  if (n.rootVc) html += propRow('Root VC', esc(n.rootVc));
+  if (n.windowLevel !== null) html += propRow('Window Level', n.windowLevel);
+  if (n.isKeyWindow) html += propRow('Key Window', '✅ YES');
+  if (n.superview) html += propRow('Superview', n.superview);
+  html += '</div>';
+
+  // Layout
+  html += '<div class="prop-section">';
+  html += '<div class="prop-section-title">Layout</div>';
+  html += propRow('Frame', `(${n.frame.x}, ${n.frame.y}; ${n.frame.w}, ${n.frame.h})`);
+  html += propRow('绝对坐标', `(${n.absFrame.x.toFixed(1)}, ${n.absFrame.y.toFixed(1)})`);
+  if (n.transform) html += propRow('Transform', n.transform);
+  if (n.zPosition !== null) html += propRow('Z Position', n.zPosition);
+  if (n.orientations) html += propRow('Orientations', n.orientations);
+  html += '</div>';
+
+  // Appearance
+  html += '<div class="prop-section">';
+  html += '<div class="prop-section-title">Appearance</div>';
+  if (n.bkgColor) {
+    html += propRow('背景色', `<div class="prop-val type-color"><span class="color-swatch" style="background:${n.bkgColor.hex};opacity:${n.bkgColor.alpha}"></span>${n.bkgColor.hex}, α=${n.bkgColor.alpha}${n.bkgColor.dynamic ? ' <span style="color:var(--mauve)">dynamic</span>' : ''}</div>`);
+  }
+  html += propRow('Hidden', n.hidden ? '<span style="color:var(--red)">YES</span>' : 'NO');
+  html += propRow('Alpha', n.alpha);
+  html += propRow('交互', n.userInteractionEnabled ? 'YES' : '<span style="color:var(--yellow)">NO</span>');
+  html += '</div>';
+
+  // Text
+  if (n.textLen !== null) {
+    html += '<div class="prop-section">';
+    html += '<div class="prop-section-title">Text</div>';
+    html += propRow('文本长度', n.textLen);
+    if (n.textColor) {
+      html += propRow('文本颜色', `<div class="prop-val type-color"><span class="color-swatch" style="background:${n.textColor.hex};opacity:${n.textColor.alpha}"></span>${n.textColor.hex}, α=${n.textColor.alpha} ${n.textColor.type}</div>`);
+    }
+    html += '</div>';
+  }
+
+  // Image
+  if (n.imageSize) {
+    html += '<div class="prop-section">';
+    html += '<div class="prop-section-title">Image</div>';
+    html += propRow('图片尺寸', `${n.imageSize.w} × ${n.imageSize.h}`);
+    html += '</div>';
+  }
+
+  // Scroll
+  if (n.scrollInfo) {
+    html += '<div class="prop-section">';
+    html += '<div class="prop-section-title">Scroll</div>';
+    if (n.scrollInfo.offset) html += propRow('Offset', `(${n.scrollInfo.offset.x}, ${n.scrollInfo.offset.y})`);
+    if (n.scrollInfo.contentSize) html += propRow('Content Size', `${n.scrollInfo.contentSize.w} × ${n.scrollInfo.contentSize.h}`);
+    if (n.scrollInfo.inset) html += propRow('Inset', `T:${n.scrollInfo.inset.top} B:${n.scrollInfo.inset.bottom} L:${n.scrollInfo.inset.left} R:${n.scrollInfo.inset.right}`);
+    if (n.scrollInfo.scrollsToTop) html += propRow('Scrolls To Top', 'YES');
+    html += '</div>';
+  }
+
+  // Gestures
+  if (n.gestureCount > 0) {
+    html += '<div class="prop-section">';
+    html += '<div class="prop-section-title">Gestures (' + n.gestureCount + ')</div>';
+    for (const g of n.gestures) {
+      const color = g.enabled ? 'var(--green)' : 'var(--overlay)';
+      html += `<div class="prop-row"><span class="prop-key" style="color:${color}">${g.enabled ? '●' : '○'}</span><span class="prop-val">${esc(g.name)}</span></div>`;
+    }
+    html += '</div>';
+  }
+
+  // ExtInfo
+  if (n.extInfo) {
+    html += '<div class="prop-section">';
+    html += '<div class="prop-section-title">ExtInfo</div>';
+    html += `<div style="color:var(--peach); word-break:break-all;">${esc(n.extInfo)}</div>`;
+    html += '</div>';
+  }
+
+  // Hierarchy
+  html += '<div class="prop-section">';
+  html += '<div class="prop-section-title">Hierarchy</div>';
+  html += propRow('深度', n.depth);
+  html += propRow('子视图数', n.children.length);
+  if (n.parent) html += propRow('父视图', `${n.parent.className} ${n.parent.address}`);
+  html += '</div>';
+
+  container.innerHTML = html;
+}
+
+function propRow(key, val) {
+  return `<div class="prop-row"><span class="prop-key">${key}</span><span class="prop-val">${val}</span></div>`;
+}
+
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ===================== 3D RENDERING =====================
+const sceneContainer = document.getElementById('scene-container');
+const sceneEl = document.getElementById('scene');
+const layersRoot = document.getElementById('view-layers-root');
+
+// Build a DOM element for each view node for 3D visualization
+function build3DScene() {
+  layersRoot.innerHTML = '';
+  if (!treeData || treeData.roots.length === 0) return;
+
+  // Determine which roots to render (focus mode or all)
+  const renderRoots = focusedNode ? [focusedNode] : treeData.roots;
+
+  // Find the main window (typically the one with isKeyWindow or the largest)
+  const refRoot = renderRoots[0];
+  const rootW = refRoot.frame.w || 430;
+  const rootH = refRoot.frame.h || 932;
+
+  // Set root element dimensions
+  layersRoot.style.width = rootW + 'px';
+  layersRoot.style.height = rootH + 'px';
+
+  // Collect all nodes to render in flat list (pre-order traversal preserves overlay order)
+  const flatNodes = [];
+  function collectNodes(node) {
+    if (userHiddenNodes.has(node)) return; // skip user-hidden nodes and their subtrees
+    const isHidden = isNodeEffectivelyHidden(node);
+    if (!showHidden && isHidden) return;
+    flatNodes.push(node);
+    for (const child of node.children) {
+      collectNodes(child);
+    }
+  }
+  for (const root of renderRoots) {
+    collectNodes(root);
+  }
+
+  // Offset for focus mode: shift all absFrames so focused node is at (0,0)
+  const focusOffsetX = focusedNode ? focusedNode.absFrame.x : 0;
+  const focusOffsetY = focusedNode ? focusedNode.absFrame.y : 0;
+
+  // Compute normalization factor: map flatIndex range to depth range
+  // so the total Z spread matches the old depth-based approach.
+  let maxFlatIndex = 0;
+  let maxDepth = 0;
+  for (const node of flatNodes) {
+    if (node.flatIndex > maxFlatIndex) maxFlatIndex = node.flatIndex;
+    if (node.depth > maxDepth) maxDepth = node.depth;
+  }
+  // Store for updateLayerSpacing
+  scene3D._maxFlatIndex = maxFlatIndex;
+  scene3D._maxDepth = maxDepth;
+
+  // Render all nodes as flat siblings in layersRoot (no DOM nesting).
+  // Use absFrame for positioning and flatIndex for Z ordering.
+  // This avoids translateZ accumulation from DOM nesting with preserve-3d.
+  for (const node of flatNodes) {
+    const isHidden = isNodeEffectivelyHidden(node);
+
+    const el = document.createElement('div');
+    el.className = 'view-layer';
+    if (isHidden) el.classList.add('hidden-layer');
+    if (node === selectedNode) el.classList.add('selected-layer');
+
+    // Use absolute frame for positioning (all nodes are siblings in DOM)
+    el.style.left = (node.absFrame.x - focusOffsetX) + 'px';
+    el.style.top = (node.absFrame.y - focusOffsetY) + 'px';
+    el.style.width = Math.max(0, node.absFrame.w) + 'px';
+    el.style.height = Math.max(0, node.absFrame.h) + 'px';
+
+    // Background color
+    if (node.bkgColor) {
+      const a = node.bkgColor.alpha * (node.alpha !== undefined ? node.alpha : 1);
+      el.style.backgroundColor = hexToRgba(node.bkgColor.hex, a);
+    } else {
+      el.style.backgroundColor = 'rgba(49, 50, 68, 0.15)';
+    }
+
+    // Z translation: flatIndex ensures correct overlay order.
+    // Normalize flatIndex into depth range so total Z spread matches depth-based approach.
+    const normalizedZ = maxFlatIndex > 0 ? (node.flatIndex / maxFlatIndex) * maxDepth : 0;
+    const zOffset = normalizedZ * scene3D.layerSpacing;
+    el.style.transform = `translateZ(${zOffset}px)`;
+
+    // Label (only for views large enough)
+    if (node.absFrame.w > 20 && node.absFrame.h > 12) {
+      const label = document.createElement('span');
+      label.className = 'view-layer-label';
+      label.textContent = node.className;
+      el.appendChild(label);
+    }
+
+    // Event handlers
+    el.addEventListener('mouseenter', (e) => {
+      e.stopPropagation();
+      if (!scene3D.isDragging && !scene3D.isPanning) {
+        setHovered(node);
+        showTooltip(node, e.clientX, e.clientY);
+      }
+    });
+    el.addEventListener('mousemove', (e) => {
+      if (node === hoveredNode && !scene3D.isDragging && !scene3D.isPanning) {
+        showTooltip(node, e.clientX, e.clientY);
+      }
+    });
+    el.addEventListener('mouseleave', (e) => {
+      if (hoveredNode === node) {
+        setHovered(null);
+        hideTooltip();
+      }
+    });
+
+    node.layerEl = el;
+    el._viewNode = node;
+    layersRoot.appendChild(el);
+  }
+
+  update3DTransform();
+}
+
+function hexToRgba(hex, alpha) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+function update3DTransform() {
+  const container = sceneContainer;
+  const cw = container.clientWidth;
+  const ch = container.clientHeight;
+
+  if (!treeData || treeData.roots.length === 0) return;
+
+  const refRoot = focusedNode || treeData.roots[0];
+  const rootW = refRoot.frame.w || 430;
+  const rootH = refRoot.frame.h || 932;
+
+  // Center the root in the scene and apply rotation & zoom
+  const tx = cw / 2 - (rootW / 2) * scene3D.zoom + scene3D.panX;
+  const ty = ch / 2 - (rootH / 2) * scene3D.zoom + scene3D.panY;
+
+  layersRoot.style.transformOrigin = `${rootW / 2}px ${rootH / 2}px 0`;
+  layersRoot.style.transform = `
+    translate(${tx}px, ${ty}px)
+    scale(${scene3D.zoom})
+    rotateX(${scene3D.rotX}deg)
+    rotateY(${scene3D.rotY}deg)
+  `;
+
+  // Update layer Z translations based on spacing
+  if (treeData) {
+    updateLayerSpacing();
+  }
+
+  // Update info bar
+  document.getElementById('zoom-info').textContent = Math.round(scene3D.zoom * 100) + '%';
+  document.getElementById('rotate-info').textContent = `${Math.round(scene3D.rotX)}°, ${Math.round(scene3D.rotY)}°`;
+}
+
+function updateLayerSpacing() {
+  if (!treeData) return;
+  const maxFI = scene3D._maxFlatIndex || 1;
+  const maxD = scene3D._maxDepth || 1;
+  for (const node of treeData.allNodes) {
+    if (node.layerEl) {
+      const normalizedZ = (node.flatIndex / maxFI) * maxD;
+      const z = normalizedZ * scene3D.layerSpacing;
+      node.layerEl.style.transform = `translateZ(${z}px)`;
+    }
+  }
+}
+
+// ===================== 3D INTERACTION =====================
+const DRAG_THRESHOLD = 4; // px — movement beyond this counts as drag, not click
+
+sceneContainer.addEventListener('mousedown', (e) => {
+  // Record start position for drag threshold detection
+  scene3D.startX = e.clientX;
+  scene3D.startY = e.clientY;
+  scene3D.lastX = e.clientX;
+  scene3D.lastY = e.clientY;
+  scene3D.hasDragged = false;
+
+  // Find the view-layer node under cursor (for click-select after mouseup)
+  let targetNode = null;
+  let target = e.target;
+  while (target && target !== sceneContainer) {
+    if (target._viewNode) { targetNode = target._viewNode; break; }
+    target = target.parentElement;
+  }
+  scene3D.pendingClickNode = targetNode;
+
+  if (e.button === 1 || (e.button === 0 && e.shiftKey)) {
+    // Pan
+    scene3D.isPanning = true;
+    scene3D.isDragging = false;
+  } else if (e.button === 0) {
+    // Potential rotate (will confirm after exceeding threshold)
+    scene3D.isDragging = true;
+    scene3D.isPanning = false;
+  } else if (e.button === 2) {
+    e.preventDefault();
+    scene3D.isPanning = true;
+    scene3D.isDragging = false;
+  }
+  sceneContainer.style.cursor = 'grabbing';
+});
+
+window.addEventListener('mousemove', (e) => {
+  if (scene3D.isDragging) {
+    const dx = e.clientX - scene3D.lastX;
+    const dy = e.clientY - scene3D.lastY;
+
+    // Check if we've exceeded drag threshold
+    if (!scene3D.hasDragged) {
+      const totalDx = e.clientX - scene3D.startX;
+      const totalDy = e.clientY - scene3D.startY;
+      if (Math.abs(totalDx) > DRAG_THRESHOLD || Math.abs(totalDy) > DRAG_THRESHOLD) {
+        scene3D.hasDragged = true;
+        // Hide tooltip when starting to drag
+        hideTooltip();
+      } else {
+        return; // Haven't exceeded threshold yet, don't rotate
+      }
+    }
+
+    scene3D.rotY += dx * 0.4;
+    scene3D.rotX -= dy * 0.4;
+    // Clamp X rotation
+    scene3D.rotX = Math.max(-90, Math.min(90, scene3D.rotX));
+    scene3D.lastX = e.clientX;
+    scene3D.lastY = e.clientY;
+    update3DTransform();
+  } else if (scene3D.isPanning) {
+    const dx = e.clientX - scene3D.lastX;
+    const dy = e.clientY - scene3D.lastY;
+    if (!scene3D.hasDragged) {
+      const totalDx = e.clientX - scene3D.startX;
+      const totalDy = e.clientY - scene3D.startY;
+      if (Math.abs(totalDx) > DRAG_THRESHOLD || Math.abs(totalDy) > DRAG_THRESHOLD) {
+        scene3D.hasDragged = true;
+        hideTooltip();
+      } else {
+        return;
+      }
+    }
+    scene3D.panX += dx;
+    scene3D.panY += dy;
+    scene3D.lastX = e.clientX;
+    scene3D.lastY = e.clientY;
+    update3DTransform();
+  }
+});
+
+window.addEventListener('mouseup', (e) => {
+  if (!scene3D.hasDragged && scene3D.pendingClickNode) {
+    if (e.button === 2) {
+      // Right-click without drag → show context menu
+      selectNode(scene3D.pendingClickNode);
+      showContextMenu(scene3D.pendingClickNode, e.clientX, e.clientY);
+    } else {
+      // Left/middle click without drag → select node
+      selectNode(scene3D.pendingClickNode);
+    }
+  } else if (!scene3D.hasDragged && (scene3D.isDragging || scene3D.isPanning)) {
+    // Clicked on empty area — deselect
+  }
+
+  scene3D.isDragging = false;
+  scene3D.isPanning = false;
+  scene3D.hasDragged = false;
+  scene3D.pendingClickNode = null;
+  sceneContainer.style.cursor = 'default';
+});
+
+sceneContainer.addEventListener('contextmenu', (e) => e.preventDefault());
+
+sceneContainer.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const delta = e.deltaY > 0 ? 0.92 : 1.08;
+  const newZoom = Math.max(0.1, Math.min(10, scene3D.zoom * delta));
+
+  // Zoom towards mouse position
+  const rect = sceneContainer.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+  const cx = rect.width / 2;
+  const cy = rect.height / 2;
+
+  scene3D.panX = mx - (mx - scene3D.panX) * (newZoom / scene3D.zoom);
+  scene3D.panY = my - (my - scene3D.panY) * (newZoom / scene3D.zoom);
+
+  // Correct: keep pan relative to center
+  const zoomRatio = newZoom / scene3D.zoom;
+  scene3D.panX *= zoomRatio;
+  scene3D.panY *= zoomRatio;
+
+  scene3D.zoom = newZoom;
+  update3DTransform();
+}, { passive: false });
+
+// ===================== TOOLTIP =====================
+function showTooltip(node, cx, cy) {
+  const tt = document.getElementById('tooltip');
+  if (!node) { tt.style.display = 'none'; return; }
+  tt.style.display = 'block';
+  tt.innerHTML = `<span class="tt-class">${esc(node.className)}</span><span class="tt-addr">${node.address}</span><div class="tt-frame">frame: (${node.frame.x}, ${node.frame.y}; ${node.frame.w}, ${node.frame.h})</div>`;
+  tt.style.left = (cx + 12) + 'px';
+  tt.style.top = (cy + 12) + 'px';
+
+  const r = tt.getBoundingClientRect();
+  if (r.right > window.innerWidth) tt.style.left = (cx - r.width - 8) + 'px';
+  if (r.bottom > window.innerHeight) tt.style.top = (cy - r.height - 8) + 'px';
+}
+
+function hideTooltip() {
+  document.getElementById('tooltip').style.display = 'none';
+}
+
+// ===================== FIT / RESET =====================
+function fitToScreen() {
+  if (!treeData || treeData.roots.length === 0) return;
+
+  const refRoot = focusedNode || treeData.roots[0];
+  const rootW = refRoot.frame.w || 430;
+  const rootH = refRoot.frame.h || 932;
+
+  const cw = sceneContainer.clientWidth;
+  const ch = sceneContainer.clientHeight;
+  const padding = 60;
+
+  const scaleX = (cw - padding * 2) / rootW;
+  const scaleY = (ch - padding * 2) / rootH;
+  scene3D.zoom = Math.min(scaleX, scaleY, 2);
+  scene3D.panX = 0;
+  scene3D.panY = 0;
+
+  update3DTransform();
+}
+
+function resetView() {
+  scene3D.zoom = 1;
+  scene3D.panX = 0;
+  scene3D.panY = 0;
+  scene3D.rotX = 0;
+  scene3D.rotY = 0;
+  scene3D.layerSpacing = 1;
+  document.getElementById('layer-spacing').value = 1;
+  document.getElementById('spacing-value').textContent = '1';
+  update3DTransform();
+}
+
+function resetRotation() {
+  scene3D.rotX = 0;
+  scene3D.rotY = 0;
+  update3DTransform();
+}
+
+// ===================== SEARCH =====================
+function doSearch(term) {
+  searchTerm = term.toLowerCase().trim();
+  searchResults.clear();
+
+  if (!searchTerm || !treeData) {
+    renderTree();
+    return;
+  }
+
+  for (const node of treeData.allNodes) {
+    if (node.className.toLowerCase().includes(searchTerm) ||
+        node.address.toLowerCase().includes(searchTerm) ||
+        node.extInfo.toLowerCase().includes(searchTerm)) {
+      searchResults.add(node);
+      let p = node.parent;
+      while (p) {
+        p.collapsed = false;
+        p = p.parent;
+      }
+    }
+  }
+
+  renderTree();
+
+  if (searchResults.size > 0) {
+    const first = [...searchResults][0];
+    if (first.treeEl) first.treeEl.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
+}
+
+// ===================== FILE LOADING =====================
+const STREAMING_THRESHOLD = 50 * 1024 * 1024; // 50MB – switch to streaming mode above this
+
+function formatFileSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  if (bytes < 1024 * 1024 * 1024) return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  return (bytes / (1024 * 1024 * 1024)).toFixed(2) + ' GB';
+}
+
+function showProgress(show) {
+  document.getElementById('load-progress').classList.toggle('hidden', !show);
+}
+
+function updateProgress(bytesRead, totalBytes, snapshotCount) {
+  const pct = totalBytes > 0 ? Math.min(100, (bytesRead / totalBytes) * 100) : 0;
+  document.getElementById('progress-fill').style.width = pct.toFixed(1) + '%';
+  document.getElementById('progress-text').textContent =
+    `正在扫描… ${formatFileSize(bytesRead)} / ${formatFileSize(totalBytes)} (${pct.toFixed(0)}%) — 已找到 ${snapshotCount} 个截图`;
+}
+
+async function handleFile(file) {
+  if (file.size > STREAMING_THRESHOLD) {
+    // Large file – use streaming
+    showProgress(true);
+    updateProgress(0, file.size, 0);
+
+    try {
+      allSnapshots = await extractSnapshotsStreaming(file, (bytesRead, totalBytes, snapCount) => {
+        updateProgress(bytesRead, totalBytes, snapCount);
+      });
+    } catch (err) {
+      showProgress(false);
+      alert('读取文件出错: ' + err.message);
+      return;
+    }
+
+    showProgress(false);
+    rawFileText = ''; // Don't store raw text for large files
+
+    if (allSnapshots.length === 0) {
+      alert('未找到视图树数据 (wc tree view begin/end)');
+      return;
+    }
+
+    document.getElementById('drop-overlay').classList.add('hidden');
+    renderSnapshotSwitcher();
+    currentSnapshotIndex = 0;
+    loadSnapshot(0);
+  } else {
+    // Small file – read all at once
+    const reader = new FileReader();
+    reader.onload = () => loadFile(reader.result);
+    reader.readAsText(file);
+  }
+}
+
+function loadFile(text, snapshotParam) {
+  rawFileText = text;
+  allSnapshots = extractAllSnapshots(text);
+
+  if (allSnapshots.length === 0) {
+    alert('未找到视图树数据 (wc tree view begin/end)');
+    return;
+  }
+
+  document.getElementById('drop-overlay').classList.add('hidden');
+
+  // Determine which snapshot to load (default: first)
+  const targetIndex = snapshotParam ? resolveSnapshotParam(snapshotParam) : 0;
+  currentSnapshotIndex = targetIndex;
+
+  // Render snapshot switcher (after setting currentSnapshotIndex so active state is correct)
+  renderSnapshotSwitcher();
+  loadSnapshot(targetIndex);
+}
+
+function loadSnapshot(index) {
+  if (index < 0 || index >= allSnapshots.length) return;
+  currentSnapshotIndex = index;
+
+  nodeIdCounter = 0;
+  const snapshot = allSnapshots[index];
+  treeData = buildTree(snapshot.lines);
+
+  document.getElementById('stats-info').textContent = `${treeData.allNodes.length} 个视图节点, ${treeData.roots.length} 个 Window` +
+    (allSnapshots.length > 1 ? ` (截图 ${index + 1}/${allSnapshots.length})` : '');
+
+  // Collapse deep nodes by default for performance
+  for (const node of treeData.allNodes) {
+    if (node.depth >= 6 && node.children.length > 0) {
+      node.collapsed = true;
+    }
+  }
+
+  selectedNode = null;
+  hoveredNode = null;
+  focusedNode = null;
+  userHiddenNodes.clear();
+  updateRestoreHiddenBtn();
+  document.getElementById('focus-bar').classList.add('hidden');
+  renderTree();
+  renderProps();
+
+  // Update active state in switcher
+  document.querySelectorAll('.snapshot-item').forEach((el, i) => {
+    el.classList.toggle('active', i === index);
+    if (i === index) el.scrollIntoView({ block: 'nearest' });
+  });
+
+  // Update snapshot summary in header
+  updateSnapshotSummary(index);
+
+  requestAnimationFrame(() => {
+    build3DScene();
+    fitToScreen();
+  });
+}
+
+function renderSnapshotSwitcher() {
+  const switcher = document.getElementById('snapshot-switcher');
+  const list = document.getElementById('snapshot-list');
+
+  if (allSnapshots.length <= 1) {
+    switcher.classList.add('hidden');
+    return;
+  }
+
+  switcher.classList.remove('hidden');
+  list.innerHTML = '';
+
+  allSnapshots.forEach((snap, i) => {
+    const item = document.createElement('div');
+    item.className = 'snapshot-item' + (i === currentSnapshotIndex ? ' active' : '');
+
+    // Extract just the time portion (HH:MM:SS.mmm)
+    let timeStr = snap.timestamp;
+    const timeMatch = timeStr.match(/([\d:.]+)$/);
+    if (timeMatch) timeStr = timeMatch[1];
+
+    // VC name: take just the class name part
+    let vcName = snap.vc;
+    const vcMatch = vcName.match(/^(\w+)/);
+    if (vcMatch) vcName = vcMatch[1];
+
+    item.innerHTML = `<span class="snap-index">#${i + 1}</span><span class="snap-time">${timeStr}</span><span class="snap-vc">${vcName || '—'}</span>`;
+    item.addEventListener('click', () => loadSnapshot(i));
+    list.appendChild(item);
+  });
+}
+
+function updateSnapshotSummary(index) {
+  const summary = document.getElementById('snapshot-summary');
+  if (!summary || allSnapshots.length <= 1) return;
+  const snap = allSnapshots[index];
+  let timeStr = snap.timestamp;
+  const timeMatch = timeStr.match(/([\d:.]+)$/);
+  if (timeMatch) timeStr = timeMatch[1];
+  summary.textContent = `(${index + 1}/${allSnapshots.length} · ${timeStr})`;
+}
+
+// Snapshot list collapse/expand toggle
+document.getElementById('snapshot-header').addEventListener('click', () => {
+  const list = document.getElementById('snapshot-list');
+  const toggle = document.getElementById('snap-toggle');
+  list.classList.toggle('collapsed');
+  toggle.classList.toggle('collapsed');
+});
+
+// ===================== DRAG & DROP / FILE INPUT =====================
+const dropOverlay = document.getElementById('drop-overlay');
+const fileInput = document.getElementById('file-input');
+
+document.getElementById('btn-open-file').addEventListener('click', () => fileInput.click());
+fileInput.addEventListener('change', (e) => {
+  if (e.target.files.length > 0) {
+    handleFile(e.target.files[0]);
+  }
+});
+
+document.addEventListener('dragover', (e) => { e.preventDefault(); dropOverlay.classList.add('drag-over'); });
+document.addEventListener('dragleave', (e) => {
+  if (e.target === document.documentElement || e.target === document.body) {
+    dropOverlay.classList.remove('drag-over');
+  }
+});
+document.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropOverlay.classList.remove('drag-over');
+  if (e.dataTransfer.files.length > 0) {
+    handleFile(e.dataTransfer.files[0]);
+  }
+});
+
+// ===================== URL PARAMETER AUTO-LOAD =====================
+// Supports:
+//   ?url=<http(s) URL>   — fetch remote file
+//   ?file=<relative path> — fetch local/relative file (same-origin)
+//   ?snapshot=<index|time> — auto-select snapshot by 1-based index or time (HH:MM:SS / HH:MM:SS.mmm / full timestamp)
+
+/** Find the best matching snapshot index for the given snapshot param string.
+ *  @param {string} param - 1-based index (e.g. "3") or time string (e.g. "14:30:25" or "14:30:25.123")
+ *  @returns {number} 0-based index, or 0 if no match
+ */
+function resolveSnapshotParam(param) {
+  if (!param || allSnapshots.length === 0) return 0;
+
+  // Try as 1-based integer index first
+  const asInt = parseInt(param, 10);
+  if (/^\d+$/.test(param.trim()) && asInt >= 1 && asInt <= allSnapshots.length) {
+    return asInt - 1;
+  }
+
+  // Try as time string — extract HH:MM:SS(.mmm) from each snapshot timestamp and compare
+  const normalizeTime = (t) => {
+    // Extract HH:MM:SS.mmm portion from timestamp like "2024-01-15 +8.00 14:30:25.123"
+    const m = t.match(/([\d]{1,2}:[\d]{2}:[\d]{2}(?:\.[\d]+)?)/);
+    return m ? m[1] : '';
+  };
+
+  const targetTime = normalizeTime(param) || param.trim();
+
+  // Exact match first
+  for (let i = 0; i < allSnapshots.length; i++) {
+    const snapTime = normalizeTime(allSnapshots[i].timestamp);
+    if (snapTime === targetTime) return i;
+  }
+
+  // Prefix match (e.g. "14:30" matches "14:30:25.123")
+  for (let i = 0; i < allSnapshots.length; i++) {
+    const snapTime = normalizeTime(allSnapshots[i].timestamp);
+    if (snapTime.startsWith(targetTime) || targetTime.startsWith(snapTime)) return i;
+  }
+
+  // Closest time match — parse to seconds and find nearest
+  const parseToSeconds = (t) => {
+    const m = t.match(/(\d{1,2}):(\d{2}):(\d{2})(?:\.(\d+))?/);
+    if (!m) return NaN;
+    return parseInt(m[1]) * 3600 + parseInt(m[2]) * 60 + parseInt(m[3]) + (m[4] ? parseFloat('0.' + m[4]) : 0);
+  };
+
+  const targetSec = parseToSeconds(targetTime);
+  if (!isNaN(targetSec)) {
+    let bestIdx = 0, bestDiff = Infinity;
+    for (let i = 0; i < allSnapshots.length; i++) {
+      const snapSec = parseToSeconds(normalizeTime(allSnapshots[i].timestamp));
+      if (!isNaN(snapSec)) {
+        const diff = Math.abs(snapSec - targetSec);
+        if (diff < bestDiff) { bestDiff = diff; bestIdx = i; }
+      }
+    }
+    return bestIdx;
+  }
+
+  return 0;
+}
+
+/** Streaming extraction from a fetch Response body (ReadableStream).
+ *  Same logic as extractSnapshotsStreaming but works with fetch() instead of File.
+ */
+async function extractSnapshotsFromResponse(response, onProgress) {
+  const snapshots = [];
+  const state = createParseState();
+  const totalBytes = parseInt(response.headers.get('content-length') || '0', 10);
+  let bytesRead = 0;
+  let leftover = '';
+  let lastProgressTime = 0;
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder('utf-8');
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    bytesRead += value.byteLength;
+    const chunk = decoder.decode(value, { stream: true });
+    const text = leftover + chunk;
+    const lines = text.split('\n');
+
+    // Last element may be incomplete line – save for next chunk
+    leftover = lines.pop();
+
+    for (const line of lines) {
+      const snap = processLine(line, state);
+      if (snap) snapshots.push(snap);
+    }
+
+    // Throttled progress reporting (max ~15fps) to keep UI responsive
+    const now = performance.now();
+    if (onProgress && (now - lastProgressTime > 66 || done)) {
+      lastProgressTime = now;
+      onProgress(bytesRead, totalBytes, snapshots.length);
+      // Yield to event loop so the browser can repaint
+      await new Promise(r => setTimeout(r, 0));
+    }
+  }
+
+  // Process any remaining leftover
+  if (leftover) {
+    const snap = processLine(leftover, state);
+    if (snap) snapshots.push(snap);
+  }
+
+  if (onProgress) onProgress(bytesRead, totalBytes, snapshots.length);
+  return snapshots;
+}
+
+(async function autoLoadFromParams() {
+  const params = new URLSearchParams(window.location.search);
+  const fileUrl = params.get('url') || params.get('file');
+  if (!fileUrl) return;
+
+  const snapshotParam = params.get('snapshot');
+
+  // Show a loading state on the drop overlay
+  const dropIcon = dropOverlay.querySelector('.drop-icon');
+  const dropText = dropOverlay.querySelector('p');
+  const dropBtn = document.getElementById('btn-open-file');
+  if (dropIcon) dropIcon.textContent = '⏳';
+  if (dropText) dropText.textContent = `正在加载: ${fileUrl}`;
+  if (dropBtn) dropBtn.style.display = 'none';
+
+  try {
+    let res;
+    if (window.location.protocol === 'file:') {
+      // file:// 下 fetch 不可用，用 XHR 读同目录文件
+      const arrayBuffer = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', fileUrl);
+        xhr.responseType = 'arraybuffer';
+        xhr.onload = () => resolve(xhr.response);
+        xhr.onerror = () => reject(new Error('XHR 加载失败，请确认日志文件与 viewer 在同一目录'));
+        xhr.send();
+      });
+      res = new Response(arrayBuffer);
+    } else {
+      res = await fetch(fileUrl);
+      if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+    }
+
+    const contentLength = parseInt(res.headers.get('content-length') || '0', 10);
+
+    // Always use streaming to avoid loading entire file into memory
+    showProgress(true);
+    updateProgress(0, contentLength, 0);
+
+    allSnapshots = await extractSnapshotsFromResponse(res, (bytesRead, totalBytes, snapCount) => {
+      updateProgress(bytesRead, totalBytes || bytesRead, snapCount);
+      if (dropText) dropText.textContent = `正在扫描: ${fileUrl}`;
+    });
+
+    showProgress(false);
+    rawFileText = ''; // Don't store raw text — file was streamed
+
+    if (allSnapshots.length === 0) {
+      if (dropIcon) dropIcon.textContent = '❌';
+      if (dropText) dropText.textContent = '未找到视图树数据 (wc tree view begin/end)';
+      if (dropBtn) { dropBtn.style.display = ''; dropBtn.textContent = '选择本地文件'; }
+      return;
+    }
+
+    document.getElementById('drop-overlay').classList.add('hidden');
+
+    // Determine which snapshot to load
+    const targetIndex = snapshotParam ? resolveSnapshotParam(snapshotParam) : 0;
+    currentSnapshotIndex = targetIndex;
+
+    renderSnapshotSwitcher();
+    loadSnapshot(targetIndex);
+  } catch (err) {
+    showProgress(false);
+    if (dropIcon) dropIcon.textContent = '❌';
+    if (dropText) dropText.textContent = `加载失败: ${err.message}`;
+    if (dropBtn) { dropBtn.style.display = ''; dropBtn.textContent = '选择本地文件'; }
+  }
+})();
+
+// ===================== FOCUS MODE =====================
+function enterFocusMode(node) {
+  if (!node) return;
+  focusedNode = node;
+  selectNode(node);
+
+  // Update focus bar
+  const focusBar = document.getElementById('focus-bar');
+  const focusInfo = document.getElementById('focus-info');
+  focusInfo.textContent = `🔍 聚焦: ${node.className} ${node.address}`;
+  focusBar.classList.remove('hidden');
+
+  requestAnimationFrame(() => {
+    build3DScene();
+    fitToScreen();
+  });
+}
+
+function exitFocusMode() {
+  focusedNode = null;
+  document.getElementById('focus-bar').classList.add('hidden');
+
+  requestAnimationFrame(() => {
+    build3DScene();
+    fitToScreen();
+  });
+}
+
+document.getElementById('btn-exit-focus').addEventListener('click', exitFocusMode);
+
+// ===================== CONTEXT MENU =====================
+const contextMenu = document.getElementById('context-menu');
+let contextMenuNode = null;
+
+function showContextMenu(node, x, y) {
+  contextMenuNode = node;
+  contextMenu.classList.remove('hidden');
+  contextMenu.style.left = x + 'px';
+  contextMenu.style.top = y + 'px';
+
+  // Ensure menu doesn't go off screen
+  requestAnimationFrame(() => {
+    const r = contextMenu.getBoundingClientRect();
+    if (r.right > window.innerWidth) contextMenu.style.left = (x - r.width) + 'px';
+    if (r.bottom > window.innerHeight) contextMenu.style.top = (y - r.height) + 'px';
+  });
+}
+
+function hideContextMenu() {
+  contextMenu.classList.add('hidden');
+  contextMenuNode = null;
+}
+
+// Recursive expand / collapse helpers
+function expandAll(node) {
+  node.collapsed = false;
+  for (const child of node.children) expandAll(child);
+}
+
+function collapseAll(node) {
+  if (node.children.length > 0) node.collapsed = true;
+  for (const child of node.children) collapseAll(child);
+}
+
+// Handle context menu actions
+contextMenu.addEventListener('click', (e) => {
+  const item = e.target.closest('.ctx-item');
+  if (!item || !contextMenuNode) return;
+
+  const action = item.dataset.action;
+  const node = contextMenuNode;
+
+  switch (action) {
+    case 'focus':
+      enterFocusMode(node);
+      break;
+    case 'expand-all':
+      expandAll(node);
+      renderTree();
+      break;
+    case 'collapse-all':
+      collapseAll(node);
+      renderTree();
+      break;
+    case 'select':
+      selectNode(node);
+      break;
+    case 'copy-class':
+      navigator.clipboard.writeText(node.className).catch(() => {});
+      break;
+    case 'copy-address':
+      navigator.clipboard.writeText(node.address).catch(() => {});
+      break;
+    case 'hide-node':
+      userHiddenNodes.add(node);
+      updateRestoreHiddenBtn();
+      if (selectedNode === node) selectNode(null);
+      renderTree();
+      build3DScene();
+      break;
+  }
+
+  hideContextMenu();
+});
+
+// Hide context menu when clicking elsewhere
+document.addEventListener('click', (e) => {
+  if (!contextMenu.contains(e.target)) hideContextMenu();
+});
+document.addEventListener('contextmenu', (e) => {
+  // If not on a tree node or a 3D view layer, hide the menu
+  if (!e.target.closest('.tree-node') && !e.target.closest('.view-layer')) {
+    hideContextMenu();
+  }
+});
+
+// ===================== TOOLBAR EVENTS =====================
+
+// --- User-hidden nodes restore button ---
+function updateRestoreHiddenBtn() {
+  const btn = document.getElementById('btn-restore-hidden');
+  const countSpan = document.getElementById('hidden-count');
+  if (userHiddenNodes.size > 0) {
+    btn.classList.remove('hidden');
+    countSpan.textContent = userHiddenNodes.size;
+  } else {
+    btn.classList.add('hidden');
+  }
+}
+
+document.getElementById('btn-restore-hidden').addEventListener('click', function() {
+  userHiddenNodes.clear();
+  updateRestoreHiddenBtn();
+  renderTree();
+  build3DScene();
+});
+
+document.getElementById('btn-toggle-hidden').addEventListener('click', function() {
+  showHidden = !showHidden;
+  this.classList.toggle('active', showHidden);
+  this.textContent = showHidden ? '👁 显示隐藏视图' : '👁‍🗨 隐藏视图已隐藏';
+  renderTree();
+  build3DScene();
+});
+document.getElementById('btn-toggle-hidden').classList.add('active');
+
+document.getElementById('btn-fit').addEventListener('click', fitToScreen);
+document.getElementById('btn-reset').addEventListener('click', resetView);
+document.getElementById('btn-reset-rotation').addEventListener('click', resetRotation);
+
+// Layer spacing slider
+document.getElementById('layer-spacing').addEventListener('input', function() {
+  scene3D.layerSpacing = parseFloat(this.value);
+  document.getElementById('spacing-value').textContent = this.value;
+  updateLayerSpacing();
+});
+
+function adjustSpacing(delta) {
+  const slider = document.getElementById('layer-spacing');
+  const newVal = Math.max(0, Math.min(60, parseFloat(slider.value) + delta));
+  slider.value = newVal;
+  scene3D.layerSpacing = newVal;
+  document.getElementById('spacing-value').textContent = newVal;
+  updateLayerSpacing();
+}
+document.getElementById('spacing-dec').addEventListener('click', () => adjustSpacing(-1));
+document.getElementById('spacing-inc').addEventListener('click', () => adjustSpacing(1));
+
+document.getElementById('search-box').addEventListener('input', (e) => doSearch(e.target.value));
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'f') {
+    e.preventDefault();
+    document.getElementById('search-box').focus();
+  }
+});
+
+// ===================== RESIZE HANDLES =====================
+function setupResize(handleId, panelId, side) {
+  const handle = document.getElementById(handleId);
+  const panel = document.getElementById(panelId);
+  let startX, startW;
+
+  handle.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    startX = e.clientX;
+    startW = panel.offsetWidth;
+    handle.classList.add('active');
+
+    const onMove = (e) => {
+      const dx = e.clientX - startX;
+      const newW = side === 'left' ? startW + dx : startW - dx;
+      panel.style.width = Math.max(200, Math.min(600, newW)) + 'px';
+      update3DTransform();
+    };
+    const onUp = () => {
+      handle.classList.remove('active');
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+    };
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+  });
+}
+
+setupResize('resize-left', 'tree-panel', 'left');
+setupResize('resize-right', 'props-panel', 'right');
+
+// ===================== WINDOW RESIZE =====================
+window.addEventListener('resize', () => {
+  if (treeData) { update3DTransform(); }
+});
+</script>
+</body>
+</html>
