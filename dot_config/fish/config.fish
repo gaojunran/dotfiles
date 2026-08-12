@@ -69,6 +69,8 @@ alias jn "jj new"
 alias jnp "jj new @-"
 alias ed "jj edit"
 alias edp "jj edit @-"
+alias pb "jj push -b"
+
 
 function jnb
     jj new (eval $BASE_BRANCH_COMMAND)
