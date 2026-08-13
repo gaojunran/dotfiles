@@ -5,19 +5,20 @@
     "@cortexkit/opencode-magic-context@0.36.1",
   ],
   "model": "venus/deepseek-v4-flash-official",
+  "default_agent": "orchestrator",
   "agent": {
-    "explore": {
-      "disable": true
-    },
-    "general": {
-      "disable": true
-    },
-    "build": {
-      "disable": true
-    },
-    "plan": {
-      "disable": true
-    }
+    // "explore": {
+    //   "disable": true
+    // },
+    // "general": {
+    //   "disable": true
+    // },
+    // "build": {
+    //   "disable": true
+    // },
+    // "plan": {
+    //   "disable": true
+    // }
   },
   "lsp": true,
   "compaction": {
