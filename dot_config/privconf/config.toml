@@ -18,6 +18,14 @@ files = [
 ]
 ignored = []
 
+[[project]]
+name = "miniprogram-novel"
+match_remote = "https://git.woa.com/sixsixsix/miniprogram-novel.git"
+files = [
+    ".opencode",
+]
+ignored = []
+
 [all]
 files = []
 ignored = [

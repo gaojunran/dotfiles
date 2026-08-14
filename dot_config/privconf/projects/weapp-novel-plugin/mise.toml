@@ -1,3 +1,6 @@
+[settings]
+env_shell_expand = false
+
 [env]
 BASE_BRANCH_COMMAND = """
 jj log -r "bookmarks(glob:'v*')" --no-graph -T 'bookmarks ++ "\\n"' | tr -d ' ' | grep -E '^v[0-9]+\\.[0-9]+\\.[0-9]+$' | sort -V | tail -1
@@ -5,7 +8,7 @@ jj log -r "bookmarks(glob:'v*')" --no-graph -T 'bookmarks ++ "\\n"' | tr -d ' ' 
 
 [tasks.dev]
 alias = "d"
-run = "pnpm run dev:once"
+run = "pnpm run dev"
 
 [tools]
 node = "20"

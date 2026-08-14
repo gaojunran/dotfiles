@@ -8,6 +8,6 @@
       "headers": {
         "Authorization": "Bearer {env:TAI_TOKEN}"
       }
-    },
-  },
+    }
+  }
 }

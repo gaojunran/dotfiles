@@ -1,0 +1,21 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "figma-context": {
+      "type": "local",
+      "command": ["npx", "-y", "figma-developer-mcp@latest", "--stdio"],
+      "enabled": true,
+      "environment": {
+        "FIGMA_API_KEY": "{env:FIGMA_API_KEY}"
+      }
+    },
+    "wecubeopenmcp": {
+      "type": "remote",
+      "url": "https://wecube.mcp.it.woa.com",
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer {env:TAI_TOKEN}"
+      }
+    }
+  }
+}

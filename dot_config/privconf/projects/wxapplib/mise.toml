@@ -99,6 +99,37 @@ await Promise.all(Array.from({ length: 8 }, async () => {
 }))
 """
 
+[tasks."jj-init"]
+description = "批量对根目录和所有子模块执行 jj git init"
+alias = "ji"
+run = """
+#!/usr/bin/env bun
+import { $ } from 'bun'
+import { existsSync } from 'node:fs'
+import { join } from 'node:path'
+
+const paths = [
+  '.',
+  ...(await $`git submodule foreach --quiet --recursive 'printf "%s\\n" "$displaypath"'`.text())
+    .trim()
+    .split('\\n')
+    .filter(Boolean),
+]
+
+let i = 0
+await Promise.all(Array.from({ length: 8 }, async () => {
+  while (i < paths.length) {
+    const p = paths[i++]
+    if (existsSync(join(p, '.jj'))) {
+      console.log('skip', p)
+      continue
+    }
+    console.log('==>', p)
+    await $`jj git init`.cwd(p).catch(() => {})
+  }
+}))
+"""
+
 [tasks."branch-list"]
 description = "批量检查子模块分支状态，使用 jj"
 alias = "bl"

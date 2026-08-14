@@ -10,6 +10,7 @@ set -Ux PRIVCONF_DIR $HOME/.local/share/chezmoi/dot_config/privconf
 
 # PATH 注意因为是 prepend，在后面的反而优先级更高。
 # 对已存在于 PATH 的目录，需要加 -m 才会被挪到更前面。
+fish_add_path -U /opt/homebrew/bin
 fish_add_path -U $HOME/.cargo/bin
 fish_add_path -U $HOME/.moon/bin
 fish_add_path -U $PNPM_HOME
