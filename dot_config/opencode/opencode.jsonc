@@ -52,7 +52,7 @@
           "reasoning": true,
           "limit": {
             "context": 200000,
-            "output": 32000
+            "output": 96000
           },
           "options": {
             // "reasoningEffort": "xhigh",
@@ -79,35 +79,35 @@
           "name": "kimi_k2d7_code/thinking",
           "limit": {
             "context": 200000,
-            "output": 32000
+            "output": 96000
           }
         },
         "glm_5d2_fp8_code": {
           "name": "glm_5d2_fp8_code",
           "limit": {
             "context": 170000,
-            "output": 32000
+            "output": 96000
           }
         },
         "minimax_m3_code/infer": {
           "name": "minimax_m3_code/infer",
           "limit": {
             "context": 80000,
-            "output": 32000
+            "output": 96000
           }
         },
         "deepseek_v4_flash_code/max": {
           "name": "deepseek_v4_flash_code/max",
           "limit": {
             "context": 200000,
-            "output": 32000
+            "output": 96000
           }
         },
         "kimi_k3_astra": {
           "name": "kimi_k3_astra",
           "limit": {
             "context": 170000,
-            "output": 32000
+            "output": 96000
           }
         }
       }
@@ -128,7 +128,7 @@
           "limit": {
             // 注意：1M 模型通常应该设在 300k 左右，其 Compact 界限约为 65% (200k)，是 1M 有效上下文的上界
             "context": 300000,
-            "output": 32000
+            "output": 96000
           }
         },
         "deepseek-v4-pro-official": {
@@ -136,35 +136,35 @@
           "limit": {
             // 注意：1M 模型通常应该设在 300k 左右，其 Compact 界限约为 65% (200k)，是 1M 有效上下文的上界
             "context": 300000,
-            "output": 32000
+            "output": 96000
           }
         },
         "kimi-k2.7-code-external": {
           "name": "kimi-k2.7-code-external",
           "limit": {
             "context": 200000,
-            "output": 32000
+            "output": 96000
           }
         },
         "glm-5.2-external": {
           "name": "glm-5.2-external",
           "limit": {
             "context": 300000,
-            "output": 32000
+            "output": 96000
           }
         },
         "glm-5.3-external": {
           "name": "glm-5.3-external",
           "limit": {
             "context": 300000,
-            "output": 32000
+            "output": 96000
           }
         },
         "minimax-m3-external": {
           "name": "minimax-m3-external",
           "limit": {
             "context": 800000,
-            "output": 32000
+            "output": 96000
           }
         }
       }
@@ -265,7 +265,7 @@
           "temperature": true,
           "limit": {
             "context": 96000,
-            "output": 32000
+            "output": 96000
           },
           "variants": {
             "low": {
@@ -367,7 +367,7 @@
           "temperature": true,
           "limit": {
             "context": 164000,
-            "output": 32000
+            "output": 96000
           },
           "variants": {
             "low": {
@@ -397,7 +397,7 @@
           },
           "limit": {
             "context": 256000,
-            "output": 32000
+            "output": 96000
           },
           "variants": {
             "low": {
@@ -427,7 +427,7 @@
           },
           "limit": {
             "context": 256000,
-            "output": 32000
+            "output": 96000
           },
           "variants": {
             "low": {
@@ -550,7 +550,7 @@
           },
           "limit": {
             "context": 128000,
-            "output": 32000
+            "output": 96000
           },
           "variants": {
             "low": {
@@ -592,7 +592,7 @@
           "temperature": true,
           "limit": {
             "context": 168000,
-            "output": 32000
+            "output": 96000
           },
           "variants": {
             "low": {
@@ -1259,7 +1259,7 @@
           },
           "limit": {
             "context": 200000,
-            "output": 32000
+            "output": 96000
           },
           "variants": {
             "low": {
