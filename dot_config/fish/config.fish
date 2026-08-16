@@ -56,7 +56,7 @@ alias cdlib "builtin cd ~/Work/wxapplib"
 alias cdnp "builtin cd ~/Work/weapp-novel-plugin"
 alias cdnm "builtin cd ~/Work/miniprogram-novel"
 alias cdsp "builtin cd ~/Work/weapp-skit-player-plugin"
-alias cdsm "builtin cd ~/Work/miniprgram-skit"
+alias cdsm "builtin cd ~/Work/miniprogram-skit"
 
 alias bri "brew install"
 alias bru "brew upgrade"
