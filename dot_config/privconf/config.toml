@@ -21,9 +21,19 @@ ignored = []
 [[project]]
 name = "miniprogram-novel"
 match_remote = "https://git.woa.com/sixsixsix/miniprogram-novel.git"
-files = [
-    ".opencode",
-]
+files = [".opencode"]
+ignored = []
+
+[[project]]
+name = "weapp-skit-player-plugin"
+match_remote = "https://git.woa.com/fifteenth-group/weapp-skit-player-plugin.git"
+files = [".opencode"]
+ignored = []
+
+[[project]]
+name = "miniprogram-skit"
+match_remote = "https://git.woa.com/sixsixsix/miniprogram-skit.git"
+files = [".opencode"]
 ignored = []
 
 [all]

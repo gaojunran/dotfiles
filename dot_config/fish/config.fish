@@ -50,6 +50,14 @@ alias cdp "builtin cd ~/Playground"
 alias cdi "builtin cd ~/Projects"
 alias cdw "builtin cd ~/Work"
 alias cdc "builtin cd ~/.local/share/chezmoi"
+
+# work projects
+alias cdlib "builtin cd ~/Work/wxapplib"
+alias cdnp "builtin cd ~/Work/weapp-novel-plugin"
+alias cdnm "builtin cd ~/Work/miniprogram-novel"
+alias cdsp "builtin cd ~/Work/weapp-skit-player-plugin"
+alias cdsm "builtin cd ~/Work/miniprgram-skit"
+
 alias bri "brew install"
 alias bru "brew upgrade"
 alias brl "brew list"
