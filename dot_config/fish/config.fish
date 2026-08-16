@@ -56,6 +56,9 @@ alias brl "brew list"
 alias brx "brew uninstall"
 alias brs "brew search"
 
+# wechatwebdevtools cli
+alias we "/Applications/wechatwebdevtools.app/Contents/MacOS/cli"
+
 # SSH remote
 alias s1 "ssh jr"
 alias s2 "ssh wxapplib"
