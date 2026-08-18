@@ -19,11 +19,13 @@ diff-formatter = ":git"         # git 风格 diff
 bookmark-advance-to = "closest_pushable(@)"
 
 [aliases]
+# fixme: fish alias
 open = ["log", "-r", "heads(mine()) ~ ::trunk()"]
 
 [revset-aliases]
 'closest_bookmark(to)' = 'heads(::to & bookmarks())'
 'closest_pushable(to)' = 'heads(::to & ~description(exact:"") & (~empty() | merges()))'
+"tip(to)" = "latest(heads(descendants(to)))"
 
 [[--scope]]
 --when.repositories = ["~/Work"]

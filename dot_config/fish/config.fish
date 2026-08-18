@@ -103,6 +103,11 @@ function th
     jj restore -i --changes-in $argv
 end
 
+function jt
+    set -q argv[1]; or set argv @
+    jj new "tip($argv)"
+end
+
 alias sq "jj squash"
 alias sp "jj split"
 
