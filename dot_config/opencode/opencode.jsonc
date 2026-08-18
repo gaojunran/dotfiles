@@ -3,6 +3,7 @@
   "plugin": [
     "oh-my-opencode-slim",
     "@cortexkit/opencode-magic-context@0.38.0",
+    "opencode-codebuddy-auth"
   ],
   "model": "venus/deepseek-v4-flash-official",
   "default_agent": "orchestrator",
@@ -169,1140 +170,1140 @@
         }
       }
     },
-    "codebuddy": {
-      "name": "CodeBuddy",
-      "npm": "@ai-sdk/openai-compatible",
-      "api": "https://copilot.tencent.com/v2",
-      "env": [
-        "CODEBUDDY_ACCESS_TOKEN"
-      ],
-      "options": {
-        "apiKey": "{env:CODEBUDDY_ACCESS_TOKEN}",
-        "headers": {
-          "X-User-Id": "{env:CODEBUDDY_USER_ID}",
-          "X-Enterprise-Id": "{env:CODEBUDDY_ENTERPRISE_ID}",
-          "X-Tenant-Id": "{env:CODEBUDDY_ENTERPRISE_ID}",
-          "X-Domain": "{env:CODEBUDDY_DOMAIN}"
-        }
-      },
-      "models": {
-        "echo": {
-          "name": "Echo (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": false,
-          "temperature": true,
-          "limit": {
-            "context": 238000,
-            "output": 24000
-          }
-        },
-        "deepseek-v4-pro-ioa": {
-          "name": "Deepseek-V4-Pro (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 1000000,
-            "output": 50000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "deepseek-v4-flash-ioa": {
-          "name": "Deepseek-V4-Flash (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 1000000,
-            "output": 50000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "deepseek-v3-2-volc-ioa": {
-          "name": "DeepSeek-V3.2 (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": false,
-          "temperature": true,
-          "limit": {
-            "context": 96000,
-            "output": 96000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "minimax-m2.5-ioa": {
-          "name": "MiniMax-M2.5 (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": false,
-          "temperature": true,
-          "limit": {
-            "context": 200000,
-            "output": 48000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "minimax-m2.7-ioa": {
-          "name": "MiniMax-M2.7 (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 200000,
-            "output": 48000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "minimax-m3-ioa": {
-          "name": "MiniMax-M3 (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 512000,
-            "output": 48000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "kimi-k2-thinking": {
-          "name": "Kimi-K2-Thinking (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": false,
-          "temperature": true,
-          "limit": {
-            "context": 164000,
-            "output": 96000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "kimi-k2.7-ioa": {
-          "name": "Kimi-K2.7-Code (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 256000,
-            "output": 96000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "kimi-k2.6-ioa": {
-          "name": "Kimi-K2.6 (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 256000,
-            "output": 96000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "glm-5.2-ioa": {
-          "name": "GLM-5.2 (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": false,
-          "temperature": true,
-          "limit": {
-            "context": 1000000,
-            "output": 48000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "glm-5.1-ioa": {
-          "name": "GLM-5.1 (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": false,
-          "temperature": true,
-          "limit": {
-            "context": 200000,
-            "output": 48000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "glm-5.0-ioa": {
-          "name": "GLM-5.0 (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": false,
-          "temperature": true,
-          "limit": {
-            "context": 200000,
-            "output": 48000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "glm-5v-turbo-ioa": {
-          "name": "GLM-5v-Turbo (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 200000,
-            "output": 38000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "glm-4.6v-ioa": {
-          "name": "GLM-4.6V (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 128000,
-            "output": 96000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "glm-4.7-ioa": {
-          "name": "GLM-4.7 (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": false,
-          "temperature": true,
-          "limit": {
-            "context": 200000,
-            "output": 48000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "glm-4.6-ioa": {
-          "name": "GLM-4.6 (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": false,
-          "temperature": true,
-          "limit": {
-            "context": 168000,
-            "output": 96000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "hy3-preview-agent-ioa": {
-          "name": "Hy3 preview (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 192000,
-            "output": 64000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "claude-sonnet-4.6": {
-          "name": "Claude-Sonnet-4.6 (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 176000,
-            "output": 24000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "claude-sonnet-5-1m": {
-          "name": "Claude-Sonnet-5-1M (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 1000000,
-            "output": 128000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "claude-sonnet-5": {
-          "name": "Claude-Sonnet-5 (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 200000,
-            "output": 64000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "claude-sonnet-4.6-1m": {
-          "name": "Claude-Sonnet-4.6-1M (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 1000000,
-            "output": 24000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "claude-opus-4.8": {
-          "name": "Claude-Opus-4.8 (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 176000,
-            "output": 64000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "claude-opus-4.8-1m": {
-          "name": "Claude-Opus-4.8-1M (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 1000000,
-            "output": 128000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "claude-opus-4.7": {
-          "name": "Claude-Opus-4.7 (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 176000,
-            "output": 64000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "claude-opus-4.7-1m": {
-          "name": "Claude-Opus-4.7-1M (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 1000000,
-            "output": 128000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "claude-opus-4.6": {
-          "name": "Claude-Opus-4.6 (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 176000,
-            "output": 24000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "claude-opus-4.6-1m": {
-          "name": "Claude-Opus-4.6-1M (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 1000000,
-            "output": 64000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "claude-haiku-4.5": {
-          "name": "Claude-Haiku-4.5 (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 176000,
-            "output": 24000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "gpt-5.5": {
-          "name": "GPT-5.5 (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 1000000,
-            "output": 128000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "gpt-5.4": {
-          "name": "GPT-5.4 (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 272000,
-            "output": 128000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "gpt-5.3-codex": {
-          "name": "GPT-5.3-Codex (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 272000,
-            "output": 128000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "gpt-5.1-codex": {
-          "name": "GPT-5.1-Codex (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 272000,
-            "output": 128000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "gpt-5.1-codex-mini": {
-          "name": "GPT-5.1-Codex-Mini (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 272000,
-            "output": 128000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "gemini-3.1-pro": {
-          "name": "Gemini-3.1-Pro (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 400000,
-            "output": 64000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "gemini-3.5-flash": {
-          "name": "Gemini-3.5-Flash (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 1000000,
-            "output": 65536
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "gemini-2.5-pro": {
-          "name": "Gemini-2.5-Pro (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 400000,
-            "output": 64000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "hunyuan-video-art": {
-          "name": "Hunyuan-Video-Art (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true
-        },
-        "gpt-5.6-sol": {
-          "name": "GPT-5.6 Sol (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 1050000,
-            "output": 128000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "gpt-5.6-terra": {
-          "name": "GPT-5.6 Terra (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 200000,
-            "output": 96000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "gpt-5.6-luna": {
-          "name": "GPT-5.6 Luna (CodeBuddy)",
-          "tool_call": true,
-          "reasoning": false,
-          "attachment": true,
-          "temperature": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "limit": {
-            "context": 1050000,
-            "output": 128000
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        }
-      }
-    }
+    // "codebuddy": {
+    //   "name": "CodeBuddy",
+    //   "npm": "@ai-sdk/openai-compatible",
+    //   "api": "https://copilot.tencent.com/v2",
+    //   "env": [
+    //     "CODEBUDDY_ACCESS_TOKEN"
+    //   ],
+    //   "options": {
+    //     "apiKey": "{env:CODEBUDDY_ACCESS_TOKEN}",
+    //     "headers": {
+    //       "X-User-Id": "{env:CODEBUDDY_USER_ID}",
+    //       "X-Enterprise-Id": "{env:CODEBUDDY_ENTERPRISE_ID}",
+    //       "X-Tenant-Id": "{env:CODEBUDDY_ENTERPRISE_ID}",
+    //       "X-Domain": "{env:CODEBUDDY_DOMAIN}"
+    //     }
+    //   },
+    //   "models": {
+    //     "echo": {
+    //       "name": "Echo (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": false,
+    //       "temperature": true,
+    //       "limit": {
+    //         "context": 238000,
+    //         "output": 24000
+    //       }
+    //     },
+    //     "deepseek-v4-pro-ioa": {
+    //       "name": "Deepseek-V4-Pro (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 1000000,
+    //         "output": 50000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "deepseek-v4-flash-ioa": {
+    //       "name": "Deepseek-V4-Flash (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 1000000,
+    //         "output": 50000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "deepseek-v3-2-volc-ioa": {
+    //       "name": "DeepSeek-V3.2 (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": false,
+    //       "temperature": true,
+    //       "limit": {
+    //         "context": 96000,
+    //         "output": 96000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "minimax-m2.5-ioa": {
+    //       "name": "MiniMax-M2.5 (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": false,
+    //       "temperature": true,
+    //       "limit": {
+    //         "context": 200000,
+    //         "output": 48000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "minimax-m2.7-ioa": {
+    //       "name": "MiniMax-M2.7 (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 200000,
+    //         "output": 48000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "minimax-m3-ioa": {
+    //       "name": "MiniMax-M3 (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 512000,
+    //         "output": 48000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "kimi-k2-thinking": {
+    //       "name": "Kimi-K2-Thinking (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": false,
+    //       "temperature": true,
+    //       "limit": {
+    //         "context": 164000,
+    //         "output": 96000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "kimi-k2.7-ioa": {
+    //       "name": "Kimi-K2.7-Code (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 256000,
+    //         "output": 96000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "kimi-k2.6-ioa": {
+    //       "name": "Kimi-K2.6 (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 256000,
+    //         "output": 96000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "glm-5.2-ioa": {
+    //       "name": "GLM-5.2 (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": false,
+    //       "temperature": true,
+    //       "limit": {
+    //         "context": 1000000,
+    //         "output": 48000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "glm-5.1-ioa": {
+    //       "name": "GLM-5.1 (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": false,
+    //       "temperature": true,
+    //       "limit": {
+    //         "context": 200000,
+    //         "output": 48000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "glm-5.0-ioa": {
+    //       "name": "GLM-5.0 (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": false,
+    //       "temperature": true,
+    //       "limit": {
+    //         "context": 200000,
+    //         "output": 48000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "glm-5v-turbo-ioa": {
+    //       "name": "GLM-5v-Turbo (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 200000,
+    //         "output": 38000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "glm-4.6v-ioa": {
+    //       "name": "GLM-4.6V (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 128000,
+    //         "output": 96000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "glm-4.7-ioa": {
+    //       "name": "GLM-4.7 (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": false,
+    //       "temperature": true,
+    //       "limit": {
+    //         "context": 200000,
+    //         "output": 48000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "glm-4.6-ioa": {
+    //       "name": "GLM-4.6 (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": false,
+    //       "temperature": true,
+    //       "limit": {
+    //         "context": 168000,
+    //         "output": 96000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "hy3-preview-agent-ioa": {
+    //       "name": "Hy3 preview (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 192000,
+    //         "output": 64000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "claude-sonnet-4.6": {
+    //       "name": "Claude-Sonnet-4.6 (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 176000,
+    //         "output": 24000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "claude-sonnet-5-1m": {
+    //       "name": "Claude-Sonnet-5-1M (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 1000000,
+    //         "output": 128000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "claude-sonnet-5": {
+    //       "name": "Claude-Sonnet-5 (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 200000,
+    //         "output": 64000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "claude-sonnet-4.6-1m": {
+    //       "name": "Claude-Sonnet-4.6-1M (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 1000000,
+    //         "output": 24000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "claude-opus-4.8": {
+    //       "name": "Claude-Opus-4.8 (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 176000,
+    //         "output": 64000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "claude-opus-4.8-1m": {
+    //       "name": "Claude-Opus-4.8-1M (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 1000000,
+    //         "output": 128000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "claude-opus-4.7": {
+    //       "name": "Claude-Opus-4.7 (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 176000,
+    //         "output": 64000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "claude-opus-4.7-1m": {
+    //       "name": "Claude-Opus-4.7-1M (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 1000000,
+    //         "output": 128000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "claude-opus-4.6": {
+    //       "name": "Claude-Opus-4.6 (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 176000,
+    //         "output": 24000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "claude-opus-4.6-1m": {
+    //       "name": "Claude-Opus-4.6-1M (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 1000000,
+    //         "output": 64000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "claude-haiku-4.5": {
+    //       "name": "Claude-Haiku-4.5 (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 176000,
+    //         "output": 24000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "gpt-5.5": {
+    //       "name": "GPT-5.5 (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 1000000,
+    //         "output": 128000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "gpt-5.4": {
+    //       "name": "GPT-5.4 (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 272000,
+    //         "output": 128000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "gpt-5.3-codex": {
+    //       "name": "GPT-5.3-Codex (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 272000,
+    //         "output": 128000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "gpt-5.1-codex": {
+    //       "name": "GPT-5.1-Codex (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 272000,
+    //         "output": 128000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "gpt-5.1-codex-mini": {
+    //       "name": "GPT-5.1-Codex-Mini (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 272000,
+    //         "output": 128000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "gemini-3.1-pro": {
+    //       "name": "Gemini-3.1-Pro (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 400000,
+    //         "output": 64000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "gemini-3.5-flash": {
+    //       "name": "Gemini-3.5-Flash (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 1000000,
+    //         "output": 65536
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "gemini-2.5-pro": {
+    //       "name": "Gemini-2.5-Pro (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 400000,
+    //         "output": 64000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "hunyuan-video-art": {
+    //       "name": "Hunyuan-Video-Art (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true
+    //     },
+    //     "gpt-5.6-sol": {
+    //       "name": "GPT-5.6 Sol (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 1050000,
+    //         "output": 128000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "gpt-5.6-terra": {
+    //       "name": "GPT-5.6 Terra (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 200000,
+    //         "output": 96000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     },
+    //     "gpt-5.6-luna": {
+    //       "name": "GPT-5.6 Luna (CodeBuddy)",
+    //       "tool_call": true,
+    //       "reasoning": false,
+    //       "attachment": true,
+    //       "temperature": true,
+    //       "modalities": {
+    //         "input": [
+    //           "text",
+    //           "image"
+    //         ],
+    //         "output": [
+    //           "text"
+    //         ]
+    //       },
+    //       "limit": {
+    //         "context": 1050000,
+    //         "output": 128000
+    //       },
+    //       "variants": {
+    //         "low": {
+    //           "reasoningEffort": "low",
+    //           "reasoningSummary": "auto"
+    //         },
+    //         "high": {
+    //           "reasoningEffort": "high",
+    //           "reasoningSummary": "auto"
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
   }
 }
