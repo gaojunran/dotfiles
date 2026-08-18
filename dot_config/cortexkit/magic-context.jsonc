@@ -16,5 +16,7 @@
     "disable": true
   },
   // 默认 300s，提高一些
-  "historian_timeout_ms": 600000
+  "historian_timeout_ms": 600000,
+  // 给一些 1M 模型一个强制的 compact 上界
+  "execute_threshold_tokens": { "default": 150000 }
 }
