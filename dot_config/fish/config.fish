@@ -65,9 +65,9 @@ alias brx "brew uninstall"
 alias brs "brew search"
 
 # wechatwebdevtools cli
-# must use absolute path instead of `.`
-alias we "/Applications/wechatwebdevtools.app/Contents/MacOS/cli open --project $(pwd)"
-alias wep "/Applications/wechatwebdevtools.app/Contents/MacOS/cli preview --project $(pwd)"
+# 必须使用绝对路径；而且应该使用单引号来避免 pwd 命令结果提前展开
+alias we '/Applications/wechatwebdevtools.app/Contents/MacOS/cli open --project $(pwd)'
+alias wep '/Applications/wechatwebdevtools.app/Contents/MacOS/cli preview --project $(pwd)'
 
 # SSH remote
 alias s1 "ssh jr"
