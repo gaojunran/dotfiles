@@ -65,5 +65,34 @@
     "bindings": {
       "cmd-shift-space": "text_finder::Toggle"
     }
+  },
+  {
+    "context": "!AcpThread > Editor && mode == full",
+    "bindings": {
+      "cmd-]": "editor::GoToHunk"
+    }
+  },
+  {
+    "context": "!AcpThread > Editor && mode == full",
+    "unbind": {
+      "cmd-f8": "editor::GoToHunk"
+    }
+  },
+  {
+    "context": "!AcpThread > Editor && mode == full",
+    "bindings": {
+      "cmd-[": "editor::GoToPreviousHunk"
+    }
+  },
+  {
+    "context": "!AcpThread > Editor && mode == full",
+    "unbind": {
+      "cmd-shift-f8": "editor::GoToPreviousHunk"
+    }
+  },
+  {
+    "bindings": {
+      "alt-tab": "agents_sidebar::ToggleThreadSwitcher"
+    }
   }
 ]
