@@ -67,6 +67,7 @@ alias brs "brew search"
 # wechatwebdevtools cli
 # must use absolute path instead of `.`
 alias we "/Applications/wechatwebdevtools.app/Contents/MacOS/cli open --project $(pwd)"
+alias wep "/Applications/wechatwebdevtools.app/Contents/MacOS/cli preview --project $(pwd)"
 
 # SSH remote
 alias s1 "ssh jr"
