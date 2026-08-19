@@ -94,5 +94,10 @@
     "bindings": {
       "alt-tab": "agents_sidebar::ToggleThreadSwitcher"
     }
+  },
+  {
+    "bindings": {
+      "ctrl-space": "file_finder::Toggle"
+    }
   }
 ]
