@@ -112,7 +112,7 @@ end
 alias sq "jj squash"
 alias sp "jj split"
 
-alias hj "jj --no-pager -n 10"
+alias hj "jj log --no-pager -n 10"
 alias cm "jj commit -im"
 alias ab "jj abandon"
 alias jd "jj desc -m"
