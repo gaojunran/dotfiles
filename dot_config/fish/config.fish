@@ -143,8 +143,8 @@ alias 3='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_3'
 alias 4='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_4'
 alias 5='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_5'
 
-alias oc opencode
-alias occ "opencode --continue"
+alias oc "opencode attach http://localhost:4096"
+alias occ "opencode attach http://localhost:4096 --continue"
 
 function cmp
     cm $argv[1..] && pp
