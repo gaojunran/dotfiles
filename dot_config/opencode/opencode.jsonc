@@ -4,6 +4,7 @@
     "oh-my-opencode-slim",
     "@cortexkit/opencode-magic-context@0.38.0",
     "opencode-codebuddy-auth-fixed",
+    "opencode-truncate-lsp-diagnostics"
   ],
   "model": "venus/deepseek-v4-pro-official",
   "default_agent": "orchestrator",
