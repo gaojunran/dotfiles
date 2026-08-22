@@ -2,6 +2,7 @@
 bunx oh-my-opencode-slim@latest install
 
 # opencode
+pkill -f opencode
 mise use -fg opencode@latest
 
 # magic-context
