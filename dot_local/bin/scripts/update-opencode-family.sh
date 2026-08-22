@@ -2,7 +2,7 @@
 bunx oh-my-opencode-slim@latest install
 
 # opencode
-mise use -g opencode
+mise use -fg opencode@latest
 
 # magic-context
 # curl -fsSL https://raw.githubusercontent.com/cortexkit/magic-context/master/scripts/install.sh | bash
