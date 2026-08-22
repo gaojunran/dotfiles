@@ -1,33 +1,33 @@
 {
   "$schema": "https://unpkg.com/oh-my-opencode-slim@latest/oh-my-opencode-slim.schema.json",
   "preset": "default",
+  "stripOrchestratorModel": true,
   "presets": {
     "default": {
       "orchestrator": {
-        "model": "venus/deepseek-v4-flash-official",
         "skills": ["*"],
         "mcps": ["*", "!context7"]
       },
       "oracle": {
-        "model": "codebuddy/gpt-5.6-terra",
+        "model": ["codebuddy/gpt-5.6-terra", "codebuddy/claude-sonnet-5", "venus/deepseek-v4-pro-official"],
         "variant": "max",
         "skills": ["simplify"],
         "mcps": []
       },
       "council": {
-        "model": "venus/deepseek-v4-flash-official",
+        "model": ["codebuddy/gpt-5.6-terra", "codebuddy/claude-sonnet-5", "venus/deepseek-v4-pro-official"],
         "variant": "high",
         "skills": [],
         "mcps": []
       },
       "librarian": {
-        "model": "venus/deepseek-v4-flash-official",
+        "model": ["venus/deepseek-v4-flash-official", "astra/deepseek_v4_flash_code/max"],
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },
       "explorer": {
-        "model": "venus/deepseek-v4-flash-official",
-        "skills": ["ccc"],
+        "model": ["venus/deepseek-v4-flash-official", "astra/deepseek_v4_flash_code/max"],
+        "skills": [],
         "mcps": []
       },
       "designer": {
@@ -37,59 +37,13 @@
         "mcps": []
       },
       "fixer": {
-        "model": "venus/deepseek-v4-flash-official",
+        "model": ["venus/deepseek-v4-flash-official", "astra/deepseek_v4_flash_code/max"],
         "variant": "high",
         "skills": [],
         "mcps": []
       },
       "observer": {
-        "model": "venus/deepseek-v4-flash-official",
-        "skills": [],
-        "mcps": []
-      }
-    },
-    "astra": {
-      "orchestrator": {
-        "model": "astra/glm_5d2_fp8_1m_code",
-        "skills": ["*"],
-        "mcps": ["*", "!context7"]
-      },
-      "oracle": {
-        "model": "venus/deepseek-v4-pro-external",
-        "variant": "max",
-        "skills": ["simplify"],
-        "mcps": []
-      },
-      "council": {
-        "model": "venus/deepseek-v4-pro-external",
-        "variant": "high",
-        "skills": [],
-        "mcps": []
-      },
-      "librarian": {
-        "model": "venus/minimax-m3-external",
-        "skills": [],
-        "mcps": ["websearch", "context7", "grep_app"]
-      },
-      "explorer": {
-        "model": "venus/minimax-m3-external",
-        "skills": [],
-        "mcps": []
-      },
-      "designer": {
-        "model": "venus/kimi-k2.6-external",
-        "variant": "medium",
-        "skills": ["agent-browser"],
-        "mcps": []
-      },
-      "fixer": {
-        "model": "venus/kimi-k2.6-external",
-        "variant": "high",
-        "skills": [],
-        "mcps": []
-      },
-      "observer": {
-        "model": "venus/kimi-k2.6-external",
+        "model": ["astra/kimi_k3_astra"],
         "skills": [],
         "mcps": []
       }
