@@ -166,3 +166,4 @@ sky = 'builtin cd "$(git rev-parse --show-superproject-working-tree | grep . || 
 sdk = 'builtin cd "$(git rev-parse --show-superproject-working-tree | grep . || git rev-parse --show-toplevel)/src/sdk"'
 wxc = 'builtin cd "$(git rev-parse --show-superproject-working-tree | grep . || git rev-parse --show-toplevel)/src/wx-component"'
 gls = 'builtin cd "$(git rev-parse --show-superproject-working-tree | grep . || git rev-parse --show-toplevel)/src/glass-easel-adapter"'
+scl = 'builtin cd "$(git rev-parse --show-superproject-working-tree | grep . || git rev-parse --show-toplevel)/src/scl-engine"'

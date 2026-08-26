@@ -44,4 +44,5 @@ files = []
 ignored = [
     ".cocoindex_code",
     ".cortexkit",
+    ".tmp",
 ]
