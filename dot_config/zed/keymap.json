@@ -99,5 +99,10 @@
     "bindings": {
       "ctrl-space": "file_finder::Toggle"
     }
+  },
+  {
+    "bindings": {
+      "cmd-shift-u": "git::ViewUnstagedChanges"
+    }
   }
 ]
