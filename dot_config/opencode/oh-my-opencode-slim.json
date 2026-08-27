@@ -21,23 +21,23 @@
         "mcps": []
       },
       "librarian": {
-        "model": ["venus/deepseek-v4-flash-official", "astra/deepseek_v4_flash_code/max"],
+        "model": ["astra/deepseek_v4_flash_code/max", "venus/deepseek-v4-flash-official"],
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },
       "explorer": {
-        "model": ["venus/deepseek-v4-flash-official", "astra/deepseek_v4_flash_code/max"],
+        "model": ["astra/deepseek_v4_flash_code/max", "venus/deepseek-v4-flash-official"],
         "skills": [],
         "mcps": []
       },
       "designer": {
-        "model": "venus/deepseek-v4-flash-official",
+        "model": ["astra/deepseek_v4_flash_code/max", "venus/deepseek-v4-flash-official"],
         "variant": "medium",
         "skills": ["agent-browser"],
         "mcps": []
       },
       "fixer": {
-        "model": ["venus/deepseek-v4-flash-official", "astra/deepseek_v4_flash_code/max"],
+        "model": ["astra/deepseek_v4_flash_code/max", "venus/deepseek-v4-flash-official"],
         "variant": "high",
         "skills": [],
         "mcps": []

@@ -7,7 +7,6 @@
     "opencode-truncate-lsp-diagnostics",
     "opencode-git-add"
   ],
-  "model": "venus/deepseek-v4-pro-official",
   "default_agent": "orchestrator",
   "agent": {
     "explore": {
