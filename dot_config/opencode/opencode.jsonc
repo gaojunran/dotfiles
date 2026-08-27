@@ -59,7 +59,8 @@
         "minimax_m3_code/infer": { "name": "minimax_m3_code/infer", "limit": { "context": 80000, "output": 96000 } },
         "deepseek_v4_flash_code/max": { "name": "deepseek_v4_flash_code/max", "limit": { "context": 200000, "output": 96000 } },
         "deepseek_v4_pro_code/max": { "name": "deepseek_v4_pro_code/max", "limit": { "context": 200000, "output": 96000 } },
-        "kimi_k3_astra": { "name": "kimi_k3_astra", "limit": { "context": 170000, "output": 96000 } }
+        "kimi_k3_astra": { "name": "kimi_k3_astra", "limit": { "context": 170000, "output": 96000 } },
+        "GLM-5.3-Flash-astra": { "name": "GLM-5.3-Flash-astra", "limit": { "context": 200000, "output": 96000 } },
       }
     },
     "venus": {
