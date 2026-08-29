@@ -121,5 +121,32 @@
     "unbind": {
       "ctrl-_": "pane::GoForward"
     }
+  },
+  {
+    "bindings": {
+      "cmd-shift-s": "editor::GoToNextReference"
+    }
+  },
+  {
+    "bindings": {
+      "cmd-shift-a": "editor::GoToPreviousReference"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "cmd-s": "editor::GoToDefinition"
+    }
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "f12": "editor::GoToDefinition"
+    }
+  },
+  {
+    "unbind": {
+      "cmd-shift-w": "workspace::CloseWindow"
+    }
   }
 ]
