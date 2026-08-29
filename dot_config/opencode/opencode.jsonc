@@ -2,10 +2,10 @@
   "$schema": "https://opencode.ai/config.json",
   "plugin": [
     "oh-my-opencode-slim",
-    "@cortexkit/opencode-magic-context@0.38.0",
-    "opencode-codebuddy-auth-fixed",
-    "opencode-truncate-lsp-diagnostics",
-    "opencode-git-add"
+    "@cortexkit/opencode-magic-context@0.40.1",
+    "opencode-codebuddy-auth-fixed",  // https://github.com/gaojunran/opencode-codebuddy-auth-fixed
+    "opencode-truncate-lsp-diagnostics", // https://github.com/gaojunran/opencode-truncate-lsp-diagnostics
+    "opencode-git-add" // https://github.com/gaojunran/opencode-git-add
   ],
   "default_agent": "orchestrator",
   "agent": {
