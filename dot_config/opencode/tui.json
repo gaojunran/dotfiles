@@ -1,3 +1,3 @@
 {
-  "plugin": ["opencode-tui-tps"]
+  "plugin": ["opencode-tui-tps", "oh-my-opencode-slim"]
 }
