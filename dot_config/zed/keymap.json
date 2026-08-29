@@ -104,5 +104,10 @@
     "bindings": {
       "cmd-shift-u": "git::ViewUnstagedChanges"
     }
+  },
+  {
+    "bindings": {
+      "cmd-shift-d": "git::ViewUncommittedChanges"
+    }
   }
 ]
