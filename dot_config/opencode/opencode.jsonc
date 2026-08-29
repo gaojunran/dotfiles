@@ -5,8 +5,8 @@
     "@cortexkit/opencode-magic-context",
     "@cortexkit/aft-opencode@latest",
     "opencode-codebuddy-auth-fixed", // https://github.com/gaojunran/opencode-codebuddy-auth-fixed
-    "opencode-truncate-lsp-diagnostics", // https://github.com/gaojunran/opencode-truncate-lsp-diagnostics
     "opencode-git-add", // https://github.com/gaojunran/opencode-git-add
+    // "opencode-truncate-lsp-diagnostics", // https://github.com/gaojunran/opencode-truncate-lsp-diagnostics
   ],
   "default_agent": "orchestrator",
   "agent": {
