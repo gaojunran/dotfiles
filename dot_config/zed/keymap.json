@@ -109,5 +109,17 @@
     "bindings": {
       "cmd-shift-d": "git::ViewUncommittedChanges"
     }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "ctrl-=": "pane::GoForward"
+    }
+  },
+  {
+    "context": "Pane",
+    "unbind": {
+      "ctrl-_": "pane::GoForward"
+    }
   }
 ]
