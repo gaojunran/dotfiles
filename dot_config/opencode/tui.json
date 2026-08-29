@@ -1,3 +1,7 @@
 {
-  "plugin": ["opencode-tui-tps", "oh-my-opencode-slim"]
+  "plugin": [
+    "opencode-tui-tps",
+    "oh-my-opencode-slim",
+    "@cortexkit/aft-opencode@latest"
+  ]
 }

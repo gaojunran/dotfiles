@@ -3,9 +3,10 @@
   "plugin": [
     "oh-my-opencode-slim",
     "@cortexkit/opencode-magic-context",
-    "opencode-codebuddy-auth-fixed",  // https://github.com/gaojunran/opencode-codebuddy-auth-fixed
+    "@cortexkit/aft-opencode@latest",
+    "opencode-codebuddy-auth-fixed", // https://github.com/gaojunran/opencode-codebuddy-auth-fixed
     "opencode-truncate-lsp-diagnostics", // https://github.com/gaojunran/opencode-truncate-lsp-diagnostics
-    "opencode-git-add" // https://github.com/gaojunran/opencode-git-add
+    "opencode-git-add", // https://github.com/gaojunran/opencode-git-add
   ],
   "default_agent": "orchestrator",
   "agent": {
@@ -32,7 +33,12 @@
       "*": "allow"
     }
   },
-  "enabled_providers": ["cctq", "venus", "astra", "codebuddy"],
+  "enabled_providers": [
+    "cctq",
+    "venus",
+    "astra",
+    "codebuddy"
+  ],
   "provider": {
     "cctq": {
       "npm": "@ai-sdk/openai",
@@ -42,8 +48,20 @@
         "setCacheKey": true
       },
       "models": {
-        "gpt-5.6-terra": { "name": "gpt-5.6-terra", "reasoning": true, "limit": { "context": 200000, "output": 96000 }, "options": {} },
-        "gpt-5.6-sol": { "name": "gpt-5.6-sol", "reasoning": true, "options": {} }
+        "gpt-5.6-terra": {
+          "name": "gpt-5.6-terra",
+          "reasoning": true,
+          "limit": {
+            "context": 200000,
+            "output": 96000
+          },
+          "options": {}
+        },
+        "gpt-5.6-sol": {
+          "name": "gpt-5.6-sol",
+          "reasoning": true,
+          "options": {}
+        }
       }
     },
     "astra": {
@@ -54,13 +72,55 @@
         "apiKey": "{env:ASTRA_TOKEN}"
       },
       "models": {
-        "kimi_k2d7_code/thinking": { "name": "kimi_k2d7_code/thinking", "limit": { "context": 200000, "output": 96000 } },
-        "glm_5d2_fp8_code": { "name": "glm_5d2_fp8_code", "limit": { "context": 170000, "output": 96000 } },
-        "minimax_m3_code/infer": { "name": "minimax_m3_code/infer", "limit": { "context": 80000, "output": 96000 } },
-        "deepseek_v4_flash_code/max": { "name": "deepseek_v4_flash_code/max", "limit": { "context": 200000, "output": 96000 } },
-        "deepseek_v4_pro_code/max": { "name": "deepseek_v4_pro_code/max", "limit": { "context": 200000, "output": 96000 } },
-        "kimi_k3_astra": { "name": "kimi_k3_astra", "limit": { "context": 170000, "output": 96000 } },
-        "GLM-5.3-Flash-astra": { "name": "GLM-5.3-Flash-astra", "limit": { "context": 200000, "output": 96000 } },
+        "kimi_k2d7_code/thinking": {
+          "name": "kimi_k2d7_code/thinking",
+          "limit": {
+            "context": 200000,
+            "output": 96000
+          }
+        },
+        "glm_5d2_fp8_code": {
+          "name": "glm_5d2_fp8_code",
+          "limit": {
+            "context": 170000,
+            "output": 96000
+          }
+        },
+        "minimax_m3_code/infer": {
+          "name": "minimax_m3_code/infer",
+          "limit": {
+            "context": 80000,
+            "output": 96000
+          }
+        },
+        "deepseek_v4_flash_code/max": {
+          "name": "deepseek_v4_flash_code/max",
+          "limit": {
+            "context": 200000,
+            "output": 96000
+          }
+        },
+        "deepseek_v4_pro_code/max": {
+          "name": "deepseek_v4_pro_code/max",
+          "limit": {
+            "context": 200000,
+            "output": 96000
+          }
+        },
+        "kimi_k3_astra": {
+          "name": "kimi_k3_astra",
+          "limit": {
+            "context": 170000,
+            "output": 96000
+          }
+        },
+        "GLM-5.3-Flash-astra": {
+          "name": "GLM-5.3-Flash-astra",
+          "limit": {
+            "context": 200000,
+            "output": 96000
+          }
+        }
       }
     },
     "venus": {
@@ -74,13 +134,49 @@
         }
       },
       "models": {
-        "deepseek-v4-flash-official": { "name": "deepseek-v4-flash-official", "limit": { "context": 300000, "output": 96000 } },
-        "deepseek-v4-pro-official": { "name": "deepseek-v4-pro-official", "limit": { "context": 300000, "output": 96000 } },
-        "kimi-k2.7-code-external": { "name": "kimi-k2.7-code-external", "limit": { "context": 200000, "output": 96000 } },
-        "glm-5.2-external": { "name": "glm-5.2-external", "limit": { "context": 300000, "output": 96000 } },
-        "glm-5.3-external": { "name": "glm-5.3-external", "limit": { "context": 300000, "output": 96000 } },
-        "minimax-m3-external": { "name": "minimax-m3-external", "limit": { "context": 800000, "output": 96000 } }
+        "deepseek-v4-flash-official": {
+          "name": "deepseek-v4-flash-official",
+          "limit": {
+            "context": 300000,
+            "output": 96000
+          }
+        },
+        "deepseek-v4-pro-official": {
+          "name": "deepseek-v4-pro-official",
+          "limit": {
+            "context": 300000,
+            "output": 96000
+          }
+        },
+        "kimi-k2.7-code-external": {
+          "name": "kimi-k2.7-code-external",
+          "limit": {
+            "context": 200000,
+            "output": 96000
+          }
+        },
+        "glm-5.2-external": {
+          "name": "glm-5.2-external",
+          "limit": {
+            "context": 300000,
+            "output": 96000
+          }
+        },
+        "glm-5.3-external": {
+          "name": "glm-5.3-external",
+          "limit": {
+            "context": 300000,
+            "output": 96000
+          }
+        },
+        "minimax-m3-external": {
+          "name": "minimax-m3-external",
+          "limit": {
+            "context": 800000,
+            "output": 96000
+          }
+        }
       }
-    },
+    }
   }
 }
