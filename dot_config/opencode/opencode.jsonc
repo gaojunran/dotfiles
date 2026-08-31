@@ -120,6 +120,13 @@
             "context": 200000,
             "output": 96000
           }
+        },
+        "GLM-5.3-astra": {
+          "name": "GLM-5.3-astra",
+          "limit": {
+            "context": 200000,
+            "output": 96000
+          }
         }
       }
     },
