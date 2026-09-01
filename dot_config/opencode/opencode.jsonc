@@ -147,6 +147,27 @@
             "output": 96000
           }
         },
+        "glm-5.3-flash-external": {
+          "name": "glm-5.3-flash-external",
+          "limit": {
+            "context": 300000,
+            "output": 96000
+          }
+        },
+        "glm-5.3": {
+          "name": "glm-5.3",
+          "limit": {
+            "context": 300000,
+            "output": 96000
+          }
+        },
+        "glm-5.3-flash": {
+          "name": "glm-5.3-flash",
+          "limit": {
+            "context": 300000,
+            "output": 96000
+          }
+        }
       }
     }
   }
