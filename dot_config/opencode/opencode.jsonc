@@ -6,7 +6,6 @@
     "@cortexkit/aft-opencode@latest",
     "opencode-codebuddy-auth-fixed", // https://github.com/gaojunran/opencode-codebuddy-auth-fixed
     "opencode-git-add", // https://github.com/gaojunran/opencode-git-add
-    // "opencode-truncate-lsp-diagnostics", // https://github.com/gaojunran/opencode-truncate-lsp-diagnostics
   ],
   "default_agent": "orchestrator",
   "agent": {
@@ -72,24 +71,10 @@
         "apiKey": "{env:ASTRA_TOKEN}"
       },
       "models": {
-        "kimi_k2d7_code/thinking": {
-          "name": "kimi_k2d7_code/thinking",
-          "limit": {
-            "context": 200000,
-            "output": 96000
-          }
-        },
         "glm_5d2_fp8_code": {
           "name": "glm_5d2_fp8_code",
           "limit": {
             "context": 170000,
-            "output": 96000
-          }
-        },
-        "minimax_m3_code/infer": {
-          "name": "minimax_m3_code/infer",
-          "limit": {
-            "context": 80000,
             "output": 96000
           }
         },
@@ -155,20 +140,6 @@
             "output": 96000
           }
         },
-        "kimi-k2.7-code-external": {
-          "name": "kimi-k2.7-code-external",
-          "limit": {
-            "context": 200000,
-            "output": 96000
-          }
-        },
-        "glm-5.2-external": {
-          "name": "glm-5.2-external",
-          "limit": {
-            "context": 300000,
-            "output": 96000
-          }
-        },
         "glm-5.3-external": {
           "name": "glm-5.3-external",
           "limit": {
@@ -176,13 +147,6 @@
             "output": 96000
           }
         },
-        "minimax-m3-external": {
-          "name": "minimax-m3-external",
-          "limit": {
-            "context": 800000,
-            "output": 96000
-          }
-        }
       }
     }
   }
