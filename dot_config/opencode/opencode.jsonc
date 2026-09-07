@@ -68,7 +68,9 @@
       "name": "astra",
       "options": {
         "baseURL": "{env:ASTRA_BASE_URL}",
-        "apiKey": "{env:ASTRA_TOKEN}"
+        "apiKey": "{env:ASTRA_TOKEN}",
+        "headerTimeout": 10000,
+        "chunkTimeout": 10000
       },
       "models": {
         "glm_5d2_fp8_code": {
@@ -123,7 +125,9 @@
         "apiKey": "{env:VENUS_TOKEN}",
         "headers": {
           "Venus-Sticky-Routing": "token"
-        }
+        },
+        "headerTimeout": 10000,
+        "chunkTimeout": 10000
       },
       "models": {
         "deepseek-v4-flash-official": {
