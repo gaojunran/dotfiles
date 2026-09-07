@@ -45,4 +45,5 @@ ignored = [
     ".cocoindex_code",
     ".cortexkit",
     ".tmp",
+    ".opencode",
 ]

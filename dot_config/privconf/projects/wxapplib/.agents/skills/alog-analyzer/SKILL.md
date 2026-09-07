@@ -1,7 +1,7 @@
 ---
 name: alog-analyzer
 version: 26040505
-description: ALog 日志分析工具。当用户提供日志文件（含 xlog）、welog 链接，或提供 UIN/微信号要求排查或分析客户端日志或异常时触发。闪退问题优先由 crash-analyzer-skill 处理，卡顿报告优先由 ios-hang-analyzer 处理。
+description: ALog 日志分析工具。当用户提供日志文件（含 xlog）、welog 链接，或提供 UIN/微信号要求排查或分析客户端日志或异常时触发。
 allowed-tools: Bash(python3:*), Bash(grep:*), Bash(cat:*)
 ---
 
@@ -43,71 +43,6 @@ allowed-tools: Bash(python3:*), Bash(grep:*), Bash(cat:*)
        python3 "$SKILL_DIR/scripts/view_tree.py" "$LOG_FILE"
        ```
     禁止在 skill 中手动解析视图树内容。
-13. **OOM/内存类问题必须回溯基线**：分析 OOM/crash 时，禁止只看 crash 时刻的内存数据。必须提取异常页面/小程序打开**之前**的内存水位时间线，对比打开前 vs 打开后跳变量，并检查打开前用户的活动路径。仅报告"crash 时内存 X MB"而不给出基线和跳变是不足够的结论。
-
-## iOS OOM / 内存类问题分析要点
-
-### ⚠️ 必须回溯 crash 前的内存基线
-
-分析 OOM/crash 时，**禁止只看 crash 时刻的内存数据**。必须回溯到异常页面/小程序打开**之前**的内存水位，因为：
-- 微信主进程长期运行后内存可能已占 5.5GB+（可用仅 500~600MB），此时再启动小程序（冷启动本身需 ~400MB）就直接濒临 OOM
-- crash 的根因可能是"内存基线过高 + 新页面开销"的组合，而非新页面本身的泄漏
-
-**操作步骤**：
-1. 用 `check memory footprint` 提取完整内存时间线（至少覆盖 crash 前 10~30 分钟）
-2. 定位异常页面/小程序的打开时间（`setScene` + `openApplet`/`EcsOpenWxaRouter` 等）
-3. 对比打开前 vs 打开后 5s 的内存跳变量
-4. 检查打开前用户的活动路径（`setScene` 序列），识别内存大户（朋友圈图片全屏、红包详情页、其他小程序等）
-
-**关键 grep 词**（iOS）：
-- 内存水位：`check memory footprint` → 提取 `footprint X MB, available: Y MB`
-- OOM 上报：`OOMCrashReport` / `foom scene` / `app foreground out of memory`
-- Scene 追踪：`setScene` / `set scene`
-- 小程序启动：`EcsOpenWxaRouter` / `openApp` / `WAAppTaskMgr open`
-- 内存清理：`WCMemoryCacheManager` / `callClearMemoryCache` / `footprintDiff`
-- 内存告警：`memoryWarning` / `didReceiveMemoryWarning`
-
-**常见内存跳变模式**：
-| 跳变量 | 典型原因 |
-|--------|---------|
-| +400~500MB（5s内） | 小程序冷启动（Skyline引擎 + WebView + 代码包） |
-| +100~200MB（持续） | 瀑布流无限加载图片/视频 |
-| +50~100MB（单次） | 朋友圈图片全屏查看(WCImageFullScreenViewController) |
-
-### 输出建议
-
-OOM 分析结论必须包含：
-1. **crash 时刻内存数据**（OOMCrashReport + footprint）
-2. **异常页面打开前的内存基线**（具体数值 + 可用内存）
-3. **内存跳变量**（打开前后差值 + 速率）
-4. **crash 前用户活动路径**（哪些页面/操作累积了内存）
-5. **修复建议分两层**：宿主侧（启动前水位检查/清理）+ 业务侧（资源回收/分页限制）
-
-### 时序竞态分析技巧
-分析客户端与基础库的时序竞态问题时，用以下方法重建事件时间线：
-1. 搜 `AppBrandOnNavigateBackInterceptEvent` 找客户端 dispatch 时间
-2. 搜 `Wxapplib.Critical` 找基础库 console 输出时间
-3. 搜 `navigateBackInterceptionInfo is null` 找客户端发现拦截器被移除的时间
-4. 搜 `BaseLibVersion` 或 `AbsReader version parsed` 确认真机运行的基础库版本
-5. 计算客户端 dispatch → 基础库 stop 的间隔（ms 级）。如果间隔远小于 setTimeout delay，说明真机跑的不是新版代码
-
-**关键结论**：如果基础库的 stop 在客户端 dispatch 后仅 3~5ms 就触发，不可能是 setTimeout 100ms 的结果——真机跑的仍是旧版代码。
-
-## 分析笔记（防 compact 丢失）
-
-分析过程中，每完成一个阶段性结论，**立即**追加写入工作目录的 `ANALYSIS.md`。格式：
-
-```markdown
-## [时间段/主题]
-- 结论：{一句话}
-- 关键证据：{行号 + 数值，不超过 5 行}
-- 待确认：{如有}
-```
-
-规则：
-- **禁止等分析完再写**：每个阶段性结论确认后立即写入。
-- compact 恢复后第一步读 `ANALYSIS.md`，已有结论不重复验证。
-- kickoff skill 共存时，分析笔记写入 kickoff 工作目录。
 
 ## 执行流程
 
@@ -236,10 +171,3 @@ MCP 鉴权使用 `${IMATE_TAI_TOKEN}` 占位符。所有 xlog MCP 工具名（�
 | 「手工上报」+「ilink」 | `submit_ilink_upload_self` |
 | 「mp」/「公众号」 | `submit_mp_upload_xlog` |
 | 「手工上报」+「mp」 | `submit_mp_upload_self` |
-
-### MCP vs 旧 Skill 的差异
-
-- **身份隔离现状**：MCP 配置使用 `${IMATE_TAI_TOKEN}` 占位符，但团队版下 MCP 连接走 `os.environ` 解析，实际用的是**容器创建者**的 token（与旧 skill 共享 credentials.json 本质相同）。Terminal 命令层面的按用户隔离在 MCP 层面暂未实现。详见 `imate-platform-internals` skill 的「团队版 MCP 身份隔离陷阱」。
-- **关键认知**：团队版下 `os.environ["IMATE_TAI_TOKEN"]` 存的是容器创建者的 token，不是当前对话人的。你无法在 `terminal()` 子进程中验证（安全过滤会移除该变量），必须用 `execute_code` 在 agent 主进程上下文中读取。如果用户提供了自己的 token 并希望用于 MCP，需硬编码替换 `${IMATE_TAI_TOKEN}`，但这会将 token 明文暴露给所有使用该容器的人。
-- **新增能力**：`query_xlog_main_data`（按微信号/uin 查历史）、`submit_custom_cmd` + `test_push`（自定义命令/推送）
-- **无需额外 appid/appkey**：MCP 鉴权走 TAI token，不再需要 xlog 专用凭证（但注意，团队版下所有人共用容器创建者的 TAI token）
