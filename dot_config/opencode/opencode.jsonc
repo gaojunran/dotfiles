@@ -16,7 +16,7 @@
       "disable": true
     },
     "build": {
-      "disable": true  // 特意保留，插件如果挂了作为备用
+      "disable": false  // 特意保留，插件如果挂了作为备用
     },
     "plan": {
       "disable": true
