@@ -13,10 +13,10 @@
       "disable": true
     },
     "general": {
-      "disable": false // 特意保留，如果插件寄了可以用这个
+      "disable": true
     },
     "build": {
-      "disable": true
+      "disable": true  // 特意保留，插件如果挂了作为备用
     },
     "plan": {
       "disable": true
