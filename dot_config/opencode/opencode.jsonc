@@ -13,7 +13,7 @@
       "disable": true
     },
     "general": {
-      "disable": true
+      "disable": false // 特意保留，如果插件寄了可以用这个
     },
     "build": {
       "disable": true
