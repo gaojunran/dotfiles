@@ -114,7 +114,14 @@
             "context": 200000,
             "output": 96000
           }
-        }
+        },
+        "DeepSeek-V4.1-Flash-astra": {
+          "name": "DeepSeek-V4.1-Flash-astra",
+          "limit": {
+            "context": 200000,
+            "output": 96000
+          }
+        },
       }
     },
     "venus": {
