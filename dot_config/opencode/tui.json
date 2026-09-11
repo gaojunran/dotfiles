@@ -2,6 +2,7 @@
   "plugin": [
     "opencode-tui-tps",
     "oh-my-opencode-slim",
-    "@cortexkit/aft-opencode@latest"
+    "@cortexkit/aft-opencode@latest",
+    "@cortexkit/opencode-magic-context@latest"
   ]
 }
