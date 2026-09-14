@@ -9,13 +9,13 @@
         "mcps": ["*", "!context7"]
       },
       "oracle": {
-        "model": ["codebuddy/gpt-5.6-terra", "codebuddy/claude-sonnet-5", "venus/deepseek-v4-pro-official"],
+        "model": ["codebuddy/gpt-5.6-sol", "venus/glm-5.3-external", "astra/GLM-5.3-astra"],
         "variant": "max",
         "skills": ["simplify"],
         "mcps": []
       },
       "council": {
-        "model": ["codebuddy/gpt-5.6-terra", "codebuddy/claude-sonnet-5", "venus/deepseek-v4-pro-official"],
+        "model": ["codebuddy/gpt-5.6-sol", "venus/glm-5.3-external", "astra/GLM-5.3-astra"],
         "variant": "high",
         "skills": [],
         "mcps": []
