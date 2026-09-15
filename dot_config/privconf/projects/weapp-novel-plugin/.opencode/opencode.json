@@ -16,6 +16,14 @@
       "headers": {
         "Authorization": "Bearer {env:TAI_TOKEN}"
       }
+    },
+    "miniprogram-automator-mcp": {
+      "type": "remote",
+      "url": "https://miniprogram-automator-mcp.mcp.woa.com",
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer {env:TAI_TOKEN}"
+      }
     }
   }
 }
