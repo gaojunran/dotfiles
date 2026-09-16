@@ -30,7 +30,8 @@
   "permission": {
     "*": {
       "*": "allow"
-    }
+    },
+    "websearch": "deny"
   },
   "enabled_providers": [
     "cctq",
@@ -179,6 +180,18 @@
             "output": 96000
           }
         }
+      }
+    }
+  },
+  "mcp": {
+    "anysearch": {
+      "type": "remote",
+      "url": "https://api.anysearch.com/mcp",
+      "enabled": true,
+      "oauth": false,
+      "headers": {
+        "Authorization": "Bearer {env:ANYSEARCH_API_KEY}",
+        "X-Anysearch-Client": "mcp/1.0.0"
       }
     }
   }
