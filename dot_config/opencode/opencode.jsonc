@@ -60,6 +60,10 @@
         "gpt-5.6-sol": {
           "name": "gpt-5.6-sol",
           "reasoning": true,
+          "limit": {
+            "context": 200000,
+            "output": 96000
+          },
           "options": {}
         }
       }
@@ -98,7 +102,7 @@
         "kimi_k3_astra": {
           "name": "kimi_k3_astra",
           "limit": {
-            "context": 170000,
+            "context": 200000,
             "output": 96000
           }
         },

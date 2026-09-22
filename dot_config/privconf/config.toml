@@ -15,6 +15,7 @@ files = [
     "mise.toml",
     ".opencode",
     ".env.local",
+    ".local",
 ]
 ignored = []
 
@@ -46,4 +47,5 @@ ignored = [
     ".cortexkit",
     ".tmp",
     ".opencode",
+    ".local",
 ]
