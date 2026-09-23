@@ -3,7 +3,7 @@
   "plugin": [
     "oh-my-opencode-slim",
     "@cortexkit/opencode-magic-context",
-    "@cortexkit/aft-opencode@latest",
+    "@cortexkit/aft-opencode",
     "opencode-codebuddy-auth-fixed", // https://github.com/gaojunran/opencode-codebuddy-auth-fixed
     "opencode-git-add", // https://github.com/gaojunran/opencode-git-add
   ],
@@ -66,7 +66,16 @@
             "output": 96000
           },
           "options": {}
-        }
+        },
+        "gpt-5.6-sol": {
+          "name": "gpt-5.6-sol",
+          "reasoning": true,
+          "limit": {
+            "context": 200000,
+            "output": 96000
+          },
+          "options": {}
+        },
       }
     },
     "cctq-cn": {
