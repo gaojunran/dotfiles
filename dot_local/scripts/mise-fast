@@ -1,0 +1,80 @@
+#!/usr/bin/env node
+
+// 用来对付一些神奇服务器打 GitHub 的慢速下载，用多线程 aria2c 骗一下 mise
+
+const { spawn, spawnSync } = require('child_process');
+const os = require('os');
+const path = require('path');
+const fs = require('fs');
+
+const arg = process.argv[2];
+if (!arg || arg.startsWith('-')) {
+  console.error('用法: mise-fast <tool>[@<version>]   例: mise-fast jj / mise-fast opencode@1.18.32');
+  process.exit(1);
+}
+const [tool, ver] = arg.includes('@') ? arg.split('@') : [arg, null];
+
+const fastEnv = { ...process.env, MISE_ALWAYS_KEEP_DOWNLOAD: '1' };
+
+// 1. 确定版本
+let version = ver;
+if (!version) {
+  const r = spawnSync('mise', ['ls-remote', tool], { encoding: 'utf8' });
+  if (r.status !== 0) { console.error(`[mise-fast] mise ls-remote ${tool} 失败`); process.exit(1); }
+  version = r.stdout.trim().split('\n').pop();
+  if (!version) { console.error(`[mise-fast] 没找到 ${tool} 的可用版本`); process.exit(1); }
+}
+console.log(`[1/4] 目标: ${tool}@${version}`);
+
+// 2. 探真实下载 URL: 跑一次 mise install -v,从日志抓 "Downloading <url> to <path>"
+function probeDownload() {
+  return new Promise((resolve, reject) => {
+    const child = spawn('mise', ['install', `${tool}@${version}`, '-v'], { env: fastEnv, stdio: ['ignore', 'pipe', 'pipe'] });
+    let buf = '';
+    const onData = (chunk) => {
+      buf += chunk;
+      const m = buf.match(/Downloading (\S+) to (\S+)/);
+      if (m) {
+        child.kill('SIGINT');  // 抓到就杀掉龟速下载
+        resolve({ url: m[1], to: m[2] });
+      }
+    };
+    child.stdout.on('data', onData);
+    child.stderr.on('data', onData);
+    child.on('exit', (code) => {
+      if (code === 0 || code === null) resolve(null);  // 没走下载(已缓存/已装)或完成太快
+      else reject(new Error(`mise 提前退出 code=${code}(${tool}@${version} 版本或 URL 探测失败)`));
+    });
+  });
+}
+
+(async () => {
+  let hit = null;
+  try { hit = await probeDownload(); }
+  catch (e) { console.error(`[mise-fast] ${e.message}`); process.exit(1); }
+
+  if (hit) {
+    const dest = hit.to.replace(/^~(?=$|\/)/, os.homedir());  // 展开 ~
+    const dir = path.dirname(dest), file = path.basename(dest);
+    fs.mkdirSync(dir, { recursive: true });
+    console.log(`[2/4] aria2 16 连接下载 → ${dest}`);
+    const a = spawnSync('aria2c', ['-x', '16', '-s', '16', '-k', '1M', '-d', dir, '-o', file, hit.url], { stdio: 'inherit' });
+    if (a.status !== 0) { console.error('[mise-fast] aria2 下载失败'); process.exit(1); }
+  } else {
+    console.log('[2/4] 没有检测到网络下载(可能已装好),跳过');
+  }
+
+  // 3. 正式安装
+  console.log('[3/4] mise install(期望命中 cached)');
+  const child = spawn('mise', ['install', `${tool}@${version}`], { env: fastEnv, stdio: ['ignore', 'pipe', 'inherit'] });
+  let out = '';
+  child.stdout.on('data', (d) => { process.stdout.write(d); out += d; });
+  child.on('exit', (code) => {
+    if (code !== 0) { console.error('[mise-fast] 安装失败'); process.exit(1); }
+    if (out.includes('cached')) {
+      console.log(`[4/4] ✓ 命中缓存,零网络下载,完成。\n   下一步: mise use -g ${tool}@${version}`);
+    } else {
+      console.log('[4/4] 安装完成(注意:未出现 cached,该工具 backend 可能不支持预置缓存,mise 自己又下了一遍)');
+    }
+  });
+})();
