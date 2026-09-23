@@ -35,6 +35,7 @@
   },
   "enabled_providers": [
     "cctq",
+    "cctq-cn",
     "venus",
     "astra",
     "codebuddy"
@@ -48,8 +49,8 @@
         "setCacheKey": true
       },
       "models": {
-        "gpt-5.6-terra": {
-          "name": "gpt-5.6-terra",
+        "gpt-6-sol": {
+          "name": "gpt-6-sol",
           "reasoning": true,
           "limit": {
             "context": 200000,
@@ -57,8 +58,36 @@
           },
           "options": {}
         },
-        "gpt-5.6-sol": {
-          "name": "gpt-5.6-sol",
+        "gpt-6-luna": {
+          "name": "gpt-6-luna",
+          "reasoning": true,
+          "limit": {
+            "context": 200000,
+            "output": 96000
+          },
+          "options": {}
+        }
+      }
+    },
+    "cctq-cn": {
+      "npm": "@ai-sdk/openai",
+      "options": {
+        "baseURL": "https://www.cctq.ai/v1",
+        "apiKey": "{env:CCTQ_CN_API_KEY}",
+        "setCacheKey": true
+      },
+      "models": {
+        "deepseek-v4.1-flash": {
+          "name": "deepseek-v4.1-flash",
+          "reasoning": true,
+          "limit": {
+            "context": 200000,
+            "output": 96000
+          },
+          "options": {}
+        },
+        "glm-5.3": {
+          "name": "glm-5.3",
           "reasoning": true,
           "limit": {
             "context": 200000,
@@ -78,13 +107,6 @@
         "chunkTimeout": 30000
       },
       "models": {
-        "glm_5d2_fp8_code": {
-          "name": "glm_5d2_fp8_code",
-          "limit": {
-            "context": 170000,
-            "output": 96000
-          }
-        },
         "deepseek_v4_flash_code/max": {
           "name": "deepseek_v4_flash_code/max",
           "limit": {
@@ -92,22 +114,8 @@
             "output": 96000
           }
         },
-        "deepseek_v4_pro_code/max": {
-          "name": "deepseek_v4_pro_code/max",
-          "limit": {
-            "context": 200000,
-            "output": 96000
-          }
-        },
         "kimi_k3_astra": {
           "name": "kimi_k3_astra",
-          "limit": {
-            "context": 200000,
-            "output": 96000
-          }
-        },
-        "GLM-5.3-Flash-astra": {
-          "name": "GLM-5.3-Flash-astra",
           "limit": {
             "context": 200000,
             "output": 96000
@@ -122,6 +130,13 @@
         },
         "DeepSeek-V4.1-Flash-astra": {
           "name": "DeepSeek-V4.1-Flash-astra",
+          "limit": {
+            "context": 200000,
+            "output": 96000
+          }
+        },
+        "MiMo-V2.6-Pro-RL-astra": {
+          "name": "MiMo-V2.6-Pro-RL-astra",
           "limit": {
             "context": 200000,
             "output": 96000
@@ -149,13 +164,6 @@
             "output": 96000
           }
         },
-        "deepseek-v4-pro-official": {
-          "name": "deepseek-v4-pro-official",
-          "limit": {
-            "context": 300000,
-            "output": 96000
-          }
-        },
         "glm-5.3-external": {
           "name": "glm-5.3-external",
           "limit": {
@@ -163,27 +171,6 @@
             "output": 96000
           }
         },
-        "glm-5.3-flash-external": {
-          "name": "glm-5.3-flash-external",
-          "limit": {
-            "context": 300000,
-            "output": 96000
-          }
-        },
-        "glm-5.3": {
-          "name": "glm-5.3",
-          "limit": {
-            "context": 300000,
-            "output": 96000
-          }
-        },
-        "glm-5.3-flash": {
-          "name": "glm-5.3-flash",
-          "limit": {
-            "context": 300000,
-            "output": 96000
-          }
-        }
       }
     }
   },
