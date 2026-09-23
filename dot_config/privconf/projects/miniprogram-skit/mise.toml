@@ -1,2 +1,13 @@
 [tools]
 pnpm = "8"
+
+
+[tasks.dev-skit]
+alias = "dn"
+dir = "{{config_root}}/../weapp-skit-player-plugin"
+run = "bun run .local/dev-skit.ts"
+
+[tasks.dev-skit-auto]
+alias = "dna"
+dir = "{{config_root}}/../weapp-skit-player-plugin"
+run = "bun run .local/dev-skit.ts --auto"

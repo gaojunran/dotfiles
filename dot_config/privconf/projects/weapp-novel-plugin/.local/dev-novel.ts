@@ -68,8 +68,8 @@ app.plugins["novel-plugin"].version = `dev-${id}`;
 await Bun.write(APP_JSON, JSON.stringify(app, null, 2) + "\n");
 console.log(`app.json 插件版本已更新为 dev-${id}`);
 
-// 4. 编译并预览宿主小程序
-const previewArgs = ["--project", NOVEL_DIR, "--private-key", `${NOVEL_DIR}/build/config/key`, "--out", "/tmp/weapp-novel-preview"];
+// 4. 编译并预览宿主小程序（ticket 链，免私钥）
+const previewArgs = ["--project", NOVEL_DIR, "--ticket", "--out", "/tmp/weapp-novel-preview"];
 if (flags.has("--auto")) {
   await $`${MINIBUILD} preview ${[...previewArgs, "--auto"]}`;
   console.log("已推送自动预览到手机");
