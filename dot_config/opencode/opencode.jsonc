@@ -5,7 +5,6 @@
     "@cortexkit/opencode-magic-context",
     "@cortexkit/aft-opencode",
     "opencode-codebuddy-auth-fixed", // https://github.com/gaojunran/opencode-codebuddy-auth-fixed
-    "opencode-git-add", // https://github.com/gaojunran/opencode-git-add
   ],
   "default_agent": "orchestrator",
   "agent": {
