@@ -43,7 +43,7 @@ alias cv "cb paste"
 alias cx "cb cut"
 alias run "mise run"
 alias use "mise use"
-alias o "start"
+alias o "open ."
 alias cd z
 alias c "zed ."
 alias cdp "builtin cd ~/Playground"
@@ -66,6 +66,7 @@ alias brs "brew search"
 
 # wechatwebdevtools cli
 # 必须使用绝对路径；而且应该使用单引号来避免 pwd 命令结果提前展开
+# FIXME: 应该之后可以用 minidev 实现替代
 alias we '/Applications/wechatwebdevtools.app/Contents/MacOS/cli open --project $(pwd)'
 alias wep '/Applications/wechatwebdevtools.app/Contents/MacOS/cli preview --project $(pwd)'
 
@@ -144,8 +145,10 @@ alias 3='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_3'
 alias 4='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_4'
 alias 5='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_5'
 
-alias oc "opencode attach http://localhost:4096 --dir ."
-alias occ "opencode attach http://localhost:4096 --dir . --continue"
+# FIXME: 可能可以改成 attach 模式来保证多客户端的状态同步
+# 但需要额外管理 server，之后再看
+alias oc "opencode"
+alias occ "opencode --continue"
 
 function cmp
     cm $argv[1..] && pp
