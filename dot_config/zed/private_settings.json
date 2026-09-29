@@ -12,16 +12,12 @@
   },
   "ssh_connections": [
     {
+      // 全能助手
       "host": "evnIns-76e2foggaliw.ssh-proxy.devcloud.woa.com",
       "username": "root",
       "port": 42660,
       "args": [],
       "projects": [
-        {
-          "paths": [
-            "/data/tmp/opencode"
-          ]
-        },
         {
           "paths": [
             "/projects"
@@ -40,25 +36,14 @@
       ]
     },
     {
-      "host": "junrangao-any2.devcloud.woa.com",
+      "host": "jr.devcloud.woa.com",
       "username": "nebula",
       "port": 36000,
       "args": [],
-      "projects": [
-        {
-          "paths": [
-            "/data/home/nebula/.local/share/opencode/worktree/1b31c21c635a6e1062b26f2b5be4e82c4b978342/eager-gopher"
-          ]
-        },
-        {
-          "paths": [
-            "/data/home/nebula/Projects/zed"
-          ]
-        }
-      ]
+      "projects": []
     }
   ],
-  "diff_view_style": "unified",
+  "diff_view_style": "split",
   "base_keymap": "VSCode",
   "cli_default_open_behavior": "existing_window",
   "mouse_wheel_zoom": true,
@@ -128,9 +113,13 @@
   "agent_servers": {
     "opencode": {
       "default_config_options": {
-        "model": "astra/glm_5d2_fp8_code",
+        "model": "astra/GLM-5.3-astra",
       },
       "type": "registry",
+    },
+    "opencode-acp": {
+      "command": "opencode",
+      "args": ["acp"],
     },
   },
   "terminal": {
