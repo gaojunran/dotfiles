@@ -1,37 +1,35 @@
 {
-  "$schema": "https://opencode.ai/config.json",
-  "plugin": [
+  // opencode.ai/config.json 仍是 v1 schema（不含 agents/plugins/providers 等 v2 字段，会误报）；
+  // "$schema": "https://opencode.ai/config.json",
+  "plugins": [
     "oh-my-opencode-slim",
-    "@cortexkit/opencode-magic-context",
     "@cortexkit/aft-opencode",
-    "opencode-codebuddy-auth-fixed", // https://github.com/gaojunran/opencode-codebuddy-auth-fixed
+    "@cortexkit/opencode-magic-context",
+    "opencode-codebuddy-auth-fixed@latest", // https://github.com/gaojunran/opencode-codebuddy-auth
   ],
   "default_agent": "orchestrator",
-  "agent": {
+  "agents": {
     "explore": {
-      "disable": true
+      "disabled": true
     },
     "general": {
-      "disable": true
+      "disabled": true
     },
     "build": {
-      "disable": false  // 特意保留，插件如果挂了作为备用
+      "disabled": false  // 特意保留，插件如果挂了作为备用
     },
     "plan": {
-      "disable": true
+      "disabled": true
     }
   },
-  "lsp": true,
+  // 不再配置 lsp：v2 已移除 LSP 运行时，诊断由 aft 插件承担
   "compaction": {
-    "auto": false,
-    "prune": false
+    "auto": false  // v1 的 prune 在 v2 无等价物，已移除
   },
-  "permission": {
-    "*": {
-      "*": "allow"
-    },
-    "websearch": "deny"
-  },
+  "permissions": [
+    { "action": "*", "resource": "*", "effect": "allow" },
+    { "action": "websearch", "resource": "*", "effect": "deny" }
+  ],
   "enabled_providers": [
     "cctq",
     "cctq-cn",
@@ -39,10 +37,10 @@
     "astra",
     "codebuddy"
   ],
-  "provider": {
+  "providers": {
     "cctq": {
-      "npm": "@ai-sdk/openai",
-      "options": {
+      "package": "aisdk:@ai-sdk/openai",
+      "settings": {
         "baseURL": "https://www.cctq.ai/v1",
         "apiKey": "{env:CCTQ_API_KEY}",
         "setCacheKey": true
@@ -50,36 +48,21 @@
       "models": {
         "gpt-6-sol": {
           "name": "gpt-6-sol",
-          "reasoning": true,
-          "limit": {
-            "context": 200000,
-            "output": 96000
-          },
-          "options": {}
+          "limit": { "context": 200000, "output": 96000 }
         },
         "gpt-6-luna": {
           "name": "gpt-6-luna",
-          "reasoning": true,
-          "limit": {
-            "context": 200000,
-            "output": 96000
-          },
-          "options": {}
+          "limit": { "context": 200000, "output": 96000 }
         },
         "gpt-5.6-sol": {
           "name": "gpt-5.6-sol",
-          "reasoning": true,
-          "limit": {
-            "context": 200000,
-            "output": 96000
-          },
-          "options": {}
-        },
+          "limit": { "context": 200000, "output": 96000 }
+        }
       }
     },
     "cctq-cn": {
-      "npm": "@ai-sdk/openai",
-      "options": {
+      "package": "aisdk:@ai-sdk/openai",
+      "settings": {
         "baseURL": "https://www.cctq.ai/v1",
         "apiKey": "{env:CCTQ_CN_API_KEY}",
         "setCacheKey": true
@@ -87,28 +70,18 @@
       "models": {
         "deepseek-v4.1-flash": {
           "name": "deepseek-v4.1-flash",
-          "reasoning": true,
-          "limit": {
-            "context": 200000,
-            "output": 96000
-          },
-          "options": {}
+          "limit": { "context": 200000, "output": 96000 }
         },
         "glm-5.3": {
           "name": "glm-5.3",
-          "reasoning": true,
-          "limit": {
-            "context": 200000,
-            "output": 96000
-          },
-          "options": {}
+          "limit": { "context": 200000, "output": 96000 }
         }
       }
     },
     "astra": {
-      "npm": "@ai-sdk/openai-compatible",
+      "package": "aisdk:@ai-sdk/openai-compatible",
       "name": "astra",
-      "options": {
+      "settings": {
         "baseURL": "{env:ASTRA_BASE_URL}",
         "apiKey": "{env:ASTRA_TOKEN}",
         "headerTimeout": 30000,
@@ -117,80 +90,60 @@
       "models": {
         "deepseek_v4_flash_code/max": {
           "name": "deepseek_v4_flash_code/max",
-          "limit": {
-            "context": 200000,
-            "output": 96000
-          }
+          "limit": { "context": 200000, "output": 96000 }
         },
         "kimi_k3_astra": {
           "name": "kimi_k3_astra",
-          "limit": {
-            "context": 200000,
-            "output": 96000
-          }
+          "limit": { "context": 200000, "output": 96000 }
         },
         "GLM-5.3-astra": {
           "name": "GLM-5.3-astra",
-          "limit": {
-            "context": 200000,
-            "output": 96000
-          }
+          "limit": { "context": 200000, "output": 96000 }
         },
         "DeepSeek-V4.1-Flash-astra": {
           "name": "DeepSeek-V4.1-Flash-astra",
-          "limit": {
-            "context": 200000,
-            "output": 96000
-          }
+          "limit": { "context": 200000, "output": 96000 }
         },
         "MiMo-V2.6-Pro-RL-astra": {
           "name": "MiMo-V2.6-Pro-RL-astra",
-          "limit": {
-            "context": 200000,
-            "output": 96000
-          }
-        },
+          "limit": { "context": 200000, "output": 96000 }
+        }
       }
     },
     "venus": {
-      "npm": "@ai-sdk/openai-compatible",
+      "package": "aisdk:@ai-sdk/openai-compatible",
       "name": "venus",
-      "options": {
+      "settings": {
         "baseURL": "http://v2.open.venus.oa.com/llmproxy",
         "apiKey": "{env:VENUS_TOKEN}",
-        "headers": {
-          "Venus-Sticky-Routing": "token"
-        },
         "headerTimeout": 30000,
         "chunkTimeout": 30000
+      },
+      "headers": {
+        "Venus-Sticky-Routing": "token"
       },
       "models": {
         "deepseek-v4-flash-official": {
           "name": "deepseek-v4-flash-official",
-          "limit": {
-            "context": 300000,
-            "output": 96000
-          }
+          "limit": { "context": 300000, "output": 96000 }
         },
         "glm-5.3-external": {
           "name": "glm-5.3-external",
-          "limit": {
-            "context": 300000,
-            "output": 96000
-          }
-        },
+          "limit": { "context": 300000, "output": 96000 }
+        }
       }
     }
   },
   "mcp": {
-    "anysearch": {
-      "type": "remote",
-      "url": "https://api.anysearch.com/mcp",
-      "enabled": true,
-      "oauth": false,
-      "headers": {
-        "Authorization": "Bearer {env:ANYSEARCH_API_KEY}",
-        "X-Anysearch-Client": "mcp/1.0.0"
+    "servers": {
+      "anysearch": {
+        "type": "remote",
+        "url": "https://api.anysearch.com/mcp",
+        "oauth": false,  // v2 中 remote MCP 默认走 OAuth，header 认证直连必须显式关闭
+        "headers": {
+          "Authorization": "Bearer {env:ANYSEARCH_API_KEY}",
+          "X-Anysearch-Client": "mcp/1.0.0"
+        }
       }
     }
   }

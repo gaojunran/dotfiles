@@ -1,16 +1,13 @@
 {
   "$schema": "https://raw.githubusercontent.com/cortexkit/magic-context/master/assets/magic-context.schema.json",
+  // 本会话常驻 home 目录工作，给 home 会话独立项目记忆
+  "allow_home_project": true,
   "historian": {
-    "model": "astra/deepseek_v4_flash_code/max",
-    "fallback_models": [
-      "venus/deepseek-v4-flash-official"
-    ]
+    
+    "opencode": {"model":"astra/deepseek_v4_flash_code/max","fallback_models": ["venus/deepseek-v4-flash-official"]},"pi": {"model":"astra/deepseek_v4_flash_code/max","fallback_models": ["venus/deepseek-v4-flash-official"]}
   },
   "dreamer": {
-    "model": "astra/deepseek_v4_flash_code/max",
-    "fallback_models": [
-      "venus/deepseek-v4-flash-official"
-    ]
+    "opencode": {"model":"astra/deepseek_v4_flash_code/max","fallback_models": ["venus/deepseek-v4-flash-official"]},"pi": {"model":"astra/deepseek_v4_flash_code/max","fallback_models": ["venus/deepseek-v4-flash-official"]}
   },
   "sidekick": {
     "disable": true
