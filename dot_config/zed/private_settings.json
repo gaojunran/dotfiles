@@ -114,6 +114,9 @@
     "opencode-acp": {
       "command": "opencode",
       "args": ["acp"],
+      "default_config_options": {
+        "model": "astra/GLM-5.3-astra",
+      },
     },
   },
   "terminal": {

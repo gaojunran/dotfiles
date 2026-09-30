@@ -5,7 +5,32 @@
     "oh-my-opencode-slim",
     "@cortexkit/aft-opencode",
     "@cortexkit/opencode-magic-context",
-    "opencode-codebuddy-auth-fixed@latest", // https://github.com/gaojunran/opencode-codebuddy-auth
+    // extraModels：整个替换插件内置 EXTRA_MODELS 清单（/v3/config 目录未暴露、后端实测可用的模型）。
+    // 2026-09 实测 copilot.tencent.com/v2：gpt-6-sol / claude-opus-5.5 流式可调通；gpt-6-terra 返回 11102 未接入。
+    // 目录元数据缺失，上下文窗口为估值；若后续 /v3/config 下发同 id 模型，目录优先不覆盖。
+    {
+      "package": "opencode-codebuddy-auth-fixed@latest",
+      "options": {
+        "extraModels": [
+        { "id": "claude-opus-5.5", "name": "Claude-Opus-5.5", "context": 400000, "output": 128000, "tool_call": true, "attachment": true },
+        { "id": "gpt-6-sol", "name": "GPT-6-Sol", "context": 1050000, "output": 128000, "tool_call": true, "attachment": true },
+        { "id": "claude-sonnet-4.6", "name": "Claude-Sonnet-4.6", "context": 176000, "output": 24000, "tool_call": true, "attachment": true },
+        { "id": "claude-sonnet-5-1m", "name": "Claude-Sonnet-5-1M", "context": 1000000, "output": 128000, "tool_call": true, "attachment": true },
+        { "id": "claude-sonnet-5", "name": "Claude-Sonnet-5", "context": 200000, "output": 64000, "tool_call": true, "attachment": true },
+        { "id": "claude-sonnet-4.6-1m", "name": "Claude-Sonnet-4.6-1M", "context": 1000000, "output": 24000, "tool_call": true, "attachment": true },
+        { "id": "claude-opus-4.8", "name": "Claude-Opus-4.8", "context": 176000, "output": 64000, "tool_call": true, "attachment": true },
+        { "id": "claude-opus-4.8-1m", "name": "Claude-Opus-4.8-1M", "context": 1000000, "output": 128000, "tool_call": true, "attachment": true },
+        { "id": "claude-opus-4.7", "name": "Claude-Opus-4.7", "context": 176000, "output": 64000, "tool_call": true, "attachment": true },
+        { "id": "claude-opus-4.7-1m", "name": "Claude-Opus-4.7-1M", "context": 1000000, "output": 128000, "tool_call": true, "attachment": true },
+        { "id": "claude-opus-4.6", "name": "Claude-Opus-4.6", "context": 176000, "output": 24000, "tool_call": true, "attachment": true },
+        { "id": "claude-opus-4.6-1m", "name": "Claude-Opus-4.6-1M", "context": 1000000, "output": 64000, "tool_call": true, "attachment": true },
+        { "id": "claude-haiku-4.5", "name": "Claude-Haiku-4.5", "context": 176000, "output": 24000, "tool_call": true, "attachment": true },
+        { "id": "gpt-5.6-sol", "name": "GPT-5.6-Sol", "context": 1050000, "output": 128000, "tool_call": true, "attachment": true },
+        { "id": "gpt-5.6-terra", "name": "GPT-5.6-Terra", "context": 1050000, "output": 128000, "tool_call": true, "attachment": true },
+        { "id": "gpt-5.6-luna", "name": "GPT-5.6-Luna", "context": 1050000, "output": 128000, "tool_call": true, "attachment": true }
+        ]
+      }
+    }  // https://github.com/gaojunran/opencode-codebuddy-auth
   ],
   "default_agent": "orchestrator",
   "agents": {
@@ -110,6 +135,12 @@
         }
       }
     },
+    "github-copilot": {
+      "npm": "@ai-sdk/copilot",
+      "models": {
+        "claude-sonnet-5.5": { "name": "claude-sonnet-5.5", "disabled": true }
+      }
+    },
     "venus": {
       "package": "aisdk:@ai-sdk/openai-compatible",
       "name": "venus",
@@ -125,6 +156,7 @@
       "models": {
         "deepseek-v4-flash-official": {
           "name": "deepseek-v4-flash-official",
+          "disabled": false,
           "limit": { "context": 300000, "output": 96000 }
         },
         "glm-5.3-external": {
