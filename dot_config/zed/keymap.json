@@ -132,12 +132,12 @@
       "cmd-shift-a": "editor::GoToPreviousReference"
     }
   },
-  {
-    "context": "Editor",
-    "bindings": {
-      "cmd-s": "editor::GoToDefinition"
-    }
-  },
+  // {
+  //   "context": "Editor",
+  //   "bindings": {
+  //     "cmd-s": "editor::GoToDefinition"
+  //   }
+  // },
   {
     "context": "Editor",
     "unbind": {

@@ -9,6 +9,14 @@ description: 通过 miniprogram-automator-mcp 驱动微信小程序做端到端�
 **chrome-devtools-mcp**——熟悉它的 agent 可直接沿用「快照 → ref → 操作」回路。
 共 **34 个工具**。
 
+> ★ **wxapplib 项目专属深化**：真机 CDP 调试（inspectee 实现原理、部署链路踩坑、
+> Runtime.evaluate REPL 语义、全部 domain 实测行为、任务配方）见
+> [reference/wxapplib-cdp-inspectee.md](reference/wxapplib-cdp-inspectee.md)。
+> 做 wxapplib 基础库的调试任务**先读该文档的 §0 任务决策表**，可避免反复试错。
+> 无 MCP 工具注册时用 [scripts/cdp_eval.py](scripts/cdp_eval.py) curl 直连。
+> 已知：MCP `evaluate_script` 在自建基础库上有 bug，改用
+> `send_command(type="cdp", method="Runtime.evaluate")`。
+
 ## 核心概念
 
 ### 调试回路（与 chrome-devtools-mcp 同构）
