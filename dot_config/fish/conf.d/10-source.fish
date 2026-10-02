@@ -8,9 +8,12 @@ set -Ux EDITOR hx
 set -Ux PRIVCONF_DIR $HOME/.local/share/chezmoi/dot_config/privconf
 set -Ux OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS true
 
-# Opencode 参数，给 Openchamber 连上去
+# Opencode Openchamber 
+# 注意只能在本地或可信内网里部署，密码均为明文
 set -Ux OPENCODE_PORT 34568
 set -Ux OPENCODE_PASSWORD nebula
+set -Ux OPENCHAMBER_HOST 0.0.0.0
+set -Ux OPENCHAMBER_UI_PASSWORD nebula
 set -Ux OPENCODE_SKIP_START true
 
 # PATH 注意因为是 prepend，在后面的反而优先级更高。
