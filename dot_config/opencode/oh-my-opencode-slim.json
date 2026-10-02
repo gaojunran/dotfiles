@@ -9,13 +9,13 @@
         "mcps": ["*", "!context7"]
       },
       "oracle": {
-        "model": ["codebuddy/gpt-5.6-sol", "venus/glm-5.3-external", "astra/GLM-5.3-astra"],
+        "model": ["codebuddy/gpt-6-sol", "cctq/gpt-6-sol", "venus/glm-5.3-external", "astra/GLM-5.3-astra"],
         "variant": "max",
         "skills": ["simplify"],
         "mcps": []
       },
       "council": {
-        "model": ["codebuddy/gpt-5.6-sol", "venus/glm-5.3-external", "astra/GLM-5.3-astra"],
+        "model": ["codebuddy/gpt-6-sol", "cctq/gpt-6-sol", "venus/glm-5.3-external", "astra/GLM-5.3-astra"],
         "variant": "high",
         "skills": [],
         "mcps": []
@@ -23,7 +23,7 @@
       "librarian": {
         "model": ["astra/deepseek_v4_flash_code/max", "venus/deepseek-v4-flash-official"],
         "skills": [],
-        "mcps": ["websearch", "context7", "grep_app"]
+        "mcps": ["anysearch", "context7", "grep_app"]
       },
       "explorer": {
         "model": ["astra/deepseek_v4_flash_code/max", "venus/deepseek-v4-flash-official"],
@@ -39,11 +39,6 @@
       "fixer": {
         "model": ["astra/deepseek_v4_flash_code/max", "venus/deepseek-v4-flash-official"],
         "variant": "high",
-        "skills": [],
-        "mcps": []
-      },
-      "observer": {
-        "model": ["astra/kimi_k3_astra"],
         "skills": [],
         "mcps": []
       }
