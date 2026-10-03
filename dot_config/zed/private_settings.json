@@ -117,7 +117,7 @@
       },
       "type": "custom",
       "command": "opencode-acp-bridge",
-      "args": []
+      "args": ["--zed-git-add"]
     }
   },
   "terminal": {
