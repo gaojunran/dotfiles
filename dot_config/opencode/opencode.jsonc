@@ -4,12 +4,15 @@
     "oh-my-opencode-slim",
     "@cortexkit/aft-opencode",
     "@cortexkit/opencode-magic-context",
+    "opencode-git-add",
     {
       "package": "opencode-codebuddy-auth-fixed@latest",
       "options": {
         "extraModels": [
         { "id": "claude-opus-5.5", "name": "Claude-Opus-5.5", "context": 400000, "output": 128000, "tool_call": true, "attachment": true },
         { "id": "gpt-6-sol", "name": "GPT-6-Sol", "context": 1050000, "output": 128000, "tool_call": true, "attachment": true },
+        { "id": "gpt-6.1-sol", "name": "GPT-6.1-Sol", "context": 1050000, "output": 128000, "tool_call": true, "attachment": true },
+        { "id": "gpt-6.1-luna", "name": "GPT-6.1-Luna", "context": 1050000, "output": 128000, "tool_call": true, "attachment": true },
         ]
       }
     }  // https://github.com/gaojunran/opencode-codebuddy-auth
@@ -53,6 +56,14 @@
       "models": {
         "gpt-6-sol": {
           "name": "gpt-6-sol",
+          "limit": { "context": 200000, "output": 96000 }
+        },
+        "gpt-6.1-sol": {
+          "name": "gpt-6.1-sol",
+          "limit": { "context": 200000, "output": 96000 }
+        },
+        "gpt-6.1-luna": {
+          "name": "gpt-6.1-luna",
           "limit": { "context": 200000, "output": 96000 }
         },
         "gpt-6-luna": {
@@ -114,6 +125,10 @@
         "glm-5.3-external": {
           "name": "glm-5.3-external",
           "limit": { "context": 300000, "output": 96000 }
+        },
+        "deepseek-v4.1-flash": {
+          "name": "deepseek-v4.1-flash",
+          "limit": { "context": 800000, "output": 96000 }
         }
       }
     }
