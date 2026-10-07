@@ -9,6 +9,7 @@
       "options": {
         "extraModels": [
         { "id": "claude-opus-5.5", "name": "Claude-Opus-5.5", "context": 400000, "output": 128000, "tool_call": true, "attachment": true },
+        { "id": "claude-sonnet-5.5", "name": "Claude-Opus-5.5", "context": 400000, "output": 128000, "tool_call": true, "attachment": true },
         { "id": "gpt-6-sol", "name": "GPT-6-Sol", "context": 1050000, "output": 128000, "tool_call": true, "attachment": true },
         { "id": "gpt-6.1-sol", "name": "GPT-6.1-Sol", "context": 1050000, "output": 128000, "tool_call": true, "attachment": true },
         ]
