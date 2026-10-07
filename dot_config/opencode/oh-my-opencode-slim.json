@@ -21,23 +21,23 @@
         "mcps": []
       },
       "librarian": {
-        "model": ["astra/deepseek_v4_flash_code/max", "venus/deepseek-v4-flash-official"],
+        "model": ["astra/DeepSeek-V4.1-Flash-astra", "venus/deepseek-v4.1-flash-official"],
         "skills": [],
         "mcps": ["anysearch", "context7", "grep_app"]
       },
       "explorer": {
-        "model": ["astra/deepseek_v4_flash_code/max", "venus/deepseek-v4-flash-official"],
+        "model": ["astra/DeepSeek-V4.1-Flash-astra", "venus/deepseek-v4.1-flash-official"],
         "skills": [],
         "mcps": []
       },
       "designer": {
-        "model": ["astra/deepseek_v4_flash_code/max", "venus/deepseek-v4-flash-official"],
+        "model": ["astra/DeepSeek-V4.1-Flash-astra", "venus/deepseek-v4.1-flash-official"],
         "variant": "medium",
         "skills": ["agent-browser"],
         "mcps": []
       },
       "fixer": {
-        "model": ["astra/deepseek_v4_flash_code/max", "venus/deepseek-v4-flash-official"],
+        "model": ["astra/DeepSeek-V4.1-Flash-astra", "venus/deepseek-v4.1-flash-official"],
         "variant": "high",
         "skills": [],
         "mcps": []
@@ -61,23 +61,23 @@
         "mcps": []
       },
       "librarian": {
-        "model": ["venus/deepseek-v4-flash-official"],
+        "model": ["venus/deepseek-v4.1-flash-official"],
         "skills": [],
         "mcps": ["anysearch", "context7", "grep_app"]
       },
       "explorer": {
-        "model": ["venus/deepseek-v4-flash-official"],
+        "model": ["venus/deepseek-v4.1-flash-official"],
         "skills": [],
         "mcps": []
       },
       "designer": {
-        "model": ["venus/deepseek-v4-flash-official"],
+        "model": ["venus/deepseek-v4.1-flash-official"],
         "variant": "medium",
         "skills": ["agent-browser"],
         "mcps": []
       },
       "fixer": {
-        "model": ["venus/deepseek-v4-flash-official"],
+        "model": ["venus/deepseek-v4.1-flash-official"],
         "variant": "high",
         "skills": [],
         "mcps": []
