@@ -6,9 +6,6 @@
   "dreamer": {
     "opencode": {"model":"astra/deepseek_v4_flash_code/max","fallback_models": ["venus/deepseek-v4-flash-official"]},"pi": {"model":"astra/deepseek_v4_flash_code/max","fallback_models": ["venus/deepseek-v4-flash-official"]}
   },
-  "sidekick": {
-    "disable": true
-  },
   // 给一些 1M 模型一个强制的 compact 上界
-  "execute_threshold_tokens": { "default": 150000 }
+  "execute_threshold_tokens": { "default": 175000 }
 }

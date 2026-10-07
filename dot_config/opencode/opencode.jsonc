@@ -52,26 +52,14 @@
         "setCacheKey": true
       },
       "models": {
-        "gpt-6-sol": {
-          "name": "gpt-6-sol",
-          "limit": { "context": 200000, "output": 96000 }
-        },
         "gpt-6.1-sol": {
           "name": "gpt-6.1-sol",
-          "limit": { "context": 200000, "output": 96000 }
-        },
-        "gpt-6.1-luna": {
-          "name": "gpt-6.1-luna",
           "limit": { "context": 200000, "output": 96000 }
         },
         "gpt-6-luna": {
           "name": "gpt-6-luna",
           "limit": { "context": 200000, "output": 96000 }
         },
-        "gpt-5.6-sol": {
-          "name": "gpt-5.6-sol",
-          "limit": { "context": 200000, "output": 96000 }
-        }
       }
     },
     "astra": {
@@ -117,12 +105,24 @@
       "models": {
         "deepseek-v4-flash-official": {
           "name": "deepseek-v4-flash-official",
+          "limit": { "context": 800000, "output": 96000 }
+        },
+        "deepseek-v4.1-flash-official": {
+          "name": "deepseek-v4.1-flash-official",
           "disabled": false,
           "limit": { "context": 800000, "output": 96000 }
         },
         "glm-5.3-external": {
           "name": "glm-5.3-external",
           "limit": { "context": 300000, "output": 96000 }
+        },
+        "glm-5.3": {
+          "name": "glm-5.3",
+          "limit": { "context": 300000, "output": 96000 }
+        },
+        "deepseek-v4-flash": {
+          "name": "deepseek-v4-flash",
+          "limit": { "context": 800000, "output": 96000 }
         },
         "deepseek-v4.1-flash": {
           "name": "deepseek-v4.1-flash",
