@@ -8,7 +8,6 @@ import { resolve } from "node:path";
 // 约定从插件仓根目录运行（mise 任务 dir 契约）；宿主目录复用 .env 的 MINIPROGRAM_NOVEL_DIR（绝对或相对插件仓），缺省 ../miniprogram-novel
 const PLUGIN_DIR = process.cwd();
 const NOVEL_DIR = resolve(PLUGIN_DIR, process.env.MINIPROGRAM_NOVEL_DIR ?? "../miniprogram-novel");
-const MINIBUILD = "/Volumes/2tb-ssd/nebula/Work/miniprogram-compiler-rs/target/release/minibuild";
 const APP_JSON = `${NOVEL_DIR}/miniprogram/app.json`;
 const STATE_FILE = "/tmp/dev-novel-plugin.state";
 
@@ -49,7 +48,7 @@ if (!flags.has("--force") && state?.hash === fingerprint && state.id) {
   await $`cd ${PLUGIN_DIR} && ./node_modules/.bin/mpflow-service build --dev`;
 
   // 2. 编译并上传 dev 插件（ticket 链）
-  const upload = await $`${MINIBUILD} upload --project ${PLUGIN_DIR} --ticket --version 1.999.999 --desc 开发版本 --out /tmp/plugin-ticket`.nothrow().quiet();
+  const upload = await $`minidev upload --project ${PLUGIN_DIR} --ticket --version 1.999.999 --desc 开发版本 --out /tmp/plugin-ticket`.nothrow().quiet();
   const log = [upload.stdout, upload.stderr].map(b => b?.toString() ?? "").join("\n");
   console.log(log);
   if (upload.exitCode !== 0) process.exit(1);
@@ -71,9 +70,9 @@ console.log(`app.json 插件版本已更新为 dev-${id}`);
 // 4. 编译并预览宿主小程序（ticket 链，免私钥）
 const previewArgs = ["--project", NOVEL_DIR, "--ticket", "--out", "/tmp/weapp-novel-preview"];
 if (flags.has("--auto")) {
-  await $`${MINIBUILD} preview ${[...previewArgs, "--auto"]}`;
+  await $`minidev preview ${[...previewArgs, "--auto"]}`;
   console.log("已推送自动预览到手机");
 } else {
-  await $`${MINIBUILD} preview ${previewArgs}`;
+  await $`minidev preview ${previewArgs}`;
   await $`open /tmp/weapp-novel-preview/qrcode.jpg`;
 }
