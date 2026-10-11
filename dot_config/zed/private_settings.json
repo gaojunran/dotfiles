@@ -122,7 +122,7 @@
   },
   "terminal": {
     "shell": {
-      "program": "/opt/homebrew/bin/fish",
+      "program": "fish",
     },
   },
   "session": {
