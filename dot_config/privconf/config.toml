@@ -40,6 +40,12 @@ files = [
 ]
 ignored = []
 
+[[project]]
+name = "sdk"
+match_remote = "https://git.woa.com/wxweb/sdk.git"
+files = []
+ignored = [".cortexkit"]
+
 [all]
 files = []
 ignored = [
