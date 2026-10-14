@@ -41,6 +41,7 @@ alias hf hyperfine
 alias cc "cb copy"
 alias cv "cb paste"
 alias cx "cb cut"
+alias pcc "pwd | cc"
 alias run "mise run"
 alias use "mise use"
 alias o "open ."
