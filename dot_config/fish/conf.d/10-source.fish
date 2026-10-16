@@ -7,6 +7,7 @@ set -Ux PNPM_HOME $HOME/Library/pnpm
 set -Ux EDITOR hx
 set -Ux PRIVCONF_DIR $HOME/.local/share/chezmoi/dot_config/privconf
 set -Ux OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS true
+set -Ux MISE_MINIMUM_RELEASE_AGE 0
 
 # Opencode Openchamber 
 # 注意只能在本地或可信内网里部署，密码均为明文
