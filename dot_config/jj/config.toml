@@ -11,7 +11,6 @@ auto-track-bookmarks = "*"
 [ui]
 default-command = "log"
 ui.diff-editor = ":builtin"
-pager = ["hunk", "pager"]       # https://github.com/modem-dev/hunk
 conflict-marker-style = "git"   # git 风格冲突标记
 diff-formatter = ":git"         # git 风格 diff
 
