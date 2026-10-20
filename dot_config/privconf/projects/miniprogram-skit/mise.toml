@@ -1,6 +1,8 @@
 [tools]
 pnpm = "8"
 
+[env]
+_.path = ["~/Work/minidev/target/debug"]
 
 [tasks.dev-skit]
 alias = "dn"

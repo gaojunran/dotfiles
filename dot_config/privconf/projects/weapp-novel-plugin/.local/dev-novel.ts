@@ -36,43 +36,66 @@ async function pluginFingerprint(): Promise<string> {
   return hasher.digest("hex");
 }
 
-// 0. 插件源码未变则跳过构建+上传（宿主-only 迭代 ~11.6s → ~3s）
-const fingerprint = await pluginFingerprint();
-const state = await Bun.file(STATE_FILE).json().catch(() => null);
-let id: string;
-if (!flags.has("--force") && state?.hash === fingerprint && state.id) {
-  id = state.id;
-  console.log(`插件无变化，跳过构建+上传（复用 dev-${id}）`);
-} else {
-  // 1. mpflow 一次性 dev 构建（直调 bin 省 pnpm 包装 ~0.5s）
+/**
+ * mpflow 一次性 dev 构建（直调 bin 省 pnpm 包装 ~0.5s）+ ticket 链上传，返回 dev_plugin_id 并写缓存
+ *
+ * Changelog:
+ * - 1. 抽成可复用函数，供缓存失效时二次上传 (1 shots by deepseek-v4.1-flash-official)
+ */
+async function buildAndUpload(fingerprint: string): Promise<string> {
   await $`cd ${PLUGIN_DIR} && ./node_modules/.bin/mpflow-service build --dev`;
 
-  // 2. 编译并上传 dev 插件（ticket 链）
   const upload = await $`minidev upload --project ${PLUGIN_DIR} --ticket --version 1.999.999 --desc 开发版本 --out /tmp/plugin-ticket`.nothrow().quiet();
   const log = [upload.stdout, upload.stderr].map(b => b?.toString() ?? "").join("\n");
   console.log(log);
   if (upload.exitCode !== 0) process.exit(1);
-  id = /Development Version Plugin ID: (\S+)/.exec(log)?.[1] ?? "";
+
+  const id = /Development Version Plugin ID: (\S+)/.exec(log)?.[1] ?? "";
   if (!id) {
     console.error("未解析到 dev_plugin_id");
     process.exit(1);
   }
   console.log(`dev_plugin_id: ${id}`);
   await Bun.write(STATE_FILE, JSON.stringify({ hash: fingerprint, id }));
+  return id;
 }
 
-// 3. 回写 novel app.json 插件开发版 id（幂等）
-const app = (await Bun.file(APP_JSON).json()) as any;
-app.plugins["novel-plugin"].version = `dev-${id}`;
-await Bun.write(APP_JSON, JSON.stringify(app, null, 2) + "\n");
-console.log(`app.json 插件版本已更新为 dev-${id}`);
-
-// 4. 编译并预览宿主小程序（ticket 链，免私钥）
-const previewArgs = ["--project", NOVEL_DIR, "--ticket", "--out", "/tmp/weapp-novel-preview"];
-if (flags.has("--auto")) {
-  await $`minidev preview ${[...previewArgs, "--auto"]}`;
-  console.log("已推送自动预览到手机");
-} else {
-  await $`minidev preview ${previewArgs}`;
-  await $`open /tmp/weapp-novel-preview/qrcode.jpg`;
+/** 回写 novel app.json 插件开发版 id（幂等） */
+async function writeAppJson(id: string) {
+  const app = (await Bun.file(APP_JSON).json()) as any;
+  app.plugins["novel-plugin"].version = `dev-${id}`;
+  await Bun.write(APP_JSON, JSON.stringify(app, null, 2) + "\n");
+  console.log(`app.json 插件版本已更新为 dev-${id}`);
 }
+
+/** 编译并预览宿主小程序（ticket 链，免私钥）；捕获输出以识别失效的开发版 id */
+async function preview() {
+  const args = ["--project", NOVEL_DIR, "--ticket", "--out", "/tmp/weapp-novel-preview"];
+  if (flags.has("--auto")) args.push("--auto");
+
+  const result = await $`minidev preview ${args}`.nothrow().quiet();
+  const log = [result.stdout, result.stderr].map(b => b?.toString() ?? "").join("\n");
+  console.log(log);
+  return { ok: result.exitCode === 0, log };
+}
+
+// 0. 插件源码未变则跳过构建+上传（宿主-only 迭代 ~16s → ~1s）
+const fingerprint = await pluginFingerprint();
+const state = await Bun.file(STATE_FILE).json().catch(() => null);
+const cached: string = !flags.has("--force") && state?.hash === fingerprint && state.id ? state.id : "";
+if (cached) console.log(`插件无变化，跳过构建+上传（复用 dev-${cached}）`);
+let id = cached || (await buildAndUpload(fingerprint));
+await writeAppJson(id);
+
+let result = await preview();
+// 开发版 id 只在「本开发者最后一次上传」前有效：期间在开发者工具/CI 传过新版本就会失效（-80403），重传一次即可
+if (!result.ok && /开发版插件未找到|-80403/.test(result.log)) {
+  console.log("缓存的开发版插件已被新上传覆盖，重新构建并上传...");
+  id = await buildAndUpload(fingerprint);
+  await writeAppJson(id);
+  result = await preview();
+}
+if (!result.ok) process.exit(1);
+
+if (flags.has("--auto")) console.log("已推送自动预览到手机");
+else await $`open /tmp/weapp-novel-preview/qrcode.jpg`;

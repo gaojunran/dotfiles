@@ -73,22 +73,14 @@
         "chunkTimeout": 30000
       },
       "models": {
-        "deepseek_v4_flash_code/max": {
-          "name": "deepseek_v4_flash_code/max",
-          "limit": { "context": 800000, "output": 96000 } // 声明大一点，防止 magic-context 报错
-        },
         "GLM-5.3-astra": {
           "name": "GLM-5.3-astra",
           "limit": { "context": 200000, "output": 96000 }
         },
         "DeepSeek-V4.1-Flash-astra": {
           "name": "DeepSeek-V4.1-Flash-astra",
-          "limit": { "context": 200000, "output": 96000 }
+          "limit": { "context": 800000, "output": 96000 }
         },
-        "MiMo-V2.6-Pro-RL-astra": {
-          "name": "MiMo-V2.6-Pro-RL-astra",
-          "limit": { "context": 200000, "output": 96000 }
-        }
       }
     },
     "venus": {
@@ -117,18 +109,6 @@
           "name": "glm-5.3-external",
           "limit": { "context": 300000, "output": 96000 }
         },
-        "glm-5.3": {
-          "name": "glm-5.3",
-          "limit": { "context": 300000, "output": 96000 }
-        },
-        "deepseek-v4-flash": {
-          "name": "deepseek-v4-flash",
-          "limit": { "context": 800000, "output": 96000 }
-        },
-        "deepseek-v4.1-flash": {
-          "name": "deepseek-v4.1-flash",
-          "limit": { "context": 800000, "output": 96000 }
-        }
       }
     }
   },

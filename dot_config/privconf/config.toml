@@ -54,4 +54,5 @@ ignored = [
     ".tmp",
     ".opencode",
     ".local",
+    "dist-prod",
 ]
