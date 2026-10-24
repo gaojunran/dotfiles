@@ -6,6 +6,7 @@
     "default": {
       "orchestrator": {
         "skills": ["*"],
+        "skills_remove": ["worktrees"],
         "mcps": ["*", "!context7"]
       },
       "oracle": {
@@ -44,6 +45,7 @@
     "venus": {
       "orchestrator": {
         "skills": ["*"],
+        "skills_remove": ["worktrees"],
         "mcps": ["*", "!context7"]
       },
       "oracle": {
