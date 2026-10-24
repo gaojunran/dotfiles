@@ -9,14 +9,12 @@
         "mcps": ["*", "!context7"]
       },
       "oracle": {
-        "model": ["cctq/gpt-6.1-sol", "venus/glm-5.3-external", "astra/GLM-5.3-astra"],
-        "variant": "max",
+        "model": ["astra/DeepSeek-V4.1-Flash-astra", "venus/deepseek-v4.1-flash-official"],
         "skills": ["simplify"],
         "mcps": []
       },
       "council": {
-        "model": ["cctq/gpt-6-sol", "venus/glm-5.3-external", "astra/GLM-5.3-astra"],
-        "variant": "high",
+        "model": ["astra/DeepSeek-V4.1-Flash-astra", "venus/deepseek-v4.1-flash-official"],
         "skills": [],
         "mcps": []
       },
@@ -49,14 +47,12 @@
         "mcps": ["*", "!context7"]
       },
       "oracle": {
-        "model": ["venus/glm-5.3-external"],
-        "variant": "max",
+        "model": ["venus/deepseek-v4.1-flash-official"],
         "skills": ["simplify"],
         "mcps": []
       },
       "council": {
-        "model": ["venus/glm-5.3-external"],
-        "variant": "high",
+        "model": ["venus/deepseek-v4.1-flash-official"],
         "skills": [],
         "mcps": []
       },
