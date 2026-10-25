@@ -109,6 +109,10 @@
           "name": "glm-5.3-external",
           "limit": { "context": 800000, "output": 96000 }
         },
+        "kimi-k3.1-pro-external": {
+          "name": "kimi-k3.1-pro-external",
+          "limit": { "context": 1048576, "output": 96000 }
+        }
       }
     }
   },
