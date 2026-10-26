@@ -4,6 +4,7 @@
     "oh-my-opencode-slim",
     "@cortexkit/aft-opencode",
     "@cortexkit/opencode-magic-context",
+    "opencode-github-notify", // https://github.com/gaojunran/opencode-github-notify
     {
       "package": "opencode-codebuddy-auth-fixed@latest",
       "options": {
