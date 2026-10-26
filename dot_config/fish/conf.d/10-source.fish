@@ -4,7 +4,7 @@
 set -Ux HOMEBREW_CASK_OPTS "--appdir=$HOME/Applications"
 set -Ux TERM "xterm-256color" # ghostty
 set -Ux PNPM_HOME $HOME/Library/pnpm
-set -Ux EDITOR hx
+set -Ux EDITOR edit
 set -Ux PRIVCONF_DIR $HOME/.local/share/chezmoi/dot_config/privconf
 set -Ux OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS true
 set -Ux MISE_MINIMUM_RELEASE_AGE 0
