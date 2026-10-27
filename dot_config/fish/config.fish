@@ -71,6 +71,8 @@ alias brs "brew search"
 alias we '/Applications/wechatwebdevtools.app/Contents/MacOS/cli open --project $(pwd)'
 alias wep '/Applications/wechatwebdevtools.app/Contents/MacOS/cli preview --project $(pwd)'
 
+alias fr fresh
+
 # SSH remote
 alias s1 "ssh jr"
 alias s2 "ssh wxapplib"
