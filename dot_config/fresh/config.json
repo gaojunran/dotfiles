@@ -1,0 +1,9 @@
+{
+  "active_keybinding_map": "macos-gui",
+  "keybindings": [
+    { "key": "Backspace", "modifiers": ["alt"], "action": "delete_word_backward",        "when": "normal" },
+    { "key": "Delete",    "modifiers": ["alt"], "action": "delete_word_forward",         "when": "normal" },
+    { "key": "Backspace", "modifiers": ["alt"], "action": "prompt_delete_word_backward", "when": "prompt" },
+    { "key": "Delete",    "modifiers": ["alt"], "action": "prompt_delete_word_forward",  "when": "prompt" }
+  ]
+}
