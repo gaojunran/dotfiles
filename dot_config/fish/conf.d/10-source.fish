@@ -6,16 +6,17 @@ set -Ux TERM "xterm-256color" # ghostty
 set -Ux PNPM_HOME $HOME/Library/pnpm
 set -Ux EDITOR fresh
 set -Ux PRIVCONF_DIR $HOME/.local/share/chezmoi/dot_config/privconf
-set -Ux OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS true
 set -Ux MISE_MINIMUM_RELEASE_AGE 0
 
 # Opencode Openchamber 
 # 注意只能在本地或可信内网里部署，密码均为明文
+set -Ux OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS true
 set -Ux OPENCODE_PORT 34568
 set -Ux OPENCODE_PASSWORD nebula
+set -Ux OPENCODE_SKIP_START true
 set -Ux OPENCHAMBER_HOST 0.0.0.0
 set -Ux OPENCHAMBER_UI_PASSWORD nebula
-set -Ux OPENCODE_SKIP_START true
+set -Ux OPENCHAMBER_FS_UPLOAD_MAX_BYTES 1073741824  # 1GB
 
 # PATH 注意因为是 prepend，在后面的反而优先级更高。
 # 对已存在于 PATH 的目录，需要加 -m 才会被挪到更前面。

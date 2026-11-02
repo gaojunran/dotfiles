@@ -162,8 +162,6 @@ alias 3='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_3'
 alias 4='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_4'
 alias 5='builtin cd ../(string replace -r "_[0-9]+\$" "" (basename $PWD))_5'
 
-# FIXME: 可能可以改成 attach 模式来保证多客户端的状态同步
-# 但需要额外管理 server，之后再看
 alias oc "opencode"
 alias occ "opencode --continue"
 
@@ -181,13 +179,13 @@ function rbr
 end
 
 # 获取 PR 形式的 diff，类似 Git 的三点比较
-function dfpr
-  set target trunk
-  if test (count $argv) -gt 0
-    set target $argv[1]
-  end
-  df --from "fork_point(@|$target)"
-end
+# function dfpr
+#   set target trunk
+#   if test (count $argv) -gt 0
+#     set target $argv[1]
+#   end
+#   df --from "fork_point(@|$target)"
+# end
 
 # 如果没有提供参数，则创建一个随机目录
 function mc

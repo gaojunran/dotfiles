@@ -1,0 +1,15 @@
+// 越靠后的绑定优先级越高，会覆盖默认的 Cmd+Shift+D（Run and Debug）
+[
+  {
+    "key": "cmd+shift+d",
+    "command": "git.openChange"
+  },
+  {
+    "key": "cmd+shift+space",
+    "command": "fffSearch.open"
+  },
+  {
+    "key": "cmd+shift+.",
+    "command": "openchamber.addToContext"
+  }
+]
