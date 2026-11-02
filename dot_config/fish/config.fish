@@ -44,9 +44,7 @@ alias cx "cb cut"
 alias pcc "pwd | cc"
 alias run "mise run"
 alias use "mise use"
-alias o "open ."
 alias cd z
-alias c "zed ."
 alias cdp "builtin cd ~/Playground"
 alias cdi "builtin cd ~/Projects"
 alias cdw "builtin cd ~/Work"
@@ -71,7 +69,23 @@ alias brs "brew search"
 alias we '/Applications/wechatwebdevtools.app/Contents/MacOS/cli open --project $(pwd)'
 alias wep '/Applications/wechatwebdevtools.app/Contents/MacOS/cli preview --project $(pwd)'
 
-alias fr fresh
+# 不传参时默认传 .
+function fr --wraps fresh --description "fresh, defaults to ."
+    set -q argv[1]; or set argv .
+    fresh $argv
+end
+
+# 不传参时默认传 .
+function c --wraps code --description "VS Code, defaults to ."
+    set -q argv[1]; or set argv .
+    code $argv
+end
+
+# 不传参时默认传 .
+function o --wraps open --description "open, defaults to ."
+    set -q argv[1]; or set argv .
+    open $argv
+end
 
 # SSH remote
 alias s1 "ssh jr"

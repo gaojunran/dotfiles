@@ -4,6 +4,32 @@
     { "key": "Backspace", "modifiers": ["alt"], "action": "delete_word_backward",        "when": "normal" },
     { "key": "Delete",    "modifiers": ["alt"], "action": "delete_word_forward",         "when": "normal" },
     { "key": "Backspace", "modifiers": ["alt"], "action": "prompt_delete_word_backward", "when": "prompt" },
-    { "key": "Delete",    "modifiers": ["alt"], "action": "prompt_delete_word_forward",  "when": "prompt" }
-  ]
+    { "key": "Delete",    "modifiers": ["alt"], "action": "prompt_delete_word_forward",  "when": "prompt" },
+
+    // Cmd+P 默认绑 quick_open（带 ">" 前缀的命令模式），这里改成纯选文件
+    { "key": "p",     "modifiers": ["super"],          "action": "quick_open_files", "when": "global" },
+    // Cmd+Shift+P -> 命令面板：macos-gui 自带绑定，无需重复
+    { "key": "space", "modifiers": ["super", "shift"], "action": "open_live_grep",   "when": "global" }
+  ],
+  "auto_attach": true,
+  "theme": "builtin://dracula",
+  "editor": {
+    "auto_save_enabled": true,
+    "diagnostics_inline_text": true
+  },
+  "file_explorer": {
+    "show_hidden": true
+  },
+  // tsserver 的 fallbackPath 指向 mise 全局装的 typescript 5；项目自带 node_modules/typescript 时优先用项目版本
+  "lsp": {
+    "rust": { "auto_start": true },
+    "typescript": {
+      "auto_start": true,
+      "initialization_options": { "tsserver": { "fallbackPath": "/Volumes/2tb-ssd/nebula/.local/share/mise/installs/npm-typescript/global/node_modules/typescript/lib/tsserver.js" } }
+    },
+    "javascript": {
+      "auto_start": true,
+      "initialization_options": { "tsserver": { "fallbackPath": "/Volumes/2tb-ssd/nebula/.local/share/mise/installs/npm-typescript/global/node_modules/typescript/lib/tsserver.js" } }
+    }
+  }
 }

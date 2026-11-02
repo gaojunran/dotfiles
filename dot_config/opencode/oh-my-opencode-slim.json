@@ -3,7 +3,7 @@
   "preset": "venus",
   "stripOrchestratorModel": true,
   "presets": {
-    "default": {
+    "astra": {
       "orchestrator": {
         "skills": [
           "*"
@@ -18,7 +18,7 @@
       },
       "oracle": {
         "model": [
-          "astra/DeepSeek-V4.1-Flash-astra",
+          "codebuddy/gpt-6.1-sol",
           "venus/deepseek-v4.1-flash-official"
         ],
         "skills": [
@@ -90,6 +90,7 @@
       },
       "oracle": {
         "model": [
+          "codebuddy/gpt-6.1-sol",
           "venus/deepseek-v4.1-flash-official"
         ],
         "skills": [

@@ -46,6 +46,12 @@ match_remote = "https://git.woa.com/wxweb/sdk.git"
 files = []
 ignored = [".cortexkit"]
 
+[[project]]
+name = "wxdoc-jsdoc-module"
+match_remote = "https://git.woa.com/wxdoc/wxdoc-jsdoc-module.git"
+files = []
+ignored = [".cortexkit"]
+
 [all]
 files = []
 ignored = [

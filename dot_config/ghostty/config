@@ -9,6 +9,11 @@ font-size = 18
 # Toggle Quick Terminal by Hyper + z (It's recommended to re-bind to capslock!)
 keybind = global:cmd+opt+ctrl+z=toggle_quick_terminal
 
+# Cmd+F 交给编辑器（Ghostty 默认把它当 scrollback 搜索吞掉）
+keybind = super+f=unbind
+# 原来的终端 scrollback 搜索挪到 Cmd+Shift+F
+keybind = super+shift+f=start_search
+
 quick-terminal-position = right
 
 background-opacity = 0.85

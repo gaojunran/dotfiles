@@ -81,6 +81,19 @@ run = """
 import { $ } from 'bun'
 
 const rev = process.env.usage_branch ?? 'release'
+
+// submodule foreach 不会遍历未 init 的子模块，先补齐（新加的子模块否则一直是空目录）
+const fresh = (await $`git submodule status --recursive`.text())
+  .split('\\n')
+  .filter(line => line.startsWith('-'))
+  .map(line => line.trim().split(/\\s+/)[1])
+
+for (const p of fresh) {
+  console.log('==> init', p)
+  await $`git submodule update --init --recursive ${p}`
+  await $`jj git init`.cwd(p).catch(() => {})
+}
+
 const paths = [
   '.',
   ...(await $`git submodule foreach --quiet --recursive 'printf "%s\\n" "$displaypath"'`.text())
