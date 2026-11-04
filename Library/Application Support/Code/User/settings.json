@@ -226,5 +226,6 @@
     "*.wat": "$(capture).wasm",
     "*.xaml": "$(capture).xaml.cs"
   },
-  "extensions.ignoreRecommendations": true
+  "extensions.ignoreRecommendations": true,
+  "openchamber.apiUrl": "http://127.0.0.1:34568"
 }
