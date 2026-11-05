@@ -1,0 +1,72 @@
+{
+  "$schema": "https://pi.dev/schemas/models.schema.json",
+  "providers": {
+    "cctq": {
+      "name": "cctq",
+      "baseUrl": "https://www.cctq.ai/v1",
+      "api": "openai-responses",
+      "apiKey": "$CCTQ_API_KEY",
+      "models": [
+        {
+          "id": "gpt-6.1-sol",
+          "contextWindow": 200000,
+          "maxTokens": 96000
+        },
+        {
+          "id": "gpt-6-luna",
+          "contextWindow": 200000,
+          "maxTokens": 96000
+        }
+      ]
+    },
+    "astra": {
+      "name": "astra",
+      "baseUrl": "https://astra.woa.com/ai-coding/v1",
+      "api": "openai-completions",
+      "apiKey": "$ASTRA_TOKEN",
+      "models": [
+        {
+          "id": "GLM-5.3-astra",
+          "contextWindow": 200000,
+          "maxTokens": 96000
+        },
+        {
+          "id": "DeepSeek-V4.1-Flash-astra",
+          "contextWindow": 800000,
+          "maxTokens": 96000
+        }
+      ]
+    },
+    "venus": {
+      "name": "venus",
+      "baseUrl": "http://v2.open.venus.oa.com/llmproxy",
+      "api": "openai-completions",
+      "apiKey": "$VENUS_TOKEN",
+      "headers": {
+        "Venus-Sticky-Routing": "token"
+      },
+      "models": [
+        {
+          "id": "deepseek-v4-flash-official",
+          "contextWindow": 800000,
+          "maxTokens": 96000
+        },
+        {
+          "id": "deepseek-v4.1-flash-official",
+          "contextWindow": 800000,
+          "maxTokens": 96000
+        },
+        {
+          "id": "glm-5.3-external",
+          "contextWindow": 800000,
+          "maxTokens": 96000
+        },
+        {
+          "id": "kimi-k3.1-pro-external",
+          "contextWindow": 1048576,
+          "maxTokens": 96000
+        }
+      ]
+    }
+  }
+}
