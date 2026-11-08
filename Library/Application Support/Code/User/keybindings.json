@@ -2,7 +2,7 @@
 [
   {
     "key": "cmd+shift+d",
-    "command": "git.openChange"
+    "command": "git.viewChanges"
   },
   {
     "key": "cmd+shift+space",

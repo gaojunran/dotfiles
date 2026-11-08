@@ -53,6 +53,7 @@
   "git.enableSmartCommit": true,
   "git.untrackedChanges": "separate",
   "scm.diffDecorationsGutterWidth": 2,
+  "scm.repositories.selectionMode": "single",
   "terminal.integrated.cursorBlinking": true,
   "terminal.integrated.cursorStyle": "line",
   "terminal.integrated.fontWeight": "300",
@@ -227,5 +228,6 @@
     "*.xaml": "$(capture).xaml.cs"
   },
   "extensions.ignoreRecommendations": true,
-  "openchamber.apiUrl": "http://127.0.0.1:34568"
+  "openchamber.apiUrl": "http://127.0.0.1:34568",
+  "gitlens.graph.details.location": "auto"
 }
