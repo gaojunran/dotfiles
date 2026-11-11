@@ -9,11 +9,10 @@ set -Ux PRIVCONF_DIR $HOME/.local/share/chezmoi/dot_config/privconf
 set -Ux MISE_MINIMUM_RELEASE_AGE 0
 
 # Opencode Openchamber 
-# 注意只能在本地或可信内网里部署，密码均为明文
-set -Ux OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS true
-set -Ux OPENCODE_PORT 34568
-set -Ux OPENCODE_PASSWORD nebula
-set -Ux OPENCODE_SKIP_START true
+# 改成 openchamber 自己托管 opencode，好处是可以使用更多 openchamber 提供的功能
+# set -Ux OPENCODE_PASSWORD nebula
+# set -Ux OPENCODE_PORT 34568
+# set -Ux OPENCODE_SKIP_START true
 set -Ux OPENCHAMBER_HOST 0.0.0.0
 set -Ux OPENCHAMBER_UI_PASSWORD nebula
 set -Ux OPENCHAMBER_FS_UPLOAD_MAX_BYTES 1073741824  # 1GB
