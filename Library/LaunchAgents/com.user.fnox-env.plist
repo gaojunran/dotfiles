@@ -8,7 +8,38 @@
     <array>
         <string>/bin/sh</string>
         <string>-c</string>
-        <string>launchctl setenv PATH "$HOME/.local/share/mise/shims:$HOME/.local/bin:$HOME/.cargo/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"; FNOX="$HOME/.local/share/mise/installs/fnox/latest/fnox"; "$FNOX" export --format shell | while IFS='=' read -r k v; do case "$k" in export\ *) k="${k#export }"; v="${v#\'}"; v="${v%\'}"; launchctl setenv "$k" "$v" ;; esac; done</string>
+        <string>cd "$HOME" || exit 1
+export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$HOME/.cargo/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+launchctl setenv PATH "$PATH"
+apply_env() {
+  while IFS='=' read -r key value; do
+    case "$key" in
+      export\ *)
+        key="${key#export }"
+        case "$value" in
+          \'*\') value="${value#\'}"; value="${value%\'}" ;;
+          \"*\") value="${value#\"}"; value="${value%\"}" ;;
+        esac
+        if [ -n "$key" ]; then launchctl setenv "$key" "$value"; fi
+        ;;
+    esac
+  done
+}
+# fnox secrets: cwd must be $HOME (or any dir under it) so fnox finds ~/fnox.toml
+FNOX="$HOME/.local/share/mise/installs/fnox/latest/fnox"
+if [ -x "$FNOX" ]; then
+  "$FNOX" export --format shell 2>/dev/null | apply_env
+else
+  echo "MISSING fnox: $FNOX"
+fi
+# mise global env (~/.config/mise/env.yaml), cwd independent
+MISE=/opt/homebrew/bin/mise
+if [ -x "$MISE" ]; then
+  "$MISE" env --shell bash 2>/dev/null | apply_env
+else
+  echo "MISSING mise: $MISE"
+fi
+echo "fnox-env: done $(date)"</string>
     </array>
     <key>WorkingDirectory</key>
     <string>/Users/nebula</string>
