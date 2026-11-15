@@ -15,6 +15,7 @@ set -Ux MISE_MINIMUM_RELEASE_AGE 0
 # set -Ux OPENCODE_SKIP_START true
 set -Ux OPENCHAMBER_HOST 0.0.0.0
 set -Ux OPENCHAMBER_UI_PASSWORD nebula
+set -Ux OPENCODE_DISABLE_MODELS_FETCH 1  # models.dev 拉取要 4s+，超时会 503，直接用本地缓存
 set -Ux OPENCHAMBER_FS_UPLOAD_MAX_BYTES 1073741824  # 1GB
 
 # PATH 注意因为是 prepend，在后面的反而优先级更高。

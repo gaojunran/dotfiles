@@ -2,7 +2,7 @@
 # 这里把 HEAD 挂回分支，让 git 工具和 agent 看到正常的当前分支。
 # 两边各一个入口：
 #   - 你的交互 shell（fish_prompt 钩子）
-#   - agent 的 bash（BASH_ENV 钩子，逻辑在 ~/.config/shell/git-attach-hook.sh）
+#   - agent 的 bash（BASH_ENV 钩子，逻辑在 ~/.config/shell/agent-bash-env.sh）
 
 # ---- 交互 fish：每个提示符前检查一次 ----
 function __git_attach_hook --on-event fish_prompt
@@ -19,7 +19,7 @@ end
 # AFT 的 shell 工具固定用 /usr/bin/bash，读不了 fish 的配置，只能靠 BASH_ENV 继承。
 # 不设成全局，避免影响平时跑的其它 bash 脚本。
 function __git_attach_bash_env
-    set -lx BASH_ENV $HOME/.config/shell/git-attach-hook.sh
+    set -lx BASH_ENV $HOME/.config/shell/agent-bash-env.sh
     $argv
 end
 
