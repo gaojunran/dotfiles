@@ -39,5 +39,6 @@
 
 ## References
 
+- 需要用户的个人信息时，参考 references/personal-info.md。
 - 编写 JS/TS 时，先参考 references/javascript.md。
 - 编写 Rust 时，先参考 references/rust.md。

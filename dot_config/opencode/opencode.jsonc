@@ -10,8 +10,6 @@
       "options": {
         "extraModels": [
         { "id": "claude-opus-5.5", "name": "Claude-Opus-5.5", "context": 400000, "output": 128000, "tool_call": true, "attachment": true },
-        { "id": "claude-sonnet-5.5", "name": "Claude-Opus-5.5", "context": 400000, "output": 128000, "tool_call": true, "attachment": true },
-        { "id": "gpt-6-sol", "name": "GPT-6-Sol", "context": 1050000, "output": 128000, "tool_call": true, "attachment": true },
         { "id": "gpt-6.1-sol", "name": "GPT-6.1-Sol", "context": 1050000, "output": 128000, "tool_call": true, "attachment": true },
         ]
       }
@@ -76,12 +74,16 @@
       "models": {
         "GLM-5.3-astra": {
           "name": "GLM-5.3-astra",
-          "limit": { "context": 200000, "output": 96000 }
+          "limit": { "context": 800000, "output": 96000 }
         },
         "DeepSeek-V4.1-Flash-astra": {
           "name": "DeepSeek-V4.1-Flash-astra",
           "limit": { "context": 800000, "output": 96000 }
         },
+        "kimi_k3d1_pro_astra": {
+          "name": "kimi_k3d1_pro_astra",
+          "limit": { "context": 800000, "output": 96000 }
+        }
       }
     },
     "venus": {
