@@ -10,6 +10,8 @@
 
 - 积极调用 ctx_reduce。每轮对话中只要产生大量工具输出，就需要调用 ctx_reduce 来减少上下文长度。
 - 积极调用 ctx_expand。较久远的会话会被定期压缩，可能丢失一些细节。尤其是用户需要你做报告等需要精确回忆过去对话记录的时候，应该展开过去会话的具体内容。
+- 积极调用 openchamber_render 工具用于展示图文等。
+- 积极调用 openchamber 的相关工具。
 
 ## Working in Shell
 

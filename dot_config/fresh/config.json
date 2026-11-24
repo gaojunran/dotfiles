@@ -6,6 +6,11 @@
     { "key": "Backspace", "modifiers": ["alt"], "action": "prompt_delete_word_backward", "when": "prompt" },
     { "key": "Delete",    "modifiers": ["alt"], "action": "prompt_delete_word_forward",  "when": "prompt" },
 
+    // markdown 插件会给 buffer 设窗口 mode（markdown-source），其“认领”阶段会把 Global
+    // 的 Alt+F 菜单助记键当成自己的键 → opt+→（终端发 ESC f）会打开 File 菜单。
+    // 用 mode 作用域的自定义绑定抢回 Normal 的 Alt+F 语义。
+    { "key": "f", "modifiers": ["alt"], "action": "move_word_right", "when": "mode:markdown-source" },
+
     // Cmd+P 默认绑 quick_open（带 ">" 前缀的命令模式），这里改成纯选文件
     { "key": "p",     "modifiers": ["super"],          "action": "quick_open_files", "when": "global" },
     // Cmd+Shift+P -> 命令面板：macos-gui 自带绑定，无需重复
