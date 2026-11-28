@@ -20,13 +20,13 @@ end
 # 不设成全局，避免影响平时跑的其它 bash 脚本。
 function __git_attach_bash_env
     set -lx BASH_ENV $HOME/.config/shell/agent-bash-env.sh
-    $argv
+    command $argv
 end
 
 function openchamber --wraps openchamber
-    __git_attach_bash_env command openchamber $argv
+    __git_attach_bash_env openchamber $argv
 end
 
 function opencode --wraps opencode
-    __git_attach_bash_env command opencode $argv
+    __git_attach_bash_env opencode $argv
 end
